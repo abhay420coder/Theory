@@ -169,11 +169,11 @@ A multi-line comment is written between the strings /* and */, e.g.
 # JavaScript Output
 JavaScript can "display" data in different ways:
 
-**innerHTML**  :-         Writing into an HTML element, using innerHTML .
-**document.write()** :-   Writing into the HTML output using document.write() .
-**window.alert()** :-     Writing into an alert box, using window.alert() .
-**console.log()** :-      Writing into the browser console, using console.log() .
-**window.print()** :-     print the content of the current window, using window.print() .
+1. **innerHTML**  :-         Writing into an HTML element, using innerHTML .
+2. **document.write()** :-   Writing into the HTML output using document.write() .
+3. **window.alert()** :-     Writing into an alert box, using window.alert() .
+4. **console.log()** :-      Writing into the browser console, using console.log() .
+5. **window.print()** :-     print the content of the current window, using window.print() .
 
 
 
