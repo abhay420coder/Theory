@@ -256,6 +256,7 @@ This means that a negative number is the bitwise NOT of the number plus 1:
 # JavaScript Data Types
 
 There are two types of Data-Types
+
 1. Primitive Data-Types
 2. Npn-Primitive Data-Types
 
@@ -290,7 +291,7 @@ car = undefined;    // Value is undefined, type is undefined
 
 
 ###  JavaScript Types are Dynamic
-JavaScript has dynamic types. This means that the same variable can be used to hold different data types:
+1. JavaScript has dynamic types. This means that the same variable can be used to hold different data types:
 
 let x;              //  Now x is undefined
 x = 5;              //  Now x is a Number

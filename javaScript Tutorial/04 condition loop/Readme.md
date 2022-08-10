@@ -164,7 +164,8 @@ while (i < 10) {
 
 
 ## do while loop
-The do while loop is a variant of the while loop. This loop will execute the code block once, before checking if the condition is true, then it will repeat the loop as long as the condition is true.
+1. The do while loop is a variant of the while loop. 
+2. This loop will execute the code block once, before checking if the condition is true, then it will repeat the loop as long as the condition is true.
 
 #### syntax:- 
             do {
@@ -268,10 +269,10 @@ object may be object , array , map , set , string , nodeList ,etc.
 
 ###### Note for array
 
-Do not use for in over an Array if the index order is important.
-The index order is **implementation-dependent**, and array values may not be accessed in the order you expect.
+1. Do not use for in over an Array if the index order is important.
+2. The index order is **implementation-dependent**, and array values may not be accessed in the order you expect.
 
-It is better to use a for loop, a for of loop, or Array.forEach() when the order is important.
+3. It is better to use a for loop, a for of loop, or Array.forEach() when the order is important.
 
 **example**
 
@@ -280,7 +281,9 @@ let txt = "";
 for (let x in numbers) {
   txt += numbers[x];            
 }
+
 //**output :-**   '45491625'
+
 // here x is working like index  and numbers[x] is working like element of array here we can use normal-for-loop / for-of / for-each
 
 
