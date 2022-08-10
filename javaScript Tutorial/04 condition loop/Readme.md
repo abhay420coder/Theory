@@ -154,13 +154,13 @@ The while loop loops through a block of code as long as a specified condition is
         }
 
 #### example :- 
-let text = " ";
-let i =0;
-while (i < 10) {
-        text += "The number is " + i;
-    console.log(text);
-        i++;
-}
+        let text = " ";
+        let i =0;
+        while (i < 10) {
+                text += "The number is " + i;
+        console.log(text);
+                i++;
+        }
 
 
 ## do while loop
@@ -184,13 +184,13 @@ while (i < 10) {
             while (condition);
 
 #### example :-
-let text = " ";
-let i =0;
-do {
-        text += "The number is " + i;
-        i++;
-}
-while (i < 10);
+        let text = " ";
+        let i =0;
+        do {
+                text += "The number is " + i;
+                i++;
+        }
+        while (i < 10);
 
 ## For Loop
 
@@ -228,26 +228,26 @@ while (i < 10);
         }
 
 #### example :-
-for (let i = 0, len = cars.length, text = ""; i < len; i++) {
-  text += cars[i] + "<br>";
-}
+        for (let i = 0, len = cars.length, text = ""; i < len; i++) {
+        text += cars[i] + "<br>";
+        }
 
 #### example :-
-let i = 2;
-let len = cars.length;
-let text = "";
-for (; i < len; i++) {
-  text += cars[i] + "<br>";
-}
+        let i = 2;
+        let len = cars.length;
+        let text = "";
+        for (; i < len; i++) {
+        text += cars[i] + "<br>";
+        }
 
 #### example :-
-let i = 0;
-let len = cars.length;
-let text = "";
-for (; i < len; ) {
-  text += cars[i] + "<br>";
-  i++;
-}
+        let i = 0;
+        let len = cars.length;
+        let text = "";
+        for (; i < len; ) {
+        text += cars[i] + "<br>";
+        i++;
+        }
 
 
 
@@ -276,11 +276,11 @@ object may be object , array , map , set , string , nodeList ,etc.
 
 **example**
 
-const numbers = [45, 4, 9, 16, 25];
-let txt = "";
-for (let x in numbers) {
-  txt += numbers[x];            
-}
+        const numbers = [45, 4, 9, 16, 25];
+        let txt = "";
+        for (let x in numbers) {
+        txt += numbers[x];            
+        }
 
 //**output :-**   '45491625'
 
@@ -304,8 +304,8 @@ for (let x in numbers) {
 object may be object , array , map , set , string , nodeList ,etc.
 
 #### example :-
-let x = "Abhay";
-for(let element of x)console.log(element + "\n");
+        let x = "Abhay";
+        for(let element of x)console.log(element + "\n");
 //**output :-**     A
                     b
                     h
@@ -314,8 +314,8 @@ for(let element of x)console.log(element + "\n");
 
 
 #### example :-
-let x =[45, 4, 9, 16, 25];
-for(let element of x)console.log(element + "\n");
+        let x =[45, 4, 9, 16, 25];
+        for(let element of x)console.log(element + "\n");
 //**output :-**     45
                     4
                     9
