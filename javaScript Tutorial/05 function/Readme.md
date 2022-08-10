@@ -288,7 +288,7 @@ SIngle statement of hum curly bracket ke andr bhi likh sakte hai aur is curly br
 
 ## Anonymus Function without Name without passing parameter
 
-#### syntax of Anonymus Function with Name with passing parameter :- we know alrady
+#### syntax of Anonymus Function with Name with passing parameter :- we know already
     key variablename = function ( para1 , para2 , para3 ,..... ) {
                                                                     // function statement
                                                                 }
@@ -309,7 +309,7 @@ SIngle statement of hum curly bracket ke andr bhi likh sakte hai aur is curly br
 
 ## Arrow Function without Name without passing parameter
 
-#### syntax of Arrow Function with Name with passing parameter :- we know alrady
+#### syntax of Arrow Function with Name with passing parameter :- we know already
     key variablename = ( para1 , para2 , para3 ,..... )  => {
                                                                 // function statement
                                                             }
@@ -330,7 +330,7 @@ SIngle statement of hum curly bracket ke andr bhi likh sakte hai aur is curly br
 
 ## async Arrow Function without Name without passing parameter
 
-#### syntax of async Function with Name with passing parameter :- we know alrady
+#### syntax of async Function with Name with passing parameter :- we know already
     key variablename = async ( para1 , para2 , para3 ,..... )  => {
                                                                 // function statement
                                                                 }
@@ -436,7 +436,41 @@ SIngle statement of hum curly bracket ke andr bhi likh sakte hai aur is curly br
 
 
 # callBack function
-1. A callback is a function which is passed as an argument to another function which is used  to handle Asynchronous of data.
+1. A callback is a function which is passed as an argument to another function.
+2. A callback is a function which is passed as an argument to another function which is used to handle Asynchronous of data.
+3. This technique allows a function to call another function.
+4. A callback function can run after another function has finished.
+5. A callBack function is a function passed into another function as an argunment ,which is then involed inside the outer function to complete some kind of routine and action.
 
-2. This technique allows a function to call another function
-3. A callback function can run after another function has finished
+#### Example :- 
+    function greeting(name) {
+                                alert('Hello ' + name);
+                            }
+
+    function processUserInput(callBack) {           //note1
+                                var name = prompt('Please enter your name.');
+                                callBack(name);{           //note2
+                            }
+
+    processUserInput(greeting);{           //note3
+
+###### note1 :- 
+1. yaha pr **greeting** ek argunmnet ke rup me **callBack** bnkr pass kr rha hai
+2. ye ek function **greeting** ko call kr rhi hai
+
+###### note2 :- 
+1. jaise hm **greeting** me name paas krte hai vaise hi **callBack**  ke andr name ko paas kr rhe hai
+
+###### note3 :- 
+1. **processUserInput** ke andr **greeting** ko pass krte hai , yaha pr greetings callback function ke roop me kaam kr rhi hai.
+2. yaha pr **greeting** **processUserInput** me argunment ke roop me paas ho rhi hai.
+
+
+###### Note:- 
+The above example is a synchronous callback, as it is executed immediately.
+
+### Note
+1. however, that callbacks are often used to continue code execution after an **asynchronous** operation has completed — these are called asynchronous callbacks. 
+2. A good example is the callback functions executed inside a **.then()** block chained onto the end of a **promise** after that **promise** fulfills or rejects. 
+3. This structure is used in many modern web APIs, such as **fetch()**.
+
