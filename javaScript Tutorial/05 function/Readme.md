@@ -15,7 +15,7 @@ By using function , we can achieve code modulity & code re-usability.
 9. Function Hoisting
 
 
-
+**Note** fuction ko call krna aur invoke krna aur execute krna teeno same hai
 
 
 
@@ -167,7 +167,6 @@ By using function , we can achieve code modulity & code re-usability.
 
 
 
-
 # Arrow Function
 1. Arrow function is use to reduce number of lines of the code .
 2. Arrow function is use to avoid **this** keyword conflict .
@@ -283,6 +282,147 @@ SIngle statement of hum curly bracket ke andr bhi likh sakte hai aur is curly br
 
 
 # IIFE function (self called function) :- immediately invoked function expression
+1. IIFE are use to protect the data.
+2. IIFE function can called only once in entire program.
+3. The name of IIFE is promoted by Ben Alman.
+
+## Anonymus Function without Name without passing parameter
+
+#### syntax of Anonymus Function with Name with passing parameter :- we know alrady
+    key variablename = function ( para1 , para2 , para3 ,..... ) {
+                                                                    // function statement
+                                                                }
+#### syntax of Anonymus Function with Name without passing parameter
+    key variablename = function () {
+                                        // function statement
+                                    }
+
+#### syntax of Anonymus Function without Name with passing parameter
+    function ( para1 , para2 , para3 ,..... ) {
+                                                // function statement
+                                                }
+
+#### syntax of Anonymus Function without Name without passing parameter
+    function () {
+                    // function statement
+                }
+
+## Arrow Function without Name without passing parameter
+
+#### syntax of Arrow Function with Name with passing parameter :- we know alrady
+    key variablename = ( para1 , para2 , para3 ,..... )  => {
+                                                                // function statement
+                                                            }
+#### syntax of Arrow Function with Name without passing parameter
+    key variablename = ()  => {
+                                // function statement
+                                }
+
+#### syntax of Arrow Function without Name with passing parameter
+    ( para1 , para2 , para3 ,..... )  => {
+                                            // function statement
+                                        }
+
+#### syntax of Arrow Function without Name without passing parameter
+    ()  => {
+                // function statement
+            }
+
+## async Arrow Function without Name without passing parameter
+
+#### syntax of async Function with Name with passing parameter :- we know alrady
+    key variablename = async ( para1 , para2 , para3 ,..... )  => {
+                                                                // function statement
+                                                                }
+
+#### syntax of async Arrow Function with Name without passing parameter
+    key variablename = async ()  => {
+                                    // function statement
+                                    }
+
+#### syntax of async Arrow Function without Name with passing parameter
+    async ( para1 , para2 , para3 ,..... )  => {
+                                                // function statement
+                                                }
+
+#### syntax of async Arrow Function without Name without passing parameter
+    async ()  => {
+                // function statement
+                }
+
+
+## Rules of IIFE function
+1. The first is the **anonymous function with lexical scope enclosed within the small beacket ().** This prevents accessing variables within the IIFE idiom as well as polluting the global scope.
+2. The second part creates **the immediately invoked function expression ()** through which the JavaScript engine will directly interpret the function.
+
+**Note :-**
+
+1.  keep **Anonymus-Function / Arrow-Function / async-Arrow-Function   without Name** inside the small beacket **()**.
+2. immediate call function by **()**
+
+## syntax of IIFE function
+
+#### IIFE	:- anonymus function IIFE
+    (   function () {
+                        //  statement 
+                    }   )();
+
+**Note :-**
+
+1.  keep **Anonymus-Function without Name ** inside the small beacket **()**.
+2. immediate call function by **()**
+
+#### Arrow function IIFE
+    (   () =>       {
+                        //  statement 
+                    }   )();
+
+**Note :-**
+
+1.  keep **Arrow-Function without Name** inside the small beacket **()**.
+2.  immediate call function by **()**
+
+#### async IIFE
+    (   async () => {
+                        //  statement 
+                    }   )();
+
+**Note :-**
+
+1.  keep **async-Arrow-Function  without Name** inside the small beacket **()**.
+2. immediate call function by **()**
+
+
+
+###### Example :- arrow function IIFE :- without passing parameter
+            (()  => {
+                    console.log("hi man");
+                    })();
+
+**output :-** "hi man"
+
+###### Example :- arrow function IIFE :- with passing parameter
+
+    ((a,b)  => {
+                    console.log(a+b);   
+                })(2,3);
+
+**output :-** 5
+
+###### Example :- anonymus function IIFE :- without passing parameter
+            (function() {
+                    console.log("hi man");
+                    })();
+
+**output :-** "hi man"
+
+###### Example :- anonymus function IIFE :- with passing parameter
+
+    (function(a,b){
+                    console.log(a+b);   
+                })(2,3);
+
+**output :-** 5
 
 
 
@@ -295,8 +435,8 @@ SIngle statement of hum curly bracket ke andr bhi likh sakte hai aur is curly br
 
 
 
+# callBack function
+1. A callback is a function which is passed as an argument to another function which is used  to handle Asynchronous of data.
 
-
-
-
-
+2. This technique allows a function to call another function
+3. A callback function can run after another function has finished
