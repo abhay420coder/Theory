@@ -459,18 +459,59 @@ SIngle statement of hum curly bracket ke andr bhi likh sakte hai aur is curly br
 2. ye ek function **greeting** ko call kr rhi hai
 
 ###### note2 :- 
-1. jaise hm **greeting** me name paas krte hai vaise hi **callBack**  ke andr name ko paas kr rhe hai
+1. jaise hm **greeting** me name paas krte hai vaise hi **callBack**  ke andr name ko paas kr rhe hai.
 
 ###### note3 :- 
 1. **processUserInput** ke andr **greeting** ko pass krte hai , yaha pr greetings callback function ke roop me kaam kr rhi hai.
 2. yaha pr **greeting** **processUserInput** me argunment ke roop me paas ho rhi hai.
 
+###### note:- 
+1. function ke andr function ko call krna hi callBack function khlata hai
+2. mtlb kisi ek  function ke andr kisi dusre function ko as a argument ki trh pass krna hi callBack function khlata hai
 
 ###### Note:- 
 The above example is a synchronous callback, as it is executed immediately.
 
-### Note
+### Note :-
 1. however, that callbacks are often used to continue code execution after an **asynchronous** operation has completed — these are called asynchronous callbacks. 
 2. A good example is the callback functions executed inside a **.then()** block chained onto the end of a **promise** after that **promise** fulfills or rejects. 
 3. This structure is used in many modern web APIs, such as **fetch()**.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Function Return
+1. When JavaScript reaches a return statement, the function will stop executing.
+2. If the function was invoked from a statement, JavaScript will "return" to execute the code after the invoking statement.
+3. Functions often compute a return value. The return value is "returned" back to the "caller":
+
+#### Example
+**Calculate the product of two numbers, and return the result:**
+
+    let x = myFunction(4, 3);   // Function is called, return value will end up in x
+
+    function myFunction(a, b)   {
+                                    return a * b;             // Function returns the product of a and b
+                                }
+
+
+
+
+
+
+# Local Variables for function
+Variables declared within a JavaScript function, become LOCAL to the function.
