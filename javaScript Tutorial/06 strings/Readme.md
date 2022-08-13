@@ -116,17 +116,17 @@
 #  Escape sequences
 1. Special characters can be encoded using escape sequences:
 
-    **Escape sequence	                    Unicode code point**
-            \0	                            null character 
-            \'	                            single quote 
-            \"	                            double quote
-            \\	                            backslash
-            \n	                            newline
-            \r	                            carriage return
-            \v	                            vertical tab
-            \t	                            tab
-            \b	                            backspace
-            \f	                            form feed
+        Escape sequence	                    Unicode code point
+                \0	                            null character 
+                \'	                            single quote 
+                \"	                            double quote
+                \\	                            backslash
+                \n	                            newline
+                \r	                            carriage return
+                \v	                            vertical tab
+                \t	                            tab
+                \b	                            backspace
+                \f	                            form feed
 
  **note :-** ydi koi character apna special power rkhta hai to uske special power ko backslash use kr khatm kr sakte hai.
 
