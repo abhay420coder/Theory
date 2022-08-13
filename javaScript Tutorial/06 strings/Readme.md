@@ -834,7 +834,54 @@ A string:- A new string converted to UpperCase according to current locale.
 
 
 
-##  Convert String into Array  
+##  Convert String into Array  :- split method
+
+### method to convert String into Array       
+1. using split() method	    :-  stringVariable.split(seperator, limit)
+
+### using split() method     :-  stringVariable.split(seperator, limit)  
+
+#### syntax :- 
+        stringVariable.split(seperator, limit)     
+
+#### parameter :-   
+1. seperator    :-  Optional    :-  A string or regular expression to use for splitting    :-  Default **seperator** = whiteSpaces 
+2. If omitted, an array with the original string is returned.
+
+1. limit        :-  Optional    :-  An integer that limits the number of splits.    :-  Default **limit** = -1
+2. Items after the limit are excluded.
+
+#### returns :-
+1. Array    :-	An array containing the splitted values.
+
+#### points:-
+1. The split() method splits a string into an array of substrings.
+2. The split() method returns the new array.
+3. The split() method does not change the original string.
+4. If (" ") is used as separator, the string is split between words.
+
+###### example :- 
+
+        str1 = “Abcdefgh Ijklmnop”;
+        str1.split(“ ”)    # [‘Abcdefgh’ , ‘Ijklmnop’] 
+        str1.split(“c”)    # [ 'Ab', 'defgh Ijklmnop' ]		       
+        
+        string.split(‘’)  :- Split a string into characters 
+        str1.split(‘’) ;     // [‘A’,‘b’,‘c’,‘d’,‘e’,‘f’,‘g’,‘h’,‘ ’,‘I’,‘j’,‘k’,‘l’,‘m’,‘n’,‘o’,‘p’ ]   
+
+
+
+
+
+
+
+
+## Replace old-value(OV) to new-value(NV) of a string
+    string.replace(OV, NV) :- Replace old-value(OV) to new-value(NV)
+
+    str1 = “Abcdefgh Ijklmnop”;
+    str1.replace(“fgh” , “abc”) // Abcdeabc Ijklmnop
+        
 
 
 
@@ -847,3 +894,48 @@ A string:- A new string converted to UpperCase according to current locale.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# String method properties , methods :- w3School  working
+
+#### startsWith()	        :-  Checks whether a string begins with specified characters
+#### endsWith()	            :-  Returns if a string ends with a specified value
+#### replace()	            :-  Searches a string for a value, or a regular expression, and returns a string where the values are replaced
+#### indexOf()	            :-  Returns the index (position) of the first occurrence of a value in a string
+#### lastIndexOf()	        :-  Returns the index (position) of the last occurrence of a value in a string
+#### match()	            :-  Searches a string for a value, or a regular expression, and returns the matches
+#### search()	            :-  Searches a string for a value, or regular expression, and returns the index (position) of the match
+#### includes()	            :-  Returns if a string contains a specified value
+#### trim()	                :-  Returns a string with removed whitespaces
+
+
+
+
+
+
+#### fromCharCode()	        :-  Returns Unicode values as characters
+#### localeCompare()	    :-  Compares two strings in the current locale
+#### prototype	            :-  Allows you to add properties and methods to an object
+#### repeat()	            :-  Returns a new string with a number of copies of a string
+#### toString()	            :-  Returns a string or a string object as a string
+#### valueOf()	            :-  Returns the primitive value of a string or a string object
