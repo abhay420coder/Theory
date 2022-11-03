@@ -1,0 +1,88 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:03.060
+Let's take a closer look
+at what documents are
+
+2
+00:00:03.060 --> 00:00:06.600
+and how they're used to store
+data in a structured way.
+
+3
+00:00:06.600 --> 00:00:09.780
+A document is a way to
+organize and store data
+
+4
+00:00:09.780 --> 00:00:12.390
+as a set of field-value pairs.
+
+5
+00:00:12.390 --> 00:00:15.660
+Just like this, where the
+field is a unique identifier
+
+6
+00:00:15.660 --> 00:00:18.120
+for some data
+point, and the value
+
+7
+00:00:18.120 --> 00:00:21.100
+is data related to
+a given identifier.
+
+8
+00:00:21.100 --> 00:00:23.490
+In this example,
+there is a field name,
+
+9
+00:00:23.490 --> 00:00:26.220
+and the value is Lakshmi.
+
+10
+00:00:26.220 --> 00:00:28.770
+We will look closer at
+documents and their structures
+
+11
+00:00:28.770 --> 00:00:31.260
+once we get our hands
+on an actual data set.
+
+12
+00:00:31.260 --> 00:00:34.630
+But for now, this is a
+simple example of a document.
+
+13
+00:00:34.630 --> 00:00:38.690
+A collection would contain many
+documents similar to this one.
+
+14
+00:00:38.690 --> 00:00:42.630
+And a database would contain
+multiple collections.
+
+15
+00:00:42.630 --> 00:00:45.510
+In this lesson, we defined
+what document and collection
+
+16
+00:00:45.510 --> 00:00:46.870
+mean in MongoDB.
+
+17
+00:00:46.870 --> 00:00:49.830
+In the next chapters, we will
+start querying collections
+
+18
+00:00:49.830 --> 00:00:53.990
+for documents and interact
+with the database in general.

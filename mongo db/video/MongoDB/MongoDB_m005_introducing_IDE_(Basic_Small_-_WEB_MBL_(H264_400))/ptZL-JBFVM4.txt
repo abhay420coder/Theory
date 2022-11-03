@@ -1,0 +1,87 @@
+In this lesson, I want to introduce you to our in-browser IDE.
+
+It's a space where you can practice what you learned, or get a grade for a lab that you just completed.
+
+But essentially, we want you to get as much hands on practice and learning as possible.
+
+And that's what the IDE is for.
+
+So this is an example of an in-browser IDE lab.
+
+There's the title of the lesson, and the problem description down here.
+
+In this particular case, it's an ungraded problem.
+
+So as the description says, practice what you learned in earlier lectures and maybe even find answers to some of the quiz questions.
+
+So this is your sandbox playground space.
+
+If I click the Launch IDE button, I get to the actual in-browser IDE.
+
+So let's click that button.
+
+So as you can see, the IDE takes up a fair amount of space.
+
+So you can collapse the IDE using the minimized button on the top right, and then bring it back up with the button right next to it.
+
+Let's examine it a little closer.
+
+There are multiple tabs and windows in this one little area.
+
+So let's go left to right.
+
+This tab, labeled Browse Files, is a File Explorer where you can browse the files in your workspace directory.
+
+These files are given to you to edit for the lab.
+
+You can also collapse this window for more space in the IDE.
+
+The next section is the File Editor.
+
+The editor displays the contents of the files on the workspace directory so you can edit these files for the lab.
+
+If you want to edit a file in the workspace directory, you can click on that files tab and the editor, or by selecting the file name from the File Explorer.
+
+You can edit these files as you like and the changes will stay here unless you reset the workspace, which you can do by clicking this button at the bottom.
+
+So let's say I add a new point to this file.
+
+I can refresh the page and this update will still be here.
+
+But once I hit reset workspace, it'll ask me if I'm sure.
+
+I click OK and now the change that I made is gone.
+
+So the workspace was completely reset to what it was originally configured with.
+
+The files in this editor usually have some code in them.
+
+Whether it's a MongoDB configuration file, a JSON snippet, or something else.
+
+The next section of the in-browser IDE is the terminal window.
+
+This is where you would issue any shell commands required for the exercise.
+
+For example, I can check what version of MongoDB is installed.
+
+And it looks like we have MongoDB version 4.0.
+
+You can also collapse the terminal window if you want more space in the file editor.
+
+If this is a graded assignment, then there will be some test cases you need to run against your solution.
+
+To run these tests, you can hit the Run Test button on the bottom right.
+
+Running the test will open up a new tab called Test Results.
+
+This tab will show you how many tests were run, how many tests were passed, and how many tests were skipped.
+
+This assignment is not graded, so we just added an example test here that always passes.
+
+If this was a graded assignment, you would get feedback on your solution.
+
+I can also collapse this tab for more space.
+
+Make sure, when you get to an in-browser IDE lab, to check whether or not the assignment is graded.
+
+I hope you enjoyed learning with us and good luck.

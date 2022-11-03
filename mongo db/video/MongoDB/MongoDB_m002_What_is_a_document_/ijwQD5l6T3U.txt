@@ -1,0 +1,19 @@
+Let's take a closer look at what documents are and how they're used to store data in a structured way.
+
+A document is a way to organize and store data as a set of field-value pairs.
+
+Just like this, where the field is a unique identifier for some data point, and the value is data related to a given identifier.
+
+In this example, there is a field name, and the value is Lakshmi.
+
+We will look closer at documents and their structures once we get our hands on an actual data set.
+
+But for now, this is a simple example of a document.
+
+A collection would contain many documents similar to this one.
+
+And a database would contain multiple collections.
+
+In this lesson, we defined what document and collection mean in MongoDB.
+
+In the next chapters, we will start querying collections for documents and interact with the database in general.
