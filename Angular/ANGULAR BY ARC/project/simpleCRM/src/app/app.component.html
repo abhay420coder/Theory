@@ -1,0 +1,237 @@
+<h1 class="c1">{{title}}</h1>
+<!-- 
+<input type="text"  [(ngModel)]="userName">
+
+<h1 *ngIf="userName.length > 10"> userName :-  {{ userName }}</h1>
+
+
+<h4> Angular Built-in Pipes </h4>
+
+<h4>Bui1t-In Pipes</h4>
+<div>lowercase Pipe :- {{ lowerCaseExamp1e | lowercase  }}</div>
+<div>uppercase Pipe :- {{ upperCaseExamp1e | uppercase  }}</div>
+<div> date Pipe :- {{ dateExampIe | date }}</div>
+<div> Json Pipe :- {{ jsonExamp1e | json }}</div>
+<div> currencyExample Pipe :- {{ currencyExample | currency }} </div>
+<div> percentExample Pipe :- {{ percentExample | percent }} </div>
+
+<h4> parameterized pipes </h4>
+<div> currencyExample Pipe :- EURO  :- {{ currencyExample | currency : 'EUR' }} </div>
+<div> currencyExample Pipe :- GREAT BRITAIN POUND :-  {{ currencyExample | currency : 'GBP' }} </div>
+<div> currencyExample Pipe :- INDIAN RUPEES :-  {{ currencyExample | currency : 'INR' }} </div>
+<div> currencyExample Pipe :- UNITED STATE DOLLARS  :-  {{ currencyExample | currency : 'USD' }} </div>
+<div> currencyExample Pipe :- AUSTRALIAN DOLLARS    :-  {{ currencyExample | currency : 'AUD' }} </div>
+<div> currencyExample Pipe :- BRAZIL  :-  {{ currencyExample | currency : 'BRL' }} </div>
+<div> currencyExample Pipe :- MEXICO  :-  {{ currencyExample | currency : 'MXN' }} </div>
+<div> currencyExample Pipe :- CANADIAN  DOLLARS :- {{ currencyExample | currency : 'CAD' }} </div>
+<div> currencyExample Pipe :- CHIENESE YUHAN  :-  {{ currencyExample | currency : 'CNY' }} </div>
+
+<div> date Pipe :- {{ dateExampIe | date }}</div>
+<div> date Pipe :- with 'short' :-  {{ dateExampIe | date : 'short'}}</div>
+<div> date Pipe :- with 'medium' :-  {{ dateExampIe | date : 'medium'}}</div>
+<div> date Pipe :- with 'long' :-  {{ dateExampIe | date : 'long'}}</div>
+<div> date Pipe :- with 'full' :-  {{ dateExampIe | date : 'full'}}</div>
+<div> date Pipe :- with 'shortDate' :-  {{ dateExampIe | date : 'shortDate'}}</div>
+<div> date Pipe :- with 'mediumDate' :-  {{ dateExampIe | date : 'mediumDate'}}</div>
+<div> date Pipe :- with 'longDate' :-  {{ dateExampIe | date : 'longDate'}}</div>
+<div> date Pipe :- with 'fullDate' :-  {{ dateExampIe | date : 'fullDate'}}</div> 
+<div> date Pipe :- with 'shortTime' :-  {{ dateExampIe | date : 'shortTime'}}</div>
+<div> date Pipe :- with 'mediumTime' :-  {{ dateExampIe | date : 'mediumTime'}}</div>
+<div> date Pipe :- with 'longTime' :-  {{ dateExampIe | date : 'longTime'}}</div>
+<div> date Pipe :- with 'fullTime' :-  {{ dateExampIe | date : 'fullTime'}}</div>
+
+<h4> number Pipe </h4>
+<div> number Pipe:-  {{5.678 | number:'1.2-3' }}</div >      
+<div> number Pipe:-   {{5.678 | number:'3.4-5' }}</div>     
+<div> number Pipe:-   {{5.678 | number:'3.1-2' }}</div>      
+<h4> percent Pipe </h4>
+<div> percent Pipe:-  {{5.678 | percent:'1.2-3' }}</div >      
+<div> percent Pipe:-   {{5.678 | percent:'3.4-5' }}</div>      
+<div> percent Pipe:-   {{5.678 | percent:'3.1-2' }}</div>      
+ -->
+
+
+<!-- <h4> Angular Chaining Pipes </h4>
+
+
+<div> date Pipe :- {{ dateExampIe | date | uppercase }}</div>
+<div> currencyExample Pipe :- CANADIAN  DOLLARS :- {{ currencyExample | currency : 'CAD' | lowercase}} </div> -->
+
+<!-- Two way data binding -->
+
+<!-- <div>{{ pageHeading }}</div> -->
+
+
+<!-- 
+<ul>
+  <h1> element oƒ your iteration 1</h1>
+  <li *ngFor="let contact of contacts">
+    {{ contact }}
+  </li>
+</ul>
+
+<ul>
+  <h1> element oƒ your iteration 2 </h1>
+  <li *ngFor="let contact of contacts ; index as i ; first as f ; last as l , odd as o , even as e">
+    <div  *ngIf="f" style="background-color:coral"> {{ i }} :-  {{contact.firstName}} {{contact.lastName}} </div>
+    <div *ngIf="l" style="background-color:rgb(0, 197, 211)" >{{ i }} :-  {{contact.firstName}} {{contact.lastName}}</div>
+  </li>
+</ul>
+
+<ul>
+  <h1> element oƒ your iteration 2 </h1>
+  <li *ngFor="let contact of contacts ; index as i ; first as f ; last as l , odd as o , even as e">
+    <div *ngIf="o" style="background-color:darkviolet" >{{ i }} :-  {{contact.firstName}} {{contact.lastName}}</div>
+    <div *ngIf="e" style="background-color:rgb(0, 211, 158)" >{{ i }} :-  {{contact.firstName}} {{contact.lastName}}</div>
+  </li>
+</ul>
+
+
+<h4>Learning ngSwitch</h4>
+<div [ngSwitch]="superHero">
+  <div *ngSwitchCase="'SuperWomen' "> my superHero is Super Women</div>
+  <div *ngSwitchCase="'SpiderMan' "> my superHero is Spider Man</div>
+  <div *ngSwitchCase="'HeMan' "> my superHero is He Man</div>
+  <div *ngSwitchCase="'SuperMan' "> my superHero is Super Man</div>
+</div>
+<div [ngSwitch]="category">
+  <div *ngSwitchCase="'clothing' "> my category is clothing</div>
+  <div *ngSwitchCase="'mobiles' "> my category is mobiles</div>
+  <div *ngSwitchDefault> my category is Default</div>
+</div>
+<div [ngSwitch]="tax">
+  <div *ngSwitchCase="30"> my tax is 30</div>
+  <div *ngSwitchCase="50"> my tax is 50</div>
+  <div *ngSwitchDefault> my tax is Default</div>
+</div>
+<div [ngSwitch]="color">
+  <div *ngSwitchCase="'red'"> my tax is 30</div>
+  <div *ngSwitchCase="'green'"> my tax is 50</div>
+  <div *ngSwitchDefault> my tax is Default</div>
+</div> -->
+<!-- 
+<div [ngStyle]="{'background-color':'green' , 'color':'#fff'}"> This is Green DIV with ngStyle </div>
+
+<div style="background-color:green"> This is Green DIV with Style attribute </div>
+<div [ngStyle]="{'background-color':styleProp}"> This is Dynamic color DIV  with ngStyle </div>
+<div [ngStyle]="{'color':txtColor1==='blue'?'blue':'red'}"> This is conditional color DIV  with ngStyle 1</div>
+<div [ngStyle]="{'color':txtColor2==='blue'?'blue':'red'}"> This is conditional color DIV  with ngStyle 2</div> -->
+
+<!-- <div [ngClass]="'c1'" > This is ngCIass example c1</div>
+<div [ngClass]="'c1 c2'" > This is ngCIass multi-classes example c1 c2</div>
+<div [ngClass]="styleClsProp" > This is ngCIass class variable example c3 </div>
+<div [ngClass]="conditionClsProp1 ==='c4'?'c4':'c5'" > This is ngCIass class condition example c4 </div>
+<div [ngClass]="conditionClsProp2 ==='c4'?'c4':'c5'" > This is ngCIass class condition example c5 </div>
+
+<div [ngClass]="{c6:true , c7:true}" > This is ngCIass class condition example c5 2 </div>
+<div [ngClass]="{c6:false , c7:true}" > This is ngCIass class condition example c5 3 </div>
+
+<div [ngClass]="getClsProp()" > This is ngCIass class method example c8 </div> -->
+
+<!-- 
+<div> {{ page_heading  }}  </div>
+<div [style.color]="txtColor"> page cout is :- {{ page_count  }}  </div>
+
+<a >this is a link</a>
+
+<div> <h2>property binding</h2></div>
+<div *ngIf="isUserLoggedIn">
+<div [innerHTML]="user_object.firstName + '   ' + user_object.lastName"></div>
+</div>
+
+<img [src]="imageUrl" [alt]="imageAlternativeName"> 
+
+-->
+
+<!-- 
+<div> {{ user_object  }}  </div>
+<div> user name is :- {{ user_object.firstName  }}  {{ user_object.lastName  }} </div>
+
+<table>
+  <tr>
+    <th>contact ID</th>
+    <th>First NAme</th>
+    <th>Last Name</th>
+  </tr>
+  <tr *ngFor="let contact of contacts">
+    <td>{{contact.contactld}}</td>
+    <td>{{contact.firstName}}</td>
+    <td>{{contact.lastName}}</td>
+  </tr>
+</table> 
+-->
+<!-- 
+<table>
+  <tr>
+    <th>contact ID</th>
+    <th>First NAme</th>
+    <th>Last Name</th>
+  </tr>
+  <tr *ngFor="let contact of contacts">
+    <td [title]="contact.contactld">{{contact.contactld}}</td>
+    <td [title]="contact.firstName">{{contact.firstName}}</td>
+    <td [title]="contact.lastName">{{contact.lastName}}</td>
+  </tr>
+</table> 
+ -->
+<!-- 
+ <div> <h1>attribute binding </h1></div>
+
+ <table style="background-color:#ddd">
+  <tr>
+    <th>contact ID</th>
+    <th>First NAme</th>
+    <th>Last Name</th>
+  </tr>
+  <tr *ngFor="let contact of contacts"  >
+    <td [title]="contact.contactld" [attr.colspan]="colVal">{{contact.contactld}}</td>
+    <td [title]="contact.firstName">{{contact.firstName}}</td>
+    <td [title]="contact.lastName">{{contact.lastName}}</td>
+  </tr>
+</table>  -->
+
+<!-- 
+  
+<div> <h1>event binding </h1></div>
+
+<button (click)="sayHello()">event binding</button>
+
+<div *ngIf="eventBinding">
+  <div> <h1> display by event binding </h1></div>
+
+ <table style="background-color:#ddd">
+  <tr>
+    <th>contact ID</th>
+    <th>First NAme</th>
+    <th>Last Name</th>
+  </tr>
+  <tr *ngFor="let contact of contacts"  >
+    <td [title]="contact.contactld" [attr.colspan]="colVal">{{contact.contactld}}</td>
+    <td [title]="contact.firstName">{{contact.firstName}}</td>
+    <td [title]="contact.lastName">{{contact.lastName}}</td>
+  </tr>
+</table> 
+
+</div>
+
+<h1 (mouseover)="highlightColor()" [class]="higlightBlock"> highlight event binding on  mouse hover </h1>
+
+<input type="text" (focus)="inputBox();"> 
+
+-->
+
+
+
+<!-- <input type="number" name="num" id="num" class="nums"> -->
+<!-- <textarea name="nums" id="" cols="30" rows="10"></textarea> -->
+
+<!-- HERE EVERY COMPONENT WILL SHOW ON ROUTER -->
+<router-outlet></router-outlet>  <!-- primary outlet --> 
+ <!-- named router outlet --> 
+ <!-- <router-outlet name="addLoan"></router-outlet>   -->
+ <!-- named router outlet --> 
+ <!-- <router-outlet name="editLoan"></router-outlet>   -->
+
+
+
+

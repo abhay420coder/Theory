@@ -1,0 +1,47 @@
+<p>clients works!</p>
+
+<a [routerLink]="'/user'">UserList</a>
+
+<table>
+    <tr>
+        <th>Client Id</th>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>Action</th>
+    </tr>
+    <tr *ngFor="let client of clientList">
+        <td> {{ client.clientId }} </td>
+        <td> {{ client.firstName }} </td>
+        <td> {{ client.lastName }} </td>
+        <td> 
+            <!-- when you hover on link we see output -->
+
+
+            <a [routerLink]="'/edit'">Edit</a>  <!-- ti si dynamic routerlink --> 
+            | <a [routerLink]="'/delete'">Delete </a> &nbsp;&nbsp;
+            <!-- output :- http://localhost:4300/app1#/edit         http://localhost:4300/app1#/delete -->
+
+            <a [routerLink]="['/edit' , client.clientId]">Edit</a>  <!-- ti si dynamic routerlink --> 
+            | <a [routerLink]="['/delete' , client.clientId]">Delete </a> &nbsp;&nbsp; 
+            <!-- put '/' on only starting variable  , after we donot put '/' -->
+            <!-- output :- http://localhost:4300/app1#/edit/10         http://localhost:4300/app1#/delete/10 -->
+            <!-- output :- http://localhost:4300/app1#/edit/11         http://localhost:4300/app1#/delete/11 -->
+            <!-- output :- http://localhost:4300/app1#/edit/12         http://localhost:4300/app1#/delete/12 -->
+            <!-- output :- http://localhost:4300/app1#/edit/13         http://localhost:4300/app1#/delete/13 -->
+            <!-- output :- http://localhost:4300/app1#/edit/14         http://localhost:4300/app1#/delete/14 -->
+            <!-- output :- http://localhost:4300/app1#/edit/15         http://localhost:4300/app1#/delete/15 -->
+
+
+            <a [routerLink]="['/edit' , client.clientId , 'edit']">Edit</a>  <!-- ti si dynamic routerlink --> 
+            | <a [routerLink]="['/delete' , client.clientId , 'deleted']">Delete </a> &nbsp;&nbsp; 
+            <!-- output :- http://localhost:4300/app1#/edit/10/edit         http://localhost:4300/app1#/delete/10/deleted -->
+            <!-- output :- http://localhost:4300/app1#/edit/11/edit         http://localhost:4300/app1#/delete/11/deleted -->
+            <!-- output :- http://localhost:4300/app1#/edit/12/edit         http://localhost:4300/app1#/delete/12/deleted -->
+            <!-- output :- http://localhost:4300/app1#/edit/13/edit         http://localhost:4300/app1#/delete/13/deleted -->
+            <!-- output :- http://localhost:4300/app1#/edit/14/edit         http://localhost:4300/app1#/delete/14/deleted -->
+            <!-- output :- http://localhost:4300/app1#/edit/15/edit         http://localhost:4300/app1#/delete/15/deleted -->
+        </td>
+    </tr>
+</table>
+
+<!--  -->
