@@ -315,7 +315,8 @@ To choose a font:
   * but you should put it somewhere where you can easily find it,
   * maybe on your Desktop, in your Home folder, or at the root of your hard drive.
 
-1. Choose a place to store your website projects. Inside your chosen place, create a new folder called `web-projects` (or similar).
+1. Choose a place to store your website projects. 
+   * Inside your chosen place, create a new folder called `web-projects` (or similar).
    * This is where all your website projects will live.
 2. Inside this first folder, create another folder to store your first website in.
    * Call it `test-site` (or something more imaginative).
@@ -324,11 +325,53 @@ To choose a font:
 
 You'll notice that throughout this article, we ask you to name folders and files completely in lowercase with no spaces. This is because:
 
-1. Many computers, particularly web servers, are case-sensitive. So for example, if you put an image on your website at test-site/MyImage.jpg and then in a different file you try to invoke the image as test-site/myimage.jpg, it may not work.
-2. Browsers, web servers, and programming languages do not handle spaces consistently. For example, if you use spaces in your filename, some systems may treat the filename as two filenames. Some servers will replace the areas in your filenames with "%20" (the character code for spaces in URLs), resulting in all your links being broken. It's better to separate words with hyphens, rather than underscores: `my-file.html` vs. `my_file.html`.
+1. Many computers, particularly web servers, are case-sensitive. 
+   * So for example, 
+     * if you put an image on your website at `test-site/MyImage.jpg` and 
+     * then in a different file you try to invoke the image as `test-site/myimage.jpg`, 
+     * it may not work.
+2. Browsers, web servers, and programming languages do not handle spaces consistently. 
+   * For example, 
+     * if you use spaces in your filename, 
+     * some systems may treat the filename as two filenames. 
+   * Some servers will replace the areas in your filenames with "%20" (the character code for spaces in URLs), 
+     * resulting in all your links being broken. 
+   * It's better to separate words with hyphens, rather than underscores: `my-file.html` vs. `my_file.html`.
 
-The short answer is that you should use a hyphen for your file names. The Google search engine treats a hyphen as a word separator but does not regard an underscore that way. For these reasons, it is best to get into the habit of writing your folder and file names lowercase with no spaces and with words separated by hyphens, at least until you know what you're doing. That way you'll bump into fewer problems later down the road.
+* The short answer is that you should use a hyphen for your file names. 
+* The Google search engine treats a hyphen as a word separator 
+  * but does not regard an underscore that way. 
+* For these reasons, 
+  * it is best to get into the habit of writing your folder and file names lowercase with no spaces and with words separated by hyphens, at least until you know what you're doing. 
+* That way you'll bump into fewer problems later down the road.
 
+## What structure should your website have?
+
+Next, let's look at what structure our test site should have. 
+The most common things we'll have on any website project we create are an index HTML file and folders to contain images, style files, and script files. 
+Let's create these now:
+
+1. `index.html`: 
+   * This file will generally contain your homepage content, 
+     * that is, the text and images 
+     * that people see when they first go to your site. 
+   * Using your text editor, 
+     * create a new file called `index.html` 
+     * and save it just inside your `test-site` folder.
+2. `images` folder: 
+   * This folder will contain all the images 
+     * that you use on your site. 
+   * Create a folder called `images`, 
+     * inside your `test-site` folder.
+3. `styles` folder: 
+   * This folder will contain the CSS code used to style your content (for example, setting text and background colors). 
+   * Create a folder called `styles`, 
+     * inside your `test-site` folder.
+4. `scripts` folder: 
+   * This folder will contain all the JavaScript code used to add interactive functionality to your site (e.g. buttons that load data when clicked). 
+   * Create a folder called `scripts`, 
+     * inside your `test-site` folder.
+   
 # naming convention
 
 ## types of case
@@ -573,7 +616,29 @@ The short answer is that you should use a hyphen for your file names. The Google
         // "Scooby-Doo Shaggy"
     ```
 
+#### Global Variables
+
+* It is recommended to use 
+  * `camelCase` for mutable global variables and 
+  * `UPPERCASE` for immutable global variables.
 #### packages
 
-* j
-  
+* It should be a lowercase letter such as java, lang.
+* If the name contains multiple words, 
+  * it should be separated by dots (.) such as java.util, java.lang.
+* ex:- `package com.javatpoint;`
+
+#### project
+
+* recommended to use `small-case`
+
+#### file
+
+* recommended to use `camelCase`
+  * or use `small-case`
+
+#### folder
+
+* recommended to use `camelCase`
+  * or use `small-case`
+
