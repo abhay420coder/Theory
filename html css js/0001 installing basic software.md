@@ -389,7 +389,6 @@ The short answer is that you should use a hyphen for your file names. The Google
         var dogName = 'Droopy';
     ```
 
-
 #### booleans
 
 * we should use `is` or `has` or `are` as prefixes.
@@ -536,6 +535,42 @@ The short answer is that you should use a hyphen for your file names. The Google
                 < /div> 
             );
         }
+    ```
+
+#### Private Functions
+
+* In JavaScript,
+  * an underscore is used to denote `private variables` or `functions`.
+
+* For example,
+  * if you have a private function name like `toonName`, 
+  * you can denote it as a private function by adding an underscore as a prefix (`_toonName`).
+
+* ex:-
+
+    ```js
+        class DogCartoon { 
+        constructor(dogName, ownerName) { 
+            this.dogName = dogName; 
+            this.ownerName = ownerName; 
+            this.name = _toonName(dogName, ownerName); 
+        } 
+        _toonName(dogName, ownerName) { 
+            return `${dogName} ${ownerName}`; 
+        } 
+        }
+
+        var cartoon = new DodCartoon('Scooby-Doo', 'Shaggy'); 
+
+        // good
+        var name = cartoon.name;
+        console.log(name);
+        // "Scooby-Doo Shaggy" 
+
+        // bad
+        name =cartoon._toonName(cartoon.dogName, cartoon.ownerName);
+        console.log(name);
+        // "Scooby-Doo Shaggy"
     ```
 
 #### packages
