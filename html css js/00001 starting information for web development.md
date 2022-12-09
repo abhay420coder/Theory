@@ -254,7 +254,7 @@ php -S localhost:8000
 * It really helps —
   * you don't have to be Van Gogh!
 
-![](2022-12-08-10-26-21.png)
+![planning](./image/00001StartingInformationForWebDevelopment/2022-12-08-10-26-21.png)
 
 > **Note:-**
 >
@@ -380,7 +380,7 @@ Let's create these now:
 2. **snake_case**
 3. **PascalCase**
 4. **dot.case**
-![all types of case](2022-12-08-11-22-06.png)
+![all types of case](./image/00001StartingInformationForWebDevelopment/2022-12-08-11-22-06.png)
 
 ## For programming
 
