@@ -8,7 +8,7 @@
 * synatx :- `arrayVariableName.length = number`
   * Sets the number of elements in an array
   
-### add/remove wlwmwnt from array
+### add/remove element from array
 
 #### `push()`
 
@@ -43,23 +43,29 @@
 #### `splice()`
 
 * synatx :- `arrayVariableName.splice(start, deleteCount, item1, item2, itemN)`
-  * `start` :- required
+  * `start` :- **required**
     * If `start < -array.length` or start is omitted, 0 is used.
     * If `start >= array.length`, no element will be deleted, but the method will behave as an adding function, adding as many elements as provided.
-  * `deleteCount` :- optional
+  * `deleteCount` :- **optional**
     * If `deleteCount` is omitted,
       * or if its value is greater than or equal to the number of elements after the position specified by `start`,
       * then all the elements from `start` to the end of the array will be deleted.
     * If `deleteCount` is 0 or negative, no elements are removed.
-  * `item1, …, itemN` :- optional
+  * `item1, …, itemN` :- **optional**
     * The elements to add to the array, beginning from `start`.
     * If you do not specify any elements, splice() will only remove elements from the array.
 * Adds/Removes elements from an array
 * overwrites the original array.
 
-### part 2 :- call function in  array-built-in-function :- map / filter / reduce / reduceRight / some / every / forEach
+#### spread syntax  
+* syntax :- `[itemA1, itemA2, ..., itemAn, ...arrA1, ...arrA2, ...., ...arrAn, itemB1, itemB2, ..., itemBn, ...arrB1, ...arrB2, ...arrB3, ...., ...arrBn]`
+* Spread syntax can be used 
+  * when all elements from an object or array need to be included in a new array or object, 
+* it returns unique array
 
-* `map()` / `filter()` / `every()` / `some()` / `reduce()` / `reduceRight()`/`forEach()` :-
+### part 2 :- call function in  array-built-in-function :- map / filter / some / every / find / findIndex / / forEach / reduce / reduceRight 
+
+* `map()` / `filter()` / `every()` / `some()` / `find()` / `findIndex()` / `reduce()` / `reduceRight()`/`forEach()` :-
   * does not execute the function for empty elements.
   * does not change the original array.
   * executes the callback function once for each array element.
@@ -75,6 +81,38 @@
 * synatx :- `arrayVariableName.filter(function(currentValue, index, arr), thisValue)`
 * Creates a new array with every element in an array that pass a test provided by a function.
 
+#### `forEach()`
+
+* synatx :- `arrayVariableName.forEach(function(currentValue, index, arr), thisValue)`
+* it returns `undefined`
+#### `find()`
+
+* synatx :- `arrayVariableName.find(function(currentValue, index, arr), thisValue)`
+* Returns the value of the first element in an array that pass a test
+* The `find()` method returns the value of the first element that passes a test.
+* The `find()` method returns `undefined` if no elements are found.
+  
+#### `findIndex()`
+
+* synatx :- `arrayVariableName.findIndex(function(currentValue, index, arr), thisValue)`
+* Returns the index of the first element in an array that pass a test
+* The `findIndex()` method returns the index (position) of the first element that passes a test.
+* The `findIndex()` method returns `-1` if no match is found.
+  
+#### `findLast()`
+
+* synatx :- `arrayVariableName.findLast(function(currentValue, index, arr), thisValue)`
+* Returns the value of the Last element in an array that pass a test
+* The `findLast()` method returns the value of the Last element that passes a test.
+* The `findLast()` method returns `undefined` if no elements are found.
+  
+#### `findLastIndex()`
+
+* synatx :- `arrayVariableName.findLastIndex(function(currentValue, index, arr), thisValue)`
+* Returns the index of the Last element in an array that pass a test
+* The `findLastIndex()` method returns the index (position) of the Last element that passes a test.
+* The `findLastIndex()` method returns `-1` if no match is found.
+  
 #### `every()`
 
 * synatx :- `arrayVariableName.every(function(currentValue, index, arr), thisValue)`
@@ -86,11 +124,6 @@
 * Checks if any of the elements in an array pass a test
 * The `some()` method returns true (and stops) if the function returns true for one of the array elements.
 * The `some()` method returns false if the function returns false for all of the array elements.
-
-#### `forEach()`
-
-* synatx :- `arrayVariableName.forEach(function(currentValue, index, arr), thisValue)`
-* it returns `undefined`
 
 ##### from syntax of  `map()` / `filter()` / `every()` / `some()`
 
@@ -126,7 +159,8 @@
 * `initialValue`  :-  **Optional**    :-  A value to be passed to the function as the initial value.
 
 
-### part 3
+### part 3 :-   Update element of a Array
+
 
 #### `concat()`
 

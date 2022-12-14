@@ -13,3 +13,16 @@ myImage.onclick = () => {
     myImage.setAttribute("src", "images/firefox-icon.png");
   }
 };
+
+let dateC = new Date();
+let dateP = new Date();
+let yearP = dateP.getFullYear();
+dateP.setMonth(2);
+dateP.setDate(31);
+dateP.setFullYear(yearP-1);
+let dateN = new Date();
+dateN.setMonth(2);
+dateN.setDate(31);
+getTime = dateN-dateP;
+console.log("date   :-  " , getTime/(1000*60*60*24))
+#)
