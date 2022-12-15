@@ -18,7 +18,8 @@ import { ProductComponent } from './product/product.component';
 import { ClientsComponent } from './clients/clients.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SearchComponent } from './search/search.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component'; // import routing strategy here
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AdminComponent } from './admin/admin.component'; // import routing strategy here
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     ClientsComponent,
     ProfileComponent,
     SearchComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

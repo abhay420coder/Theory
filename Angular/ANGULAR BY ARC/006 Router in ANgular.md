@@ -2134,9 +2134,9 @@ export class ClientsComponent implements OnInit {
 </table>
 ```
 
-![](2022-12-05-14-42-25.png)
-![](2022-12-05-14-42-50.png)
-![](2022-12-05-14-50-19.png)
+![d](./image%20-%20006%20Router%20in%20ANgular/2022-12-05-14-42-25.png)
+![s](./image%20-%20006%20Router%20in%20ANgular/2022-12-05-14-42-50.png)
+![t](./image%20-%20006%20Router%20in%20ANgular/2022-12-05-14-50-19.png)
 
 ## RouterLink by Angular.io
 
@@ -2244,7 +2244,7 @@ export class LeadsGridComponent implements OnInit {
 }
 ```
 
-![](2022-12-05-15-05-07.png)
+![dd](./image%20-%20006%20Router%20in%20ANgular/2022-12-05-15-05-07.png)
 
 ## Redirect Routes by Angular.io
 
@@ -2486,7 +2486,7 @@ import { SearchComponent } from './search/search.component'; // import routing s
 export class AppModule { }
 ```
 
-![](2022-12-06-09-51-04.png)
+![ss](./image%20-%20006%20Router%20in%20ANgular/2022-12-06-09-51-04.png)
 
 ## Query Params by Angular.io
 
@@ -2683,7 +2683,7 @@ export class PageNotFoundComponent implements OnInit {
 
   they will gives you PageNotFoundComponent
 -->
-![](2022-12-06-13-41-27.png)
+![tt](./image%20-%20006%20Router%20in%20ANgular/2022-12-06-13-41-27.png)
 
 ## Wildcard Routes by Angular.io
 
@@ -3156,7 +3156,7 @@ export class CustomersComponent implements OnInit {
 
 
 
-![](2022-12-06-16-56-49.png)
-![](2022-12-06-17-16-09.png)
+![ss](./image%20-%20006%20Router%20in%20ANgular/2022-12-06-16-56-49.png)
+![tt](./image%20-%20006%20Router%20in%20ANgular/2022-12-06-17-16-09.png)
 
 ## Lazy Loading by Angular.io

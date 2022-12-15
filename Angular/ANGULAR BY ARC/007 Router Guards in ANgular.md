@@ -69,8 +69,8 @@ Episode # 48 - Route Guards
 
 **generate a guard**
 
-![](2022-12-06-17-53-29.png)
-![](2022-12-06-17-54-08.png)
+![generate a guard](./image%20-%20007%20Router%20Guards%20in%20ANgular/2022-12-06-17-53-29.png)
+![generate a guard](./image%20-%20007%20Router%20Guards%20in%20ANgular/2022-12-06-17-54-08.png)
 
 ```js
 D:\theory\Angular\ANGULAR BY ARC\project\simpleCRM>ng g guard auth
@@ -261,8 +261,8 @@ export class AppRoutingModule { }
 
 **generate a guard**
 
-![](2022-12-06-17-53-29.png)
-![](2022-12-06-17-54-08.png)
+![generate aáguard](./image%20-%20007%20Router%20Guards%20in%20ANgular/2022-12-06-17-53-29.png)
+![generate a guard](./image%20-%20007%20Router%20Guards%20in%20ANgular/2022-12-06-17-54-08.png)
 
 ```js
 
@@ -293,7 +293,7 @@ Press 'enter' to proceed
 */
 ```
 
-![](2022-12-07-11-35-16.png)
+![multi route option](./image%20-%20007%20Router%20Guards%20in%20ANgular/2022-12-07-11-35-16.png)
 
 **multi-admin.guard.ts**
 
@@ -590,14 +590,386 @@ export class ClientsComponent implements OnInit {
 </table>
 ```
 
-![](2022-12-07-14-30-22.png)
-![ because AdminGuard is noţ giving permission ](2022-12-07-14-35-40.png) 
-
+![because  AuthGuard is giving permission](./image%20-%20007%20Router%20Guards%20in%20ANgular/2022-12-07-14-30-22.png)
+![ because AdminGuard is noţ giving permission ](./image%20-%20007%20Router%20Guards%20in%20ANgular/2022-12-07-14-35-40.png) 
+ * http://localhost:4300/app1#/leads will not work because  AdminGuard is noţ giving permission (only AuthGuard is giving permission)
+ * http://localhost:4300/app1#/clients will not work because  AuthGuard is giving permission
+  
 ## Route Guards. CanActivate by Angular.io
 
 # Route Guards. CanActivateChild
 
 ## Route Guards. CanActivateChild by ARC
+
+### Routing — Route Guards
+
+* Use route guards to prevent users from navigating to parts of an app without authorization.
+* Route Guards are used to secure the route paths.
+* In most cases, the routes and screens are protected behind a good authentication system.
+* The route guard resolves to true or false based on custom logic and functionality.
+* We can generate any number of guards based on our application requirements.
+* To generate the route guard we can make use of Angular CLI
+  * `ng generate guard <guard-name>`
+* Inject the guard in our module under providers
+* There are various types of route guards available
+  * `CanActivate` — Checks to see if a user can visit a route
+  * `CanActivateChiId` - Checks to see if a user can visit a routes children
+  * `CanLoad` - Checks to see if a user can route to a module that lazy loaded
+  * `CanDeactivate` - Checks to see if a user can exit a route
+  * `Resolve` - Performs route data retrieval before route activation
+* The route guard resolves to true or false based on custom logic and functionality
+
+### CanActivateChiId
+
+* The CanActivateChiId guard works similarly to the CanActivate guard, 
+  * but the difference is its run before each child route is activated
+  
+• Routing — CanActivateChild
+• CanActivateChiId — The CanActivateChild guard works similarly to the CanActivate guard, but the
+before each child route is activated
+####  Example Route Syntax:
+
+```js
+{
+  path: 'admin',
+  component: AdminComponent,
+  canActivate: [AuthGuard],
+  children: [
+    {
+      path: ''
+      canActivateChild: [AuthGuard],
+      children: [
+          { path: 'crises', component: ManageCrisesComponent },
+          { path: 'heroes', component: ManageHeroesComponent },
+          { path: '', component: AdminDashboardComponent }
+        ]
+      }
+  ]
+}
+```
+
+```js
+// CanActivateChile Auth Guard
+  {
+    path:'admin',
+    canActivate:[SuperAdminGuard] ,// http://localhost:4300/app1#/admin will work if SuperAdminGuard will give Access.
+    children:[
+      { path:'', component:AdminComponent }, //  http://localhost:4300/app1#/admin will work
+      {
+        path:'',
+        canActivateChild:[AdminAccessGuard],
+        children:[
+          { path:'manage', component:AdminManageComponent }, //  http://localhost:4300/app1#/admin/manage will work
+          { path:'delete', component:AdminDeleteComponent }, //  http://localhost:4300/app1#/admin/delete will work
+          { path:'edit', component:AdminEditComponent }, //  http://localhost:4300/app1#/admin/edit will work
+          { path:'access', component:AdminAccessGuard }, //  http://localhost:4300/app1#/admin/access will work
+        ]
+      },
+    ]
+  }
+```
+
+#### CanActivateChiId — Practical Use Case
+
+```js
+{
+  path: 'admin',
+  component: AdminComponent,
+  canActivate: [AuthGuardl], // 1 - redirect to login page if not logged in
+  children: [
+    //View Access
+    {
+      //.......
+    },
+    //Edit Access
+    {
+      path:'',
+      canActivateChild: [EditGuard], //2 - display "you don't have Edit permission to access this page"
+      children: [
+        { path: 'crises', component: ManageCrisesComponent },
+        { path: 'heroes', component: ManageHeroesComponent },
+        { path: '', component: AdminDashboardComponent }
+      ]
+    }
+  ]
+}
+```
+
+### example :-
+
+**create component and guard**
+
+```js
+Microsoft Windows [Version 10.0.19044.2364]
+(c) Microsoft Corporation. All rights reserved.
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\simpleCRM>ng g c admin
+CREATE src/app/admin/admin.component.html (20 bytes)
+CREATE src/app/admin/admin.component.spec.ts (592 bytes)
+CREATE src/app/admin/admin.component.ts (272 bytes)
+CREATE src/app/admin/admin.component.scss (0 bytes)
+UPDATE src/app/app.module.ts (2112 bytes)
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\simpleCRM>ng g c admin-edit --skip-import
+CREATE src/app/admin-edit/admin-edit.component.html (25 bytes)
+CREATE src/app/admin-edit/admin-edit.component.spec.ts (621 bytes)
+CREATE src/app/admin-edit/admin-edit.component.ts (291 bytes)
+CREATE src/app/admin-edit/admin-edit.component.scss (0 bytes)
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\simpleCRM>ng g c admin-delete --skip-import 
+CREATE src/app/admin-delete/admin-delete.component.html (27 bytes)
+CREATE src/app/admin-delete/admin-delete.component.spec.ts (635 bytes)
+CREATE src/app/admin-delete/admin-delete.component.ts (299 bytes)
+CREATE src/app/admin-delete/admin-delete.component.scss (0 bytes)
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\simpleCRM>ng g c admin-manage --skip-import 
+CREATE src/app/admin-manage/admin-manage.component.html (27 bytes)
+CREATE src/app/admin-manage/admin-manage.component.spec.ts (635 bytes)
+CREATE src/app/admin-manage/admin-manage.component.ts (299 bytes)
+CREATE src/app/admin-manage/admin-manage.component.scss (0 bytes)
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\simpleCRM>ng g  guard SuperAdmin          
+? Which interfaces would you like to implement? CanActivate
+CREATE src/app/super-admin.guard.spec.ts (362 bytes)
+CREATE src/app/super-admin.guard.ts (463 bytes)
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\simpleCRM>ng g  guard AdminAccess
+? Which interfaces would you like to implement? CanActivateChild
+CREATE src/app/admin-access.guard.spec.ts (367 bytes)
+CREATE src/app/admin-access.guard.ts (484 bytes)
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\simpleCRM>
+```
+
+**app.routing.module.ts**
+
+```js
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AddLoansComponent } from './add-loans/add-loans.component';
+import { AdminAccessGuard } from './admin-access.guard';
+import { AdminDeleteComponent } from './admin-delete/admin-delete.component';
+import { AdminEditComponent } from './admin-edit/admin-edit.component';
+import { AdminManageComponent } from './admin-manage/admin-manage.component';
+import { AdminGuard } from './admin.guard';
+import { AdminComponent } from './admin/admin.component';
+import { AuthGuard } from './auth.guard';
+import { ClientsComponent } from './clients/clients.component';
+import { LeadsGridComponent } from './leads/leads-listing/leads-grid/leads-grid.component';
+import { LoanTypesComponent } from './loan-types/loan-types.component';
+import { LoansComponent } from './loans/loans.component';
+import { P1Component } from './p1/p1.component';
+import { P2Component } from './p2/p2.component';
+import { P3Component } from './p3/p3.component';
+import { P4Component } from './p4/p4.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ProductComponent } from './product/product.component';
+import { SearchComponent } from './search/search.component';
+import { SuperAdminGuard } from './super-admin.guard';
+
+
+
+const routes: Routes = [
+ 
+  { 
+    path:'product/:id' , 
+    component:ProductComponent
+  } ,
+  { 
+    path:'product/:productId/photos/:photoId' , 
+    component:ProductComponent
+  } ,
+    // CanActivate Auth Guard
+  {
+    path:'clients',
+    component: ClientsComponent,
+    canActivate:[AuthGuard]  // it takes more than one routes
+  },
+  {
+    path:'',
+    redirectTo:'leads',
+    pathMatch:'full'
+  },
+  // CanActivate Auth Guard
+  {
+    path:'leads',
+    component:LeadsGridComponent,
+    canActivate:[AuthGuard , AdminGuard]  // it takes more than one routes // all guard should return access(means true)
+  },
+  {
+    path:'search',
+    component:SearchComponent
+  },
+
+  // CanActivateChild Auth Guard
+  {
+    path:'admin',
+    canActivate:[SuperAdminGuard] ,// http://localhost:4300/app1#/admin will work if SuperAdminGuard will give Access.
+    children:[
+      { path:'', component:AdminComponent }, //  http://localhost:4300/app1#/admin will work
+      {
+        path:'',
+        canActivateChild:[AdminAccessGuard],
+        children:[
+          { path:'manage', component:AdminManageComponent }, //  http://localhost:4300/app1#/admin/manage will work
+          { path:'delete', component:AdminDeleteComponent }, //  http://localhost:4300/app1#/admin/delete will work
+          { path:'edit', component:AdminEditComponent }, //  http://localhost:4300/app1#/admin/edit will work
+          { path:'access', component:AdminAccessGuard }, //  http://localhost:4300/app1#/admin/access will work
+        ]
+      },
+    ]
+  },
+ 
+  { path: 'payments', loadChildren: () => import('./payments/payments.module').then(m => m.PaymentsModule) },  // lazy modules
+  { path: 'customers', loadChildren: () => import('./customers/customers.module').then(m => m.CustomersModule) },
+  {
+    path:'**',
+    component:PageNotFoundComponent
+  }
+];
+
+
+@NgModule({
+  imports: [
+    // CommonModule,
+    RouterModule.forRoot(routes)
+  ],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+```
+
+**super-admin.guard.ts**
+
+```ts
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SuperAdminGuard implements CanActivate {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return true;
+  }
+  
+}
+```
+
+**admin-access.guard.ts**
+
+```ts
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivateChild, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AdminAccessGuard implements CanActivateChild {
+  canActivateChild(
+    childRoute: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return true;
+  }
+  
+}
+```
+
+**admin-edit.component.ts**
+
+```ts
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-admin-edit',
+  templateUrl: './admin-edit.component.html',
+  styleUrls: ['./admin-edit.component.scss']
+})
+export class AdminEditComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+```
+
+**admin-edit.component.html**
+
+```html
+<p>admin-edit works!</p>
+```
+
+**admin-delete.component.ts**
+
+```ts
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-admin-delete',
+  templateUrl: './admin-delete.component.html',
+  styleUrls: ['./admin-delete.component.scss']
+})
+export class AdminDeleteComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+```
+
+**admin-delete.component.html**
+
+```html
+<p>admin-delete works!</p>
+```
+
+**admin-manage.component.ts**
+
+```ts
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-admin-manage',
+  templateUrl: './admin-manage.component.html',
+  styleUrls: ['./admin-manage.component.scss']
+})
+export class AdminManageComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+```
+
+**admin-manage.component.html**
+
+```html
+<p>admin-manage works!</p>
+```
+
+**app.component.htnl**
+
+```html
+<h1 class="c1">{{title}}</h1>
+
+<router-outlet></router-outlet>  <!-- primary outlet --> 
+```
+
+![http://localhost:4300/app1#/admin](./image%20-%20007%20Router%20Guards%20in%20ANgular/2022-12-15-14-22-25.png)
+![http://localhost:4300/app1#/admin/manage](./image%20-%20007%20Router%20Guards%20in%20ANgular/2022-12-15-14-20-08.png)
+![http://localhost:4300/app1#/admin/edit](./image%20-%20007%20Router%20Guards%20in%20ANgular/2022-12-15-14-20-42.png)
+![http://localhost:4300/app1#/admin/delete](./image%20-%20007%20Router%20Guards%20in%20ANgular/2022-12-15-14-21-23.png)
 
 ## Route Guards. CanActivateChild by Angular.io
 
@@ -605,17 +977,292 @@ export class ClientsComponent implements OnInit {
 
 ## Route Guards. CanLoad by ARC
 
+### Routing — Route Guards
+
+* Use route guards to prevent users from navigating to parts of an app without authorization.
+* Route Guards are used to secure the route paths.
+* In most cases, the routes and screens are protected behind a good authentication system.
+* The route guard resolves to true or false based on custom logic and functionality.
+* We can generate any number of guards based on our application requirements.
+* To generate the route guard we can make use of Angular CLI
+  * `ng generate guard <guard-name>`
+* Inject the guard in our module under providers
+* There are various types of route guards available
+  * `CanActivate` — Checks to see if a user can visit a route
+  * `CanActivateChiId` - Checks to see if a user can visit a routes children
+  * `CanLoad` - Checks to see if a user can route to a module that lazy loaded
+  * `CanDeactivate` - Checks to see if a user can exit a route
+  * `Resolve` - Performs route data retrieval before route activation
+* The route guard resolves to true or false based on custom logic and functionality.
+
+### Routing — Lazy Loading
+
+* By default, `NgModules` are eagerly loaded,
+  * which means that as soon as the app loads,
+  * so do all the `NgModules`,
+    * whether or not they are immediately necessary.
+* For large apps with lots of routes,
+  * consider lazy loading—a design pattern that loads `NgModules` as needed.
+* Lazy loading helps keep initial bundle sizes smaller,
+  * which in turn helps decrease load times.
+* From Angular 8,
+  * `loadChiIdren` expects a function that uses the dynamic import syntax to import your lazy-loaded module only when it's needed
+
+* With lazy loaded modules in Angular, 
+  * it's easy to have features loaded only 
+    * when the user navigates to their routes for the first time.
+
+* This can be a huge help for your app's performance 
+  * and reducing the initial bundle size. 
+* Plus, it's pretty straightforward to setup!
+
+* When the application grows in size, 
+  * we should always modularize the application into individual.
+
+* Load the modules on-demand ( we can verify them in the console)
+  
+* **There are 2 steps to create a lazy loading feature module**
+  * Create Feature Module
+  * Configure loadChildren in appRouting
+* Feature Module is a module specific to certain functionality
+* To load a feature module lazily (only on demand) we need to load its children using the loadChiIdren property in route configuration
+* Syntax to create the lazy loading is given below
+  * `ng g module customers --route customer --module app.module`
+
+### Generate a Lazy Loading Module
+* `ng generate module customers --route customers --module app.module`
+
+### canLoad
+* This protects the route completely. 
+* Such as lazy loading the module and also protects all the routes associated with that module
+
+ if `canLoad` guard will return true , then it gives access to load lazy-loading
+ if `canLoad` guard will return false , then it doesnot give access to load lazy-loading
+
+**craete `preferences` module and `preferencesCheck` guard**
+
+```ts
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\simpleCRM>ng g module preferences --route settings --module app.module
+CREATE src/app/preferences/preferences-routing.module.ts (363 bytes)
+CREATE src/app/preferences/preferences.module.ts (392 bytes)
+CREATE src/app/preferences/preferences.component.html (26 bytes)
+CREATE src/app/preferences/preferences.component.spec.ts (634 bytes)
+CREATE src/app/preferences/preferences.component.ts (296 bytes)
+CREATE src/app/preferences/preferences.component.scss (0 bytes)
+UPDATE src/app/app-routing.module.ts (3341 bytes)
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\simpleCRM>ng g guard preferencesCheck  
+? Which interfaces would you like to implement? CanLoad
+CREATE src/app/preferences-check.guard.spec.ts (392 bytes)
+CREATE src/app/preferences-check.guard.ts (407 bytes)
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\simpleCRM>
+```
+
+**preferences-check.guard.ts**
+
+```ts
+import { Injectable } from '@angular/core';
+import { CanLoad, Route, UrlSegment, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PreferencesCheckGuard implements CanLoad {
+  canLoad(
+    route: Route,
+    segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return true;
+    // it it returns true then http://localhost:4300/app1#/preferences will give access preferences module  ,  will return preferences component
+    // it it returns false then http://localhost:4300/app1#/preferences will not give access preferences module  , will not return preferences component
+  }
+}
+```
+
+**preferences.module.ts**
+
+```ts
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { PreferencesRoutingModule } from './preferences-routing.module';
+import { PreferencesComponent } from './preferences.component';
+
+
+@NgModule({
+  declarations: [
+    PreferencesComponent
+  ],
+  imports: [
+    CommonModule,
+    PreferencesRoutingModule
+  ]
+})
+export class PreferencesModule { }
+```
+
+**preferences.component.ts**
+
+```ts
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-preferences',
+  templateUrl: './preferences.component.html',
+  styleUrls: ['./preferences.component.scss']
+})
+export class PreferencesComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+```
+
+**preferences.component.html**
+
+```html
+<p>preferences works!</p>
+```
+
+**preferences-routing.module.ts**
+
+```ts
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { PreferencesComponent } from './preferences.component';
+
+const routes: Routes = [{ path: '', component: PreferencesComponent }];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class PreferencesRoutingModule { }
+```
+
+![http://localhost:4300/app1#/preferences](2022-12-15-15-54-05.png)
+
 ## Route Guards. CanLoad by Angular.io
 
 # Route Guards. CanDeactivate
 
 ## Route Guards. CanDeactivate by ARC
 
+### Routing — Route Guards
+
+* Use route guards to prevent users from navigating to parts of an app without authorization.
+* Route Guards are used to secure the route paths.
+* In most cases, the routes and screens are protected behind a good authentication system.
+* The route guard resolves to true or false based on custom logic and functionality.
+* We can generate any number of guards based on our application requirements.
+* To generate the route guard we can make use of Angular CLI
+  * `ng generate guard <guard-name>`
+* Inject the guard in our module under providers
+* There are various types of route guards available
+  * `CanActivate` — Checks to see if a user can visit a route
+  * `CanActivateChiId` - Checks to see if a user can visit a routes children
+  * `CanLoad` - Checks to see if a user can route to a module that lazy loaded
+  * `CanDeactivate` - Checks to see if a user can exit a route
+  * `Resolve` - Performs route data retrieval before route activation
+* The route guard resolves to true or false based on custom logic and functionality.
+  
+### can Deactivate
+
+* When we want to make sure that user can deactivate a particular route — we will use canDeactivate .
+* Interface that a class can implement to be a guard deciding if a route can be deactivated.
+* If all guards return true, navigation continues. If any guard returns false, navigation is cancelled.
+
+#### example :- 
+
+```ts
+{
+  canDeactivate(component: SearchComponent){
+  console.log(component.isDirty);
+  
+  if(!component.isDirty) {
+      return window.confirm("You have some unsaved changes?");
+    }
+  return true;
+}
+```
+
+### example from SRM  project
+
+**create unsave auth guard**
+
+```ts
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\simpleCRM>ng g guard unsaved
+? Which interfaces would you like to implement? CanDeactivate
+CREATE src/app/unsaved.guard.spec.ts (346 bytes)
+CREATE src/app/unsaved.guard.ts (550 bytes)
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\simpleCRM>
+```
+
+**unsaved.guard.ts**
+
+```ts
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
+import { SearchComponent } from './search/search.component';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UnsavedGuard implements CanDeactivate<unknown> {
+  /* canDeactivate(
+    component: unknown,
+    currentRoute: ActivatedRouteSnapshot,
+    currentState: RouterStateSnapshot,
+    nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return true;
+  } */
+  canDeactivate(  component: SearchComponent   ) {
+    if(component.isDirty)return window.confirm("you have some u nsaved changes. sure you want to leave?");
+    return true;
+  }
+
+}
+```
+
+
+
+![when you click on Admin then you get](2022-12-15-17-07-31.png)
+![when you click on ok then you get](2022-12-15-17-08-27.png)
+
+
+
 ## Route Guards. CanDeactivate by Angular.io
 
 # Angular Applications Dark Theme Switch Tutorial | Angular Material Dark Mode Toggle Tutorial
 
 ## Angular Applications Dark Theme Switch Tutorial | Angular Material Dark Mode Toggle Tutorial by ARC
+
+### Angular Applications Dark Theme
+
+* In this tutorial we will learn how to create/use Dark Theme
+* Prerequisites
+  * Angular Application
+  * Angular Material Design Framework
+* Angular material has default support for Dark Theme.
+* We just need to enable it.
+* In this tutorial — I will teach you step by step to achieve Dark Theme mode.
+
+### In this tutorial — I will teach you step by step to achieve Dark Theme mode.
+
+#### step-1 Install ANgular CLI
+
+`npm i @angular/cli`
+
+#### step-2 Create The Angular Project
+
+`ng new ProductBoard`
 
 ## Angular Applications Dark Theme Switch Tutorial | Angular Material Dark Mode Toggle Tutorial by Angular.io
 

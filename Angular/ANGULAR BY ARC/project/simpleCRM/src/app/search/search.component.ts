@@ -13,6 +13,9 @@ export class SearchComponent implements OnInit {
   priceFrom = 0;
   size = "M";
 
+  // check if ffotm is dirty fields
+  isDirty = true;
+
 
   /* 
   // it is for parametrized routes
