@@ -465,3 +465,678 @@ popstate
 online
 offline
 
+element.addEventListener("EventName", (event) => {});
+
+element.onEventName = (event) => {};
+
+
+
+
+
+
+
+Events
+Experimental - beforexrselect
+Non-standard - afterscriptexecute
+animationcancel
+animationend
+animationiteration
+animationstart
+auxclick
+Experimental - beforematch
+Non-standard - beforescriptexecute
+blur
+click
+compositionend
+compositionstart
+compositionupdate
+Experimental - contentvisibilityautostatechanged
+contextmenu
+copy
+cut
+dblclick
+Deprecated - DOMActivate
+Non-standard+Deprecated - DOMMouseScroll
+error
+focus
+focusin
+focusout
+fullscreenchange
+fullscreenerror
+Non-standard - gesturechange
+Non-standard - gestureend
+Non-standard - gesturestart
+gotpointercapture
+keydown
+Deprecated - keypress
+keyup
+lostpointercapture
+mousedown
+mouseenter
+mouseleave
+mousemove
+mouseout
+mouseover
+mouseup
+Non-standard+Deprecated - mousewheel
+Non-standard+Deprecated - MozMousePixelScroll
+Non-standard - msContentZoom
+Non-standard - MSGestureChange
+Non-standard - MSGestureEnd
+Non-standard - MSGestureHold
+Non-standard - MSGestureStart
+Non-standard - MSGestureTap
+Non-standard - MSInertiaStart
+Non-standard - MSManipulationStateChanged
+paste
+pointercancel
+pointerdown
+pointerenter
+pointerleave
+pointermove
+pointerout
+pointerover
+pointerup
+scroll
+securitypolicyviolation
+Non-standard+Deprecated - show
+touchcancel
+touchend
+touchmove
+touchstart
+transitioncancel
+transitionend
+transitionrun
+transitionstart
+Non-standard - webkitmouseforcechanged
+Non-standard - webkitmouseforcedown
+Non-standard - webkitmouseforceup
+Non-standard - webkitmouseforcewillbegin
+wheel
+
+
+
+
+
+
+
+
+
+
+
+1. XRSessionEvent
+beforexrselect
+
+2. generic event
+abort
+afterprint
+afterscriptexecute
+beforeprint
+beforeunload
+beforematch 
+beforescriptexecute 
+canplay		
+canplaythrough	
+change
+durationchange
+error
+fullscreenchange 
+fullscreenerror 
+input
+invalid
+load		
+loadeddata	
+loadedmetadata	
+message
+open
+online
+offline
+pause			
+play			
+playing		
+progress	
+ratechange
+reset
+resize
+submit
+search
+stalled
+select
+scroll 
+seeked
+seeking
+show 
+suspend
+toggle
+timeupdate
+unload
+waiting
+
+
+
+
+
+3. Animation event
+animationcancel 
+animationend 
+animationiteration 
+animationstart 
+
+
+
+4. Mouse event
+auxclick 
+click 
+contextmenu 
+dblclick 
+DOMActivate 
+DOMMouseScroll
+mousedown  
+mouseenter 
+mouseleave
+mousemove 
+mouseout 
+mouseover 
+mouseup 
+webkitmouseforcechanged 
+mousewheel
+wheel
+
+
+
+
+
+5. Focus event
+blur
+focus 
+focusin 
+focusout 
+
+
+
+
+6. Composition event
+compositionend 
+compositionstart 
+compositionupdate 
+
+
+
+7. CSS Containment
+contentvisibilityautostatechanged 
+
+
+
+8. clipboard event
+copy 
+cut 
+paste
+
+
+
+
+
+9. UI event 
+error 
+abort
+beforeunload
+fullscreenchange
+fullscreenerror
+unload
+scroll
+select
+load
+resize
+message
+open
+
+
+
+
+10. gesture event
+gesturechange 
+gestureend 
+gesturestart
+
+
+
+
+
+11. pointer event
+gotpointercapture 
+lostpointercapture 
+pointercancel 
+pointerdown 
+pointerenter 
+pointerleave 
+pointermove 
+pointerout 
+pointerover 
+pointerup 
+
+
+12. keyboard event
+keydown
+keypress  
+keyup 
+
+
+13. wheel event
+wheel 
+mousewheel
+
+14. security policy violation  event
+securitypolicyviolation 
+
+15. touch event
+touchcancel 
+touchend 
+touchmove 
+touchstart 
+
+16.  Transition Event
+transitioncancel 
+transitionend 
+transitionrun 
+transitionstart 
+
+
+
+17. printing event
+afterprint
+beforeprint
+
+
+
+
+
+18. media event
+canplay
+canplaythrough
+durationchange
+ended
+fullscreenchange
+fullscreenerror
+waiting
+volumechange
+timeupdate
+suspend
+stalled
+seeking
+seeked
+load
+loadeddata
+loadedmetadata
+loadstart
+pause
+play
+playing
+progress
+ratechange
+
+
+
+
+
+
+19. drag event
+drag
+dragend
+dragenter
+dragleave
+dragover
+dragstart
+drop
+
+20. progress event
+error
+loadstart
+
+21. touch event
+touchcancel
+touchend
+touchmove
+touchstart
+
+
+
+22.storage event
+storage
+
+
+
+23 form event
+input
+search
+submit
+reset
+message
+
+24. submit event
+submit
+
+
+25. hash change event
+hashchange
+
+26. input event
+input
+
+
+27 message wevent
+message
+
+
+28. Page Transition Event	
+pagehide			
+pageshow			
+
+
+
+29.Pop State Event
+popstate
+
+
+30. browser event
+online
+offline
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+describe
+
+
+1. XRSessionEvent
+beforexrselect
+
+
+2. generic event
+abort				The loading of a media is aborted
+afterprint
+afterscriptexecute
+beforeprint
+beforeunload
+beforematch 
+beforescriptexecute 
+canplay		
+canplaythrough	
+change
+durationchange
+error
+fullscreenchange 
+fullscreenerror 
+input
+invalid
+load		
+loadeddata	
+loadedmetadata	
+message
+open
+online
+offline
+pause			
+play			
+playing		
+progress	
+ratechange
+reset
+resize
+submit
+search
+stalled
+select
+scroll 
+seeked
+seeking
+show 
+suspend
+toggle
+timeupdate
+unload
+waiting
+
+
+3. Animation event
+animationcancel 
+animationend 
+animationiteration 
+animationstart 
+
+
+4. Mouse event
+auxclick 
+click 
+contextmenu 
+dblclick 
+DOMActivate 
+DOMMouseScroll
+mousedown  
+mouseenter 
+mouseleave
+mousemove 
+mouseout 
+mouseover 
+mouseup 
+webkitmouseforcechanged 
+mousewheel
+wheel
+
+
+5. Focus event
+blur
+focus 
+focusin 
+focusout 
+
+
+6. Composition event
+compositionend 
+compositionstart 
+compositionupdate 
+
+
+7. CSS Containment
+contentvisibilityautostatechanged 
+
+
+8. clipboard event
+copy 
+cut 
+paste
+
+
+9. UI event 
+error 
+abort				The loading of a media is aborted
+beforeunload
+fullscreenchange
+fullscreenerror
+unload
+scroll
+select
+load
+resize
+message
+open
+
+
+10. gesture event
+gesturechange 
+gestureend 
+gesturestart
+
+
+11. pointer event
+gotpointercapture 
+lostpointercapture 
+pointercancel 
+pointerdown 
+pointerenter 
+pointerleave 
+pointermove 
+pointerout 
+pointerover 
+pointerup 
+
+
+12. keyboard event
+keydown			A key is down	
+keypress		A key is pressed	
+keyup			A key is released
+
+
+13. wheel event
+wheel			The mouse wheel rolls up or down over an element
+mousewheel		The mouse wheel rolls up or down over an element
+
+
+14. security policy violation  event
+securitypolicyviolation 
+
+
+15. touch event
+touchcancel 
+touchend 
+touchmove 
+touchstart 
+
+
+16.  Transition Event
+transitioncancel 
+transitionend 
+transitionrun 
+transitionstart 
+
+
+17. printing event
+afterprint
+beforeprint
+
+
+18. media event
+canplay
+canplaythrough
+durationchange
+ended
+fullscreenchange
+fullscreenerror
+waiting				The media has paused but is expected to resume (like when the media pauses to buffer more data)
+volumechange			The volume of the media has changed (includes setting the volume to "mute")
+timeupdate
+suspend
+stalled
+seeking
+seeked
+load
+loadeddata
+loadedmetadata
+loadstart
+pause
+play
+playing
+progress
+ratechange
+
+
+19. drag event
+drag			An element is being dragged				
+dragend			Dragging of an element has ended			
+dragenter		A dragged element enters the drop target		
+dragleave		A dragged element leaves the drop target		
+dragover		A dragged element is over the drop target		
+dragstart		Dragging of an element has started			
+drop			A dragged element is dropped on the target		
+
+
+20. progress event
+error
+loadstart
+
+
+21. touch event
+touchcancel
+touchend
+touchmove
+touchstart
+
+
+22.storage event
+storage
+
+
+23 form event
+input
+search
+submit
+reset
+message
+
+
+24. submit event
+submit
+
+
+25. hash change event
+hashchange
+
+
+26. input event
+input
+
+
+27 message wevent
+message
+
+
+28. Page Transition Event	
+pagehide			
+pageshow			
+
+
+29.Pop State Event
+popstate
+
+
+30. browser event
+online
+offline
+
