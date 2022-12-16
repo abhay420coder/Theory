@@ -1173,9 +1173,12 @@ export class PreferencesRoutingModule { }
   
 ### can Deactivate
 
-* When we want to make sure that user can deactivate a particular route — we will use canDeactivate .
+* When we want to make sure that user can deactivate a particular route — we will use `canDeactivate` .
 * Interface that a class can implement to be a guard deciding if a route can be deactivated.
 * If all guards return true, navigation continues. If any guard returns false, navigation is cancelled.
+
+*  `canDeactivate` gives you security to exit from Current-Route
+*  `canActivate` gives you security to enter into ThatRoute , which route has `canActivate` guard
 
 #### example :- 
 
@@ -1552,12 +1555,250 @@ export class AppModule { }
 
 ### example
 
+**index.html**
 
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ProductBoard</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="mat-typography">
+  <app-root></app-root>
+</body>
+</html>
+```
+
+**style.scss**
+
+```css
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$ProductBoard-primary: mat.define-palette(mat.$indigo-palette);
+$ProductBoard-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$ProductBoard-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+// this is for light theme
+$ProductBoard-theme: mat.define-light-theme((
+  color: (
+    primary: $ProductBoard-primary,
+    accent: $ProductBoard-accent,
+    warn: $ProductBoard-warn,
+  )
+));
+
+// this is for dark theme
+$ProductBoard-dark-theme: mat.define-dark-theme((
+  color: (
+    primary: $ProductBoard-primary,
+    accent: $ProductBoard-accent,
+    warn: $ProductBoard-warn,
+  )
+));
+
+// this is for dark theme
+.dark-theme{
+  @include mat.all-component-themes($ProductBoard-dark-theme);
+}
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($ProductBoard-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+html, body { 
+  height: 100%; 
+  }
+
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  }
+```
+
+**app.module.ts**
+
+```ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
+import {MatCardModule} from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,MatCardModule,MatIconModule,MatButtonModule,MatToolbarModule,
+    FormsModule,
+
+    
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+**app.componnet.ts**
+
+```ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+
+  title = 'ProductBoard';
+  // User setting/preference API - which will fetch the saved
+  // if user has save DarkTheme , the it will be true else it will be false 
+  isDarkTheme:boolean=true;
+  isChecked:boolean = true;
+  
+
+  constructor(){
+  }
+}
+```
+
+**app.component.html**
+
+```html
+<div [ngClass]="isChecked?'dark-theme':'light-theme'">
+  <p>hi this is app component html</p>
+
+  <p>
+    <mat-toolbar>
+      <button
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with menu icon"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>My App</span>
+      <span class="example-spacer"></span>
+      <button
+        mat-icon-button
+        class="example-icon favorite-icon"
+        aria-label="Example icon-button with heart icon"
+      >
+        <mat-icon>favorite</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with share icon">
+        <mat-icon>share</mat-icon>
+      </button>
+    </mat-toolbar>
+  </p>
+
+  <mat-card>
+    <mat-card-content [ngClass]="isChecked?'light-font':'dark-font'">
+      
+      Animi dolorem quisquam in cupiditate quos ipsa voluptate corporis, iure atque praesentium quas possimus? Minima, itaque! Saepe distinctio earum accusamus cumque a, obcaecati tenetur quia ipsum repellat ipsa! Iste, maiores.
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-content>
+      <mat-slide-toggle [(ngModel)]="isChecked">slide me!</mat-slide-toggle>
+    </mat-card-content>
+  </mat-card>
+  
+  <router-outlet></router-outlet>
+
+
+</div>
+```
+
+**app.component.scss**
+
+```css
+.example-form mat-slide-toggle {
+    margin: 8px 0;
+    display: block;
+  }
+  
+  .dark-font{
+    color: black;
+  }
+  .light-font{
+    color: white;
+  }
+```
+
+![Dark Theme](2022-12-16-11-12-24.png)
+![Light Theme](2022-12-16-11-12-54.png)
 
 ## Angular Applications Dark Theme Switch Tutorial | Angular Material Dark Mode Toggle Tutorial by Angular.io
 
 # Route Guards. Resolve Tutorial
 
 ## Route Guards. Resolve by ARC
+
+### Routing — Route Guards
+
+* Use route guards to prevent users from navigating to parts of an app without authorization.
+* Route Guards are used to secure the route paths.
+* In most cases, the routes and screens are protected behind a good authentication system.
+* The route guard resolves to true or false based on custom logic and functionality.
+* We can generate any number of guards based on our application requirements.
+* To generate the route guard we can make use of Angular CLI
+  * `ng generate guard <guard-name>`
+* Inject the guard in our module under providers
+* There are various types of route guards available
+  * `CanActivate` — Checks to see if a user can visit a route
+  * `CanActivateChiId` - Checks to see if a user can visit a routes children
+  * `CanLoad` - Checks to see if a user can route to a module that lazy loaded
+  * `CanDeactivate` - Checks to see if a user can exit a route
+  * `Resolve` - Performs route data retrieval before route activation
+* The route guard resolves to true or false based on custom logic and functionality.
+  
+### Resolve Guard
+
+* Resolve route guard allows us to provide data needed for a route.
+* If some data is "MANDATORY" for a component — try using the logic from ngOnit to Resolve
+* Using the` activatedRoute.snapshot.data` we can access data and process it.
 
 ## Route Guards. Resolve by Angular.io

@@ -20,6 +20,7 @@ import { P4Component } from './p4/p4.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PreferencesCheckGuard } from './preferences-check.guard';
 import { ProductComponent } from './product/product.component';
+import { ResolverGuard } from './resolver.guard';
 import { SearchComponent } from './search/search.component';
 import { SuperAdminGuard } from './super-admin.guard';
 import { UnsavedGuard } from './unsaved.guard';
@@ -49,7 +50,11 @@ const routes: Routes = [
   {
     path:'leads',
     component:LeadsGridComponent,
-    canActivate:[AuthGuard , AdminGuard]  // it takes more than one routes // all guard should return access(means true)
+    // canActivate:[AuthGuard , AdminGuard]  // it takes more than one routes // all guard should return access(means true)
+    resolve:{
+      data:ResolverGuard , // whenever this path is trying to be loaded before route is activated
+    }
+    //  when i will be launch this route ResolverGuard will be resolve f irst then this route will be initiated
   },
   {
     path:'search',

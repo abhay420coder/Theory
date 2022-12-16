@@ -29,10 +29,18 @@
   </p>
 
   <mat-card>
-    <mat-card-content>
-      <mat-slide-toggle [(ngModel)]="isChecked">slide me!</mat-slide-toggle>
+    <mat-card-content [ngClass]="isChecked?'light-font':'dark-font'">
+      
+      Animi dolorem quisquam in cupiditate quos ipsa voluptate corporis, iure atque praesentium quas possimus? Minima, itaque! Saepe distinctio earum accusamus cumque a, obcaecati tenetur quia ipsum repellat ipsa! Iste, maiores.
     </mat-card-content>
   </mat-card>
+
+  <mat-card>
+    <mat-card-content>
+      <mat-slide-toggle [(ngModel)]="isChecked">slide me! to get dark theme</mat-slide-toggle>
+    </mat-card-content>
+  </mat-card>
+  
   <router-outlet></router-outlet>
 
 
