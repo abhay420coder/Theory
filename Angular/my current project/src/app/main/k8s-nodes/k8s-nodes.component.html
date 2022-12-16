@@ -1,0 +1,177 @@
+<div class="cluster">
+    <h3 class="">Master Nodes</h3>
+    <div class="card-container">
+        <mat-accordion displayMode='flat' class="node-list">
+            <mat-expansion-panel *ngFor="let node of masterList"
+                class="expansion-list">
+                <mat-expansion-panel-header class="_flex-box panel-header">
+                    <mat-panel-title>
+                        <span class="_mr-10">
+                            <status-tag [size]="'icon-only'" [type]="node.status.conditions | parsenodestatus"></status-tag>
+                        </span>
+                        <span>{{node.metadata.name}}</span>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{node.status.addresses | parseipfromstatus}}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <div class="_mt-15">
+                        <h4 class="_fw-500">Node Info: </h4>
+                        <div class="_flex-box _flex-wrap _jc-sb">
+                            <div class="info-item _flex-column _pt-5 _pb-5 _pl-10 _pr-10 _mb-10" *ngFor="let info of node.status.nodeInfo | keyvalue">
+                                <span class="key _fw-500">{{info.key}}:</span> 
+                                <span class="value">{{info.value}}</span>
+                            </div>
+                        </div>
+                        <h4 class="_fw-500 _mt-20">Capacity: </h4>
+                        <div class="_flex-box _flex-wrap _jc-sb">
+                            <div class="info-item _flex-column _pt-5 _pb-5 _pl-10 _pr-10 _mb-10" *ngFor="let capacity of node.status.capacity | keyvalue">
+                                <span class="key _fw-500">{{capacity.key}}:</span> 
+                                <span class="value">{{capacity.value}}</span>
+                            </div>
+                        </div>
+                        <h4 class="_fw-500 _mt-20">Status: </h4>
+                        <div class="_flex-box _flex-wrap _jc-sb">
+                            <div class="info-item _flex-column _pt-5 _pb-5 _pl-10 _pr-10 _mb-10" *ngFor="let status of node.status.conditions">
+                                <span class="key _fw-500">{{status.type}}:</span> 
+                                <span class="value">{{status.status}}</span>
+                            </div>
+                        </div>
+                        <h4 class="_fw-500 _mt-20">Labels: </h4>
+                        <div class="_flex-box _flex-wrap">
+                            <div 
+                                class="label-chip _mr-10 _mb-10" 
+                                *ngFor="let label of node.metadata.labels | keyvalue">
+                                    <span class="key">{{label.key}}</span>
+                                    <span class="value" [ngClass]="{'custom-label': !label.key.includes('kubernetes')}">{{label.value}}</span>
+                            </div>
+                        </div>
+                        <button mat-stroked-button color="primary" (click)="editLabels(node)">Edit Labels</button>
+                        <h4 class="_fw-500 _mt-20">Taints: </h4>
+                        <div class="_flex-box _flex-wrap">
+                            <div 
+                                class="label-chip _mr-10 _mb-10" 
+                                *ngFor="let taint of node.spec.taints">
+                                    <span class="key">{{taint.key}}</span>
+                                    <span class="value">{{taint.effect}}</span>
+                            </div>
+                        </div>
+                        <button mat-stroked-button color="primary" (click)="editTaints(node)">Edit Taints</button>
+                    </div>
+                </ng-template>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <ng-container *ngIf="loading">
+            <div class="_flex-box _pt-10 _pb-10 _pl-20 _pr-20 loader-wrapper" *ngFor="let item of skeletonCount">
+                <span class="_mr-10">
+                    <ngx-skeleton-loader count="1" [theme]="{ 
+                        'border-radius': '50%',
+                        'width': '20px',
+                        'height': '20px',
+                        'margin-bottom': '0px',
+                        'border': '1px solid white'
+                    }"></ngx-skeleton-loader>
+                </span>
+                <span>
+                    <ngx-skeleton-loader count="1" [theme]="{ 
+                        'border-radius': '5px',
+                        'width': '150px',
+                        'height': '15px',
+                        'margin-bottom': '0px',
+                        'border': '1px solid white'
+                    }"></ngx-skeleton-loader>
+                </span>
+            </div>
+        </ng-container>
+        <div class="_flex-box _jc-c _pt-10 _pb-10" *ngIf="!loading&&!masterList.length">No nodes to display</div>
+    </div>
+
+    <h3 class="_mt-20">Worker Nodes</h3>
+    <div class="card-container">
+        <mat-accordion displayMode='flat'  class="node-list">
+            <mat-expansion-panel *ngFor="let node of workerList"
+                class="expansion-list">
+                <mat-expansion-panel-header class="_flex-box panel-header">
+                    <mat-panel-title>
+                        <span class="_mr-10">
+                            <status-tag [size]="'icon-only'" [type]="node.status.conditions | parsenodestatus"></status-tag>
+                        </span>
+                        <span>{{node.metadata.name}}</span>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{node.status.addresses | parseipfromstatus}}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <div class="_mt-15">
+                        <h4 class="_fw-500">Node Info: </h4>
+                        <div class="_flex-box _flex-wrap _jc-sb">
+                            <div class="info-item _flex-column _pt-5 _pb-5 _pl-10 _pr-10 _mb-10" *ngFor="let info of node.status.nodeInfo | keyvalue">
+                                <span class="key _fw-500">{{info.key}}:</span> 
+                                <span class="value">{{info.value}}</span>
+                            </div>
+                        </div>
+                        <h4 class="_fw-500 _mt-20">Capacity: </h4>
+                        <div class="_flex-box _flex-wrap _jc-sb">
+                            <div class="info-item _flex-column _pt-5 _pb-5 _pl-10 _pr-10 _mb-10" *ngFor="let capacity of node.status.capacity | keyvalue">
+                                <span class="key _fw-500">{{capacity.key}}:</span> 
+                                <span class="value">{{capacity.value}}</span>
+                            </div>
+                        </div>
+                        <h4 class="_fw-500 _mt-20">Status: </h4>
+                        <div class="_flex-box _flex-wrap _jc-sb">
+                            <div class="info-item _flex-column _pt-5 _pb-5 _pl-10 _pr-10 _mb-10" *ngFor="let status of node.status.conditions">
+                                <span class="key _fw-500">{{status.type}}:</span> 
+                                <span class="value">{{status.status}}</span>
+                            </div>
+                        </div>
+                        <h4 class="_fw-500 _mt-20">Labels: </h4>
+                        <div class="_flex-box _flex-wrap">
+                            <div 
+                                class="label-chip _mr-10 _mb-10" 
+                                *ngFor="let label of node.metadata.labels | keyvalue">
+                                    <span class="key">{{label.key}}</span>
+                                    <span class="value" [ngClass]="{'custom-label': !label.key.includes('kubernetes')}">{{label.value}}</span>
+                            </div>
+                        </div>
+                        <button mat-stroked-button color="primary" (click)="editLabels(node)">Edit Labels</button>
+                        <h4 class="_fw-500 _mt-20">Taints: </h4>
+                        <div class="_flex-box _flex-wrap">
+                            <div 
+                                class="label-chip _mr-10 _mb-10" 
+                                *ngFor="let taint of node.spec.taints">
+                                    <span class="key">{{taint.key}}</span>
+                                    <span class="value">{{taint.effect}}</span>
+                            </div>
+                        </div>
+                        <button mat-stroked-button color="primary" (click)="editTaints(node)">Edit Taints</button>
+                    </div>
+                </ng-template>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <ng-container *ngIf="loading">
+            <div class="_flex-box _pt-10 _pb-10 _pl-20 _pr-20 loader-wrapper" *ngFor="let item of skeletonCount">
+                <span class="_mr-10">
+                    <ngx-skeleton-loader count="1" [theme]="{ 
+                        'border-radius': '50%',
+                        'width': '20px',
+                        'height': '20px',
+                        'margin-bottom': '0px',
+                        'border': '1px solid white'
+                    }"></ngx-skeleton-loader>
+                </span>
+                <span>
+                    <ngx-skeleton-loader count="1" [theme]="{ 
+                        'border-radius': '5px',
+                        'width': '150px',
+                        'height': '15px',
+                        'margin-bottom': '0px',
+                        'border': '1px solid white'
+                    }"></ngx-skeleton-loader>
+                </span>
+            </div>
+        </ng-container>
+        <div class="_flex-box _jc-c _pt-10 _pb-10" *ngIf="!loading&&!workerList.length">No nodes to display</div>
+    </div>
+</div>

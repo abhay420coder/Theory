@@ -1,0 +1,22 @@
+<div class="_p-10">
+    <div class="custom-header">
+        <div>
+            <h3>{{this.injectedData&&this.injectedData.title?this.injectedData.title:'Edit Spec'}}</h3>
+        </div>
+    </div>
+    <div *ngIf="loader">Loading Editor...</div>
+    <ngx-monaco-editor class="editor" [options]="editorOptions" [(ngModel)]="code" (onInit)="onInit($event)">
+    </ngx-monaco-editor>
+    <div class="custom-footer" [ngClass]="{'_jc-sb': canDisableOnError}">
+        <span class="_error-text" *ngIf="canDisableOnError">{{errorText}}</span>
+        <div>
+            <ng-container *ngIf="!this.injectedData.readOnly else readonly">
+                <button mat-stroked-button class="_mr-10" (click)="close()">Cancel</button>
+                <button mat-stroked-button (click)="save()" class="_green-text" disabled="{{canDisableOnError&&errorText!==''}}">Save</button>
+            </ng-container>
+            <ng-template #readonly>
+                <button mat-stroked-button class="_mr-10" (click)="close()">OK</button>
+            </ng-template>
+        </div>
+    </div>
+</div>

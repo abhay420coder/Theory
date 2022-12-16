@@ -1,0 +1,33 @@
+<div class="custom-header">
+    <div class="_heading_1">
+        {{this.data?.name+" - "+"Modify Taints"}}
+    </div>
+</div>
+<mat-dialog-content class="_pb-5">
+    <div class="_pt-10 _pb-10">
+        <div class="_flex-box taint" *ngFor="let taint of taints; let i=index">
+            <mat-form-field appearance="outline" class="_w-100">
+                <mat-label>Key</mat-label>
+                <input matInput [(ngModel)]="taints[i].key" [disabled]="taint.disabled">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="_w-100 _ml-10">
+                <mat-label>Value</mat-label>
+                <input matInput [(ngModel)]="taints[i].value">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="_w-100 _ml-10">
+                <mat-label>Effect</mat-label>
+                <mat-select [(ngModel)]="taints[i].effect">
+                    <mat-option *ngFor="let effect of effectOptions" [value]="effect.value">{{effect.display}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-icon-button class="_delete-icon" (click)="removeTaint(taint)"></button>
+        </div>
+        <div class="_flex-box _jc-c">
+            <button mat-stroked-button (click)="addTaint()">+ Add</button>
+        </div>
+    </div>
+</mat-dialog-content>
+<div class="custom-footer">
+    <button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
+    <button mat-button (click)="save()">Save</button>
+</div>

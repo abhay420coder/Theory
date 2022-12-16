@@ -1,0 +1,44 @@
+<div class="container _h-100 _p-10">
+    <div class="_flex-box _jc-sb">
+        <h2>Kubernetes clusters</h2>
+        <button mat-stroked-button (click)="createUpdateCluster()">Add a cluster</button>
+        <button mat-stroked-button (click)="checkConn()">check</button>
+    </div>
+    <div *ngIf="loading">
+        <ngx-skeleton-loader count="10" [theme]="{ 
+            'border-radius': '5px',
+            height: '50px',
+            'margin-bottom': '0px',
+            border: '1px solid white'
+          }"></ngx-skeleton-loader>
+    </div>
+    <ng-container *ngIf="!loading">
+        <div *ngIf="!clusterList.length && !loading else list" class="_flex-box _jc-c _mt-10">No clusters yet.</div>
+        <ng-template #list>
+            <div class="_flex-box _sub-heading _padding-general">
+                <div class="_first-head-col">Name</div>
+                <div class="_mr-10" style="width: 100px;">Branch Name</div>
+                <div class="_mr-10" style="width: 100px;">Version</div>
+                <div class="_flex-1">Number of dependencies</div>
+            </div>
+            <div class="card-container _overflow-hidden">
+                <div *ngFor="let cluster of clusterList" class="list _jc-sb">
+                    <div class="_first-head-col">{{cluster.serviceName}}</div>
+                    <div class="_mr-10" style="width: 100px;">{{cluster.srBranch}}</div>
+                    <div class="_mr-10" style="width: 100px;">{{cluster.srVersion}}</div>
+                    <div class="_flex-1">{{cluster.dependentServiceCount}}</div>
+                    <div class="actions">
+                        <button mat-icon-button *ngIf="cluster.actions.includes('update')"
+                            (click)="createUpdateCluster(cluster)"
+                            class="_edit-icon">
+                        </button>
+                        <button mat-icon-button *ngIf="cluster.actions.includes('delete')"
+                            (click)="deleteCluster(cluster)"
+                            class="_delete-icon">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>

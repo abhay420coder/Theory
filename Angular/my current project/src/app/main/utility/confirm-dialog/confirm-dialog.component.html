@@ -1,0 +1,13 @@
+<div class="custom-header">
+    <b>Confirmation</b>
+</div>
+<div class="_p-10 _padding-general">
+    <div class="_flex-box _pl-10">
+            {{msg || 'Are you sure ?'}}
+    </div>
+    <hr>
+    <div class="_flex-box _jc-c">
+        <button mat-button mat-dialog-close class="_mr-5">Cancel</button>
+        <button mat-button (click)="confirm()" cdkFocusInitial>Yes</button>
+    </div>
+</div>

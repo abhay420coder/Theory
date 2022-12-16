@@ -1,0 +1,30 @@
+<div class="_flex-column _h-100">
+    <div class="custom-header">
+        <div class="_heading_1">{{data?"Edit":"Add"}} Template</div>
+    </div>
+    <div class="_pl-10 _pr-10 _pt-10 _pb-5 _flex-1 _flex-column">
+            <div class="_flex-box _w-100">
+                <mat-form-field appearance="outline" class="_w-100">
+                    <mat-label>Name</mat-label>
+                    <input matInput name="name" placeholder="Name" [(ngModel)]="templateObj.name">
+                </mat-form-field>
+            </div>
+            <div class="_flex-box _w-100">
+                <mat-form-field appearance="outline" class="_w-100">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput name="description" placeholder="Description" [(ngModel)]="templateObj.description"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="_flex-1">
+                <div *ngIf="editorLoading">Loading Editor...</div>
+                <ngx-monaco-editor class="_w-100 editor" [options]="editorOptions" [(ngModel)]="templateObj.spec" (onInit)="onInit($event)"></ngx-monaco-editor>
+            </div>
+    </div>
+    <div class="custom-footer">
+        <button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
+        <button mat-button (click)="save()" [disabled]="!canSubmit()">
+            <mat-spinner diameter='20' *ngIf="isSaving"></mat-spinner>
+            <span *ngIf="!isSaving">Save</span>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,344 @@
+<div class="custom-header">
+    <button mat-icon-button [routerLink]="['../../']" class="_mr-10 _back-icon">
+    </button>
+    <div class="_heading_1">{{rtDepObj.rtName}} Deployment</div>
+</div>
+<div class="loading-screen _flex-box" *ngIf="deploying">
+    <div>
+        <h2>Fasten your seatbelt</h2>
+        <h4>We are starting deployment ...</h4>
+    </div>
+    <span>
+        <mat-spinner></mat-spinner>
+    </span>
+</div>
+<div class="success-screen _flex-box" *ngIf="deploymentSuccess">
+    <div>
+        <h2>Apps Deployment has started</h2>
+        <h4>Redirecting in {{successTimer}} second{{successTimer>1?"s":""}}</h4>
+    </div>
+    <span class="material-icons">
+        check_circle_outline
+    </span>
+</div>
+<div *ngIf="!deploymentSuccess&&!deploying">
+    <mat-stepper #stepper class="custom-stepper" (selectionChange)="stepperChange($event)" [ngClass]="{'state0-error': selectedNs.deploymentId}">
+        <mat-step [label]="stepperProp.label1">
+            <div class="_pl-10 _pr-10 _pb-15 _flex-1">
+                <form #form="ngForm">
+                    <div class="_pt-10 _pb-5">
+                        <div class="_flex-box">
+                            <mat-form-field appearance="outline" class="_w-100 _mr-10">
+                                <mat-label>Namespace</mat-label>
+                                <mat-select [(ngModel)]="rtDepObj.nsId" name="nsId" required (selectionChange)="handleNsChange($event)">
+                                    <mat-option *ngFor="let ns of nsList" [value]="ns.id">{{ns.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="_w-100">
+                                <mat-label>Tag</mat-label>
+                                <input matInput [(ngModel)]="rtDepObj.tag" required name="tag">
+                                <mat-hint *ngIf="rtDepObj.tag.length > maxTagLength" class="_red-text">Tag can not be more than {{maxTagLength}} characters</mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="_mt-10 _error-text" *ngIf="selectedNs.deploymentId">Deployment already exists for this namespace.</div>
+                </form>
+            </div>
+        </mat-step>
+        <mat-step [label]="stepperProp.label2">
+            <div class="_pl-10 _pr-10 _pb-15 _flex-1">
+                <div class="_info-box _mt-10"><strong class="_mr-5">Note:</strong>
+                    Maximum number of replicas is 99.
+                </div>
+                <search-box (onChange)="handleReplicaSearch($event)"></search-box>
+                <div *ngIf="attachedServicesLoading">
+                    <ngx-skeleton-loader count="4" class="_flex-wrap _flex-box attached-services" [theme]="{ 
+                        'display': 'flex',
+                        'width': '270px',
+                        'height': '40px',
+                        'margin': '10px 10px 0 0'
+                        }"></ngx-skeleton-loader>
+                </div>
+                <div class="_flex-wrap _flex-box attached-services" *ngIf="!attachedServicesLoading">
+                    <div *ngFor="let sr of srListDirty">
+                        <div *ngIf="sr.visible" class="ser-release-card card _mb-10 _mr-10 _flex-column">
+                            <div class="_flex-box _jc-sb">
+                                <div class="_flex-box">
+                                    <div class="_mr-10 _flex-box" style="width: 20px;">
+                                        <img #iconImg src="/assets/icons/services/{{sr.serviceName}}.svg" alt="" srcset="" (error)="iconImg.src='/assets/icons/services/unknown-default.svg'">
+                                    </div>
+                                    <div>{{sr.serviceName}}</div>
+                                </div>
+                                <div class="_flex-box">
+                                    <input type="number" min="1" max="99"
+                                        onKeyPress="if(this.value.length==2) return false;" [(ngModel)]="sr.replicaCount">
+                                </div>
+                            </div>
+                            <div class="_w-100 _text-ellipsis release-note" [matTooltip]="sr.releaseNote&&sr.releaseNote.length>60?sr.releaseNote.length:''">{{sr.releaseNote?sr.releaseNote:"No notes"}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-step>
+        <mat-step [label]="stepperProp.label3">
+            <div class="item-attacher-wrapper">
+                <multi-attacher [multiAttacherProps]="specAttacherProp" (onAttach)="handleAttachment($event)"></multi-attacher>
+            </div>
+            <!-- <div class="_pl-10 _pr-10 _pb-15">
+                <div class="_flex-box _jc-sb _ai-start">
+                    <div class="list-column">
+                        <h4 class="_mb-10">Spec Templates</h4>
+                        <search-box (onChange)="specSearch($event)"></search-box>
+                        <div class="action-row _flex-box _jc-sb _mb-10">
+                            <span class="_cursor-pointer" 
+                                (click)="toggleAllSpec(selectedSpec.length===specList.length)">
+                                    {{selectedSpec.length===specList.length?"Deselect":"Select"}} All
+                            </span>
+                            <span class="_cursor-pointer" (click)="attachSpec()">Attach</span>
+                        </div>
+                        <div class="spec-list"
+                            infiniteScroll
+                            [infiniteScrollDistance]="0"
+                            [infiniteScrollThrottle]="10"
+                            [infiniteScrollContainer]="'.spec-list'"
+                            [fromRoot]="true"
+                            [scrollWindow]="false"
+                            (scrolled)="onSpecListScroll()">
+                            <div class="_p-10" *ngIf="specSearchEmpty">No results for {{specTemplateListProps.searchText}}</div>
+                            <hr class="_mb-20" *ngIf="specSearchEmpty && selectedSpec.length!==0"/>
+                            <div class="spec-item  _p-10 _mb-10" 
+                                *ngFor="let spec of specList"
+                                [ngClass]="{'spec-item-active': isSpecSelected(spec)}"
+                                (click)="toggleSpec(spec)">
+                                <div>{{spec.name}}</div>
+                                <div class="_status-text">{{spec.description}}</div>
+                            </div> -->
+                            <!-- spec skeleton loader template -->
+                            <!-- <div *ngIf="specListLoading">
+                                <div class="spec-item  _p-10 _mb-10" style="pointer-events: none;" *ngFor="let item of specListSkeletonCount">
+                                    <div>
+                                        <ngx-skeleton-loader count="1" [theme]="{ 
+                                            'border-radius': '5px',
+                                            'width': '20%',
+                                            'height': '15px',
+                                            'margin-bottom': '0px',
+                                            'border': '1px solid white'
+                                        }"></ngx-skeleton-loader>
+                                    </div>
+                                    <div>
+                                        <ngx-skeleton-loader count="1" [theme]="{ 
+                                            'border-radius': '5px',
+                                            'width': '40%',
+                                            'height': '15px',
+                                            'margin-bottom': '0px',
+                                            'border': '1px solid white'
+                                        }"></ngx-skeleton-loader>
+                                    </div>                                
+                                </div>
+                            </div>-->
+                            <!-- spec skeleton loader template ends-->
+                        <!-- </div>
+                    </div>
+                    <div class="list-column">
+                        <h4 class="_mb-10">Services</h4>
+                        <search-box (onChange)="serviceSearch($event)"></search-box>
+                        <div class="action-row _mb-10">
+                            <span class="_cursor-pointer" (click)="toggleAllServices(serviceList.length===selectedService.length)">{{serviceList.length===selectedService.length?"Deselect":"Select"}} All</span>
+                        </div>
+                        <div class="services-list">
+                            <div class="_p-10" *ngIf="serviceSearchEmpty">No results for {{serviceSearchText}}</div>
+                            <hr class="_mb-20" *ngIf="serviceSearchEmpty && selectedService.length!==0"/>
+                            <div *ngFor="let item of srListDirty; let i = index" >
+                                <div class="service-item flex-column _p-10 _mb-10" 
+                                    *ngIf="item.visible"
+                                    (click)="toggleService(item)"
+                                    [ngClass]="{'service-item-active': selectedService.includes(item.srId)}">
+                                    <div class="_flex-box">
+                                        <div class="_mr-10 _flex-box" style="width: 20px;">
+                                            <img #iconImg src="/assets/icons/services/{{item.serviceName}}.svg" alt="" srcset="" (error)="iconImg.src='/assets/icons/services/unknown-default.svg'">
+                                        </div>
+                                        <div class="_flex-column _flex-1">
+                                            <div>{{item.serviceName}}</div> 
+                                        </div>
+                                        <span class="material-icons _ml-10 _cursor-pointer" style="font-size: 20px;" (click)="showSpec(item); $event.stopPropagation();">visibility</span>
+                                        <span class="material-icons _ml-10 _cursor-pointer" style="font-size: 20px;" (click)="addAdditionalSpec(i); $event.stopPropagation();">drive_file_rename_outline</span>
+                                    </div>
+                                    <div class="release-note _status-text _gray-text _text-ellipsis">
+                                        {{item.releaseNote!==null?item.releaseNote:"No notes"}} 
+                                    </div>
+                                    <div class="_mt-5 specs _overflow-hidden _overflow-y-auto">
+                                        <span class="_status-text" *ngIf="item.specList.length===0&&item.additionalSpec===''">No specs attached</span>
+                                        <mat-chip-list *ngIf="item.specList.length!==0||item.additionalSpec!==''" class="">
+                                            <mat-chip *ngIf="item.additionalSpec!==''" color="primary" [removable]="false" selected>Custom</mat-chip>
+                                            <mat-chip *ngFor="let spec of item.specList" [removable]="true" (removed)="removeSpec(item, spec)">
+                                                {{spec.name}}
+                                                <span matChipRemove class="material-icons" style="font-size: 13px; width: 13px; height: 13px;">cancel</span>
+                                            </mat-chip>
+                                        </mat-chip-list>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- service skeleton loader template -->
+                            <!-- <div *ngIf="attachedServicesLoading">
+                                <div *ngFor="let item of serviceListSkeletonCount" style="pointer-events: none;">
+                                    <div class="service-item flex-column _p-10 _mb-10" >
+                                        <div class="_flex-box">
+                                            <div class="_mr-10 _flex-box">
+                                                <ngx-skeleton-loader count="1" [theme]="{ 
+                                                    'border-radius': '5px',
+                                                    'width': '20px',
+                                                    'height': '20px',
+                                                    'margin-bottom': '0px',
+                                                    'border': '1px solid white'
+                                                }"></ngx-skeleton-loader>
+                                            </div>
+                                            <div class="_flex-column _flex-1">
+                                                <ngx-skeleton-loader count="1" [theme]="{ 
+                                                    'border-radius': '5px',
+                                                    'width': '150px',
+                                                    'height': '20px',
+                                                    'margin-bottom': '0px',
+                                                    'border': '1px solid white'
+                                                }"></ngx-skeleton-loader>
+                                            </div>
+                                            <span class="_ml-10">
+                                                <ngx-skeleton-loader count="1" [theme]="{ 
+                                                    'border-radius': '5px',
+                                                    'width': '20px',
+                                                    'height': '20px',
+                                                    'margin-bottom': '0px',
+                                                    'border': '1px solid white'
+                                                }"></ngx-skeleton-loader>
+                                            </span>
+                                            <span class="_ml-10">
+                                                <ngx-skeleton-loader count="1" [theme]="{ 
+                                                    'border-radius': '5px',
+                                                    'width': '20px',
+                                                    'height': '20px',
+                                                    'margin-bottom': '0px',
+                                                    'border': '1px solid white'
+                                                }"></ngx-skeleton-loader>
+                                            </span>
+                                        </div>
+                                        <div style="margin-left: 30px;">
+                                            <ngx-skeleton-loader count="1" [theme]="{ 
+                                                'border-radius': '5px',
+                                                'width': '100px',
+                                                'height': '12px',
+                                                'margin-bottom': '0px',
+                                                'border': '1px solid white'
+                                            }"></ngx-skeleton-loader> 
+                                        </div>
+                                        <div class="_mt-5">
+                                            <ngx-skeleton-loader count="4" [theme]="{ 
+                                                'border-radius': '15px',
+                                                'width': '60px',
+                                                'height': '18px',
+                                                'margin-bottom': '0px',
+                                                'margin-right': '5px',
+                                                'border': '1px solid white'
+                                            }"></ngx-skeleton-loader>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>-->
+                            <!-- service skeleton loader template ends-->
+                        <!-- </div>
+                    </div>
+                </div>
+            </div> -->
+        </mat-step>
+        <mat-step [label]="stepperProp.label4">
+            <search-box (onChange)="serviceSearch($event)"></search-box>
+            <ng-container *ngIf="!attachedServicesLoading" class="config-list">
+                <div *ngIf="!srListDirty.length" class="_flex-box _jc-c _mt-10">No service release
+                    yet.</div>
+                <div *ngIf="srListDirty.length">
+                    <div class="_flex-box _sub-heading _padding-general">
+                        <div class="_mr-10 _pl-10" style="width: 20px;">#</div>
+                        <div class="_first-head-col _mr-10">Name</div>
+                        <div class="_mr-10" style="width: 250px;">Release Note</div>
+                        <div class="_mr-10" style="width: 75px;">Branch Name</div>
+                        <div class="_mr-10" style="width: 60px;">Version</div>
+                        <div class="_mr-10" style="width: 65px;">Port Number</div>
+                        <div class="_flex-1">Status</div>
+                    </div>
+                    <div class="card-container service-release-list _overflow-y-auto">
+                        <div *ngFor="let service of srListDirty; let i = index" class="list _jc-sb">
+                            <div class="_mr-10 _flex-box" style="width: 20px;">
+                                <img #iconImg src="/assets/icons/services/{{service.serviceName}}.svg" alt="" srcset="" (error)="iconImg.src='/assets/icons/services/unknown-default.svg'">
+                            </div>
+                            <div class="_first-head-col _mr-10 " [ngClass]="{'red-dot': isConfigChanged(i)}">{{service.serviceName}}</div>
+                            <div class="_mr-10 secondary-text" style="width: 250px;color: #0000008A;;">{{service.releaseNote}}</div>
+                            <div class="_mr-10" style="width: 75px;">{{service.srBranch}}</div>
+                            <div class="_mr-10" style="width: 60px;">{{service.srVersion}}</div>
+                            <div class="_mr-10" style="width: 65px;">{{service.portNumber}}</div>
+                            <div class="_flex-1" >
+                                <mat-chip-list *ngIf="service.configMap&&service.configMap!==null">
+                                    <mat-basic-chip 
+                                        class="chip greenChip" 
+                                        [matTooltip]="'Config Exists'"
+                                        disabled>
+                                            Config
+                                    </mat-basic-chip>
+                                </mat-chip-list>
+                            </div>
+                            <div class="actions">
+                                <button mat-icon-button (click)="editK8sService(i)" matTooltip="K8S Service" class="_k8s-service-icon"></button>
+                                <button mat-icon-button (click)="editConfig(i)" matTooltip="Configs" class="_config-icon"></button>
+                            </div>
+                        </div>
+                        <div *ngIf="lastPage" class="_list-end-message _jc-c">That's all!</div>
+                    </div>
+                </div>
+            </ng-container>
+            <!-- service list skeleton template -->
+            <div *ngIf="attachedServicesLoading" class="config-list">
+                <div class="card-container service-release-list _overflow-y-auto">
+                    <div *ngFor="let service of serviceListSkeletonCount" class="list _jc-sb">
+                        <div class="_mr-10 _flex-box" style="width: 20px;">
+                            <ngx-skeleton-loader count="1" [theme]="{ 
+                                'border-radius': '5px',
+                                'width': '20px',
+                                'height': '20px',
+                                'margin-bottom': '0px',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                        <div class="_first-head-col _mr-10 ">
+                            <ngx-skeleton-loader count="1" [theme]="{ 
+                                'border-radius': '5px',
+                                'width': '200px',
+                                'height': '20px',
+                                'margin-bottom': '0px',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                        <div class="_mr-10 secondary-text" style="width: 250px;color: #0000008A;;"></div>
+                        <div class="_mr-10" style="width: 75px;"></div>
+                        <div class="_mr-10" style="width: 60px;"></div>
+                        <div class="_mr-10" style="width: 65px;"></div>
+                        <div class="_flex-1" ></div>
+                        <div>
+                            <ngx-skeleton-loader count="1" [theme]="{ 
+                                'border-radius': '5px',
+                                'width': '20px',
+                                'height': '20px',
+                                'margin-bottom': '0px',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- service list skeleton template ends -->
+        </mat-step>
+    </mat-stepper>
+    <div class="custom-footer" *ngIf="!deploymentSuccess">
+        <button mat-button *ngIf="stepperProp.selectedIndex!==0" (click)="stepper.previous()">Prev</button>
+        <button mat-button *ngIf="stepperProp.selectedIndex!==3" (click)="stepper.next()">Next</button>
+        <button *ngIf="stepperProp.selectedIndex===3" mat-button (click)="save()" [disabled]="!canSubmit()">Deploy</button>
+    </div>
+</div>
+

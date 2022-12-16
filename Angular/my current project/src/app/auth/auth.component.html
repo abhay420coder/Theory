@@ -1,0 +1,27 @@
+<div class="header _flex-box _jc-sb">
+    <div class="_flex-box">
+        <img src="../../assets/images/business-logo.png" alt="" class="logo">
+    </div>
+    
+</div>
+<div class="content-body _flex-box _jc-r">
+    <div class="_flex-column caption">
+        <div class="head-text _mb-10">Cordis Devops</div>
+        <div class="secondery-text _mt-10">Welcome Back!</div>
+        <div class="_mt-10" style="height: 80px;">
+            <button *ngIf="!isLoggingIn&&!loginStatus.state" class="login-btn _w-100 _mt-10" (click)="signIn()">Sign In</button>
+            <div *ngIf="isLoggingIn" class="_flex-box _mt-10">
+                <span class="_mr-10">Signing you in</span>
+                <mat-spinner [diameter]='20'></mat-spinner>
+            </div>
+            <div *ngIf="loginStatus.display&&loginStatus.state" class="_flex-box _mt-10">
+                <span class="material-icons _mr-10 _green-text">check_circle_outline</span>
+                <span class="_mr-10">Signed in as {{loginStatus.user}}</span>
+            </div>
+            <div *ngIf="loginStatus.display&&!loginStatus.state" class="_flex-box _mt-10">
+                <span class="status-icon _error-raw"></span>
+                <span class="_mr-10">Your session has expired</span>
+            </div>
+        </div>
+    </div>
+</div>

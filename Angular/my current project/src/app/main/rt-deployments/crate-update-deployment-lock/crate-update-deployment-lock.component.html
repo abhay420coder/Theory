@@ -1,0 +1,104 @@
+<div class="overlay _w-100 _h-100" [ngClass]="{'overlay-show': canShow}" (click)="close()"></div>
+<div class="sidebar _flex-column _pt-10 _pl-15 _pr-15" [ngClass]="{'sidebar-show': canShow}">
+    <div class="_flex-box _jc-sb _mt-10 _mb-10">
+        <div class="_mb-0 _heading_1">{{rtDeployment?.deploymentNamespace}} - {{rtDeployment?.isLocked?"Unlock":"Lock"}} Deployment</div>
+        <button mat-icon-button (click)="close()" class="_close-icon"></button>
+    </div>
+    <div class="_flex-1">
+        <form [formGroup]="lockForm" (ngSubmit)="onSubmit()" class="_h-100 _flex-column">
+            <div class="_flex-1 _mt-15">
+                <div class="_flex-box _jc-sb _mb-10">
+                    <mat-form-field appearance="outline" class="_w-45">
+                        <mat-label>Desired Action</mat-label>
+                        <mat-select 
+                            formControlName="action"
+                            required>
+                            <mat-option value="lock" [disabled]="rtDeployment?.isLocked&&lockForm.get('actionType').value==='indefinite'">Lock</mat-option>
+                            <mat-option value="unlock" [disabled]="!rtDeployment?.isLocked&&lockForm.get('actionType').value==='indefinite'">Unlock</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="lockForm.get('action').hasError('required')">This field is required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="_w-45">
+                        <mat-label>Action Type</mat-label>
+                        <mat-select 
+                            formControlName="actionType"
+                            (selectionChange)="onActionTypeSelect($event)"
+                            required>
+                            <mat-option value="indefinite">Indefinite</mat-option>
+                            <mat-option value="duration">Scheduled</mat-option>
+                            <mat-option value="cronJob" disabled>Cron Job</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="lockForm.get('actionType').hasError('required')">This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="_w-100" *ngIf="lockForm.get('actionType').value==='duration'">
+                    <h4 class="_mb-10">Time range</h4>
+                    <mat-form-field appearance="outline" class="_mr-10 _w-100">
+                        <mat-label>From</mat-label>
+                        <input 
+                            matInput 
+                            placeholder="Choose a date" 
+                            formControlName="fromDateTime"
+                            [ngxMatDatetimePicker]="fromPicker" 
+                            [min]="minDateTime"
+                            readonly>
+                        <mat-datepicker-toggle 
+                            matSuffix 
+                            [for]="fromPicker"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker 
+                            #fromPicker 
+                            [showSeconds]="true" 
+                            [enableMeridian]="true"></ngx-mat-datetime-picker>
+                        <mat-error *ngIf="lockForm.get('fromDateTime').hasError('required')">This field is required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="_mr-10 date-time-picker _w-100">
+                        <mat-label>To</mat-label>
+                        <input 
+                            matInput 
+                            placeholder="Choose a date" 
+                            formControlName="toDateTime"
+                            [ngxMatDatetimePicker]="toPicker" 
+                            [min]="minDateTime"
+                            readonly> 
+                        <mat-datepicker-toggle 
+                            matSuffix 
+                            [for]="toPicker"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker 
+                            #toPicker 
+                            [showSeconds]="true" 
+                            [enableMeridian]="true"></ngx-mat-datetime-picker>
+                        <mat-error *ngIf="lockForm.get('toDateTime').hasError('required')">This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="_w-100">
+                    <mat-form-field class="_w-100" appearance="outline">
+                        <mat-label>Action Description</mat-label>
+                        <textarea matInput 
+                            type="text"
+                            name="lockDescription" 
+                            class="textareaLockDescription" 
+                            placeholder="Action description" 
+                            formControlName="description"
+                            required
+                        ></textarea>
+                        <mat-error *ngIf="lockForm.get('description').hasError('required')">This field is required</mat-error>
+                        <mat-error *ngIf="lockForm.get('description').hasError('invalidContent')">Please put valid description</mat-error>
+                      </mat-form-field>
+                </div>
+            </div>
+            <div class="footer _flex-box _jc-r _pt-10 _pb-10">
+                <button mat-stroked-button 
+                    type="submit"
+                    class="_flex-box _jc-c"
+                    [disabled]="lockForm.invalid||isSaving" 
+                >
+                    <div *ngIf="isSaving" class="_pt-10 _pb-10">
+                        <mat-spinner diameter='20' ></mat-spinner>
+                    </div>
+                    <div *ngIf="!isSaving">Done</div>
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

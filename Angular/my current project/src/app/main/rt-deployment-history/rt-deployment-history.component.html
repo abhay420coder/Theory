@@ -1,0 +1,97 @@
+<div class="container _h-100 _p-10 _overflow-hidden">
+    <div class="_flex-box _mb-10">
+        <button mat-icon-button class="_mr-10" (click)="moveBack()">
+            <span class="_back-icon"></span>
+        </button>
+        <h2 class="_mb-0">Deployment History</h2>
+        <h2 class="_mb-0 _ml-5">{{name}}</h2>
+    </div>
+    <div class="_flex-col _mb-10 _ml-10 _status-text" *ngIf="type===historyType.serviceRel">
+        <div>Namespace: {{namespace}}</div>
+        <div>Release Train: {{rtName}}</div>
+    </div>
+    <!-- <div *ngIf="loading; else list">
+
+        <ngx-skeleton-loader count="4" [theme]="{ 
+            'border-radius': '5px',
+            height: '50px',
+            'margin-bottom': '0px',
+            border: '1px solid white'
+          }"></ngx-skeleton-loader>
+    </div> -->
+    <ng-container *ngIf="true">
+        <div class="_flex-box _sub-heading _padding-general">
+            <div class="_mr-10" style="width: 30%;">Status</div>
+            <div class="_mr-10" style="width: 15%;">Action</div>
+            <div class="_mr-10" style="width: 15%;">Time</div>
+            <div class="_mr-10" style="width: 15%;">Deployed by</div>
+        </div>
+        <div class="card-container job-list _overflow-y-auto"
+            infiniteScroll
+            [infiniteScrollDistance]="1"
+            [infiniteScrollThrottle]="10"
+            [infiniteScrollContainer]="'.job-list'"
+            [fromRoot]="true"
+            [scrollWindow]="false"
+            (scrolled)="onScroll()">
+            <mat-accordion displayMode='flat' multi='false' class="">
+                <mat-expansion-panel 
+                    *ngFor="let history of deploymentData" 
+                    class="_cursor-pointer"
+                    [hideToggle]="type === historyType.serviceRel"
+                    (opened)="viewHistory(history)">
+                    <mat-expansion-panel-header class="_padding-general">
+                        <div class="_mr-10" style="width: 30%;" [ngClass]="history.deploymentStatus | statuscolor">{{history.deploymentStatus}}</div>
+                        <div class="_mr-10" style="width: 15%;">{{history.action | deploymentaction | titlecase}}</div>
+                        <div class="_mr-10 _status-text" style="width: 15%;">
+                            <div>{{history.deploymentLastModified | formatteddate:"MMM D, YYYY":true}}</div>
+                            <div>{{history.deploymentLastModified | formatteddate:"h:mm A":true}}</div>
+                        </div>
+                        <div class="_mr-10 _status-text" style="width: 15%;">{{history.deploymentLastModifiedBy | parseusername:employeeData}}</div>
+                    </mat-expansion-panel-header>
+                    <ng-template matExpansionPanelContent class="_pt-10 _pb-10">
+                        <div *ngIf="servicesLoading; else servicesList">
+                            <ngx-skeleton-loader count="2" [theme]="{ 
+                                'border-radius': '5px',
+                                'height': '50px',
+                                'margin': '0 15px',
+                                'border': '1px solid white',
+                                'width': '45%'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                        <ng-template #servicesList>
+                            <div class="_flex-box _flex-wrap _jc-c">
+                                <div class="_flex-box _jc-c" *ngIf="!affectedServices.length">No services yet</div>
+                                <div *ngFor="let ser of affectedServices" class="serRelBox _flex-box _pl-10 _pr-10 _mr-10 _mt-10"
+                                >
+                                    <div class="_flex-column _flex-50">
+                                        <span>{{ser.serviceName}}</span>
+                                        <span class="_status-text">{{ser.deploymentLastModifiedBy | parseusername:employeeData}}</span>
+                                    </div>
+                                    <div class="_flex-column _flex-25">
+                                        <span [ngClass]="ser.deploymentStatus | statuscolor">{{ser.deploymentStatus | titlecase}}</span>
+                                        <span class="_status-text">{{ser.action | deploymentaction | titlecase}}</span>
+                                    </div>
+                                    <div class="_flex-column _status-text _flex-25">
+                                        <span>{{ser.deploymentLastModified | formatteddate:"MMM D, YYYY":true}}</span>
+                                        <span>{{ser.deploymentLastModified | formatteddate:"h:mm A":true}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ng-template>
+                </mat-expansion-panel>
+            </mat-accordion>
+            <div *ngIf="loading">
+                <ngx-skeleton-loader count="3" [theme]="{ 
+                    'border-radius': '5px',
+                    height: '50px',
+                    'margin-bottom': '0px',
+                    border: '1px solid white'
+                  }"></ngx-skeleton-loader>
+            </div>
+            <div class="_flex-box _jc-c _pt-10 _pb-10" *ngIf="!loading&&!deploymentData.length">History not available</div>
+        </div>
+    </ng-container>
+    
+</div>

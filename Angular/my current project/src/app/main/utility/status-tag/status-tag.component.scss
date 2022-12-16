@@ -1,0 +1,87 @@
+.status-tag{
+    display: flex;
+    flex-direction: row;
+    border: 2px solid;
+    border-radius: 5px;
+    padding: 2px 5px;
+    width: fit-content;
+    align-items: center;
+    line-height: 20px;
+    margin: 5px;
+    
+    .data{
+        font-size: 11px;
+        line-height: 11px;
+        margin-left: 5px;
+    }
+}
+
+.icon{
+    .status-icon{
+        font-size: 17px;
+        width: 20px;
+        height: 20px;
+    }
+    height: 20px;
+    // margin-right: 5px;
+}
+
+.success-text{
+    color: #28a745;
+}
+
+.warning-text{
+    color: #ffc107;
+}
+
+.error-text{
+    color: #dc3545;
+}
+
+.info-text{
+    color: #17a2b8;
+}
+
+.inactive-text{
+    color: #6c757d;
+}
+
+.success-bg{
+    background-color: #d4edda;
+}
+
+.warning-bg{
+    background-color: #fff3cd;
+}
+
+.error-bg{
+    background-color: #f8d7da;
+}
+
+.info-bg{
+    background-color: #d1ecf1;
+}
+
+.inactive-bg{
+    background-color: #e2e3e5;
+}
+
+.success-border{
+    border-color: #c3e6cb;
+}
+
+.warning-border{
+    border-color: #ffeeba;
+}
+
+.error-border{
+    border-color: #f5c6cb;
+}
+
+.info-border{
+    border-color: #bee5eb;
+}
+
+.inactive-border{
+    border-color: #d6d8db;
+}

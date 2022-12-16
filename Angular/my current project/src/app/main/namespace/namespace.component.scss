@@ -1,0 +1,21 @@
+@import "../../../assets/css/variables";
+
+.namespace-list{
+    max-height: calc(100% - 140px);
+    position: relative;
+    overflow: auto;
+}
+
+._first-head-col{
+    max-width: 250px;
+    min-width: 250px;
+}
+
+.deployment-chip{
+    background-color: $status-green;
+    color: white;
+    font-size: 11px;
+    padding: 0 10px;
+    line-height: 18px;
+    border-radius: 15px;
+}

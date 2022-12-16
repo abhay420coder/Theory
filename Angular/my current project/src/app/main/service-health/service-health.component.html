@@ -1,0 +1,245 @@
+<div class="_flex-column _w-100 _pt-10 _h-100">
+    <div class="_flex-box">
+        <button mat-icon-button [routerLink]="['../../../']" class="_back-icon">
+        </button>
+        <div *ngIf="podDataLoading" class="_flex-column _ml-10">
+            <ngx-skeleton-loader  count="1" [theme]="{ 
+                'border-radius': '5px',
+                height: '30px',
+                'width': '250px',
+                'margin-bottom': '0px',
+                border: '1px solid white'
+            }"></ngx-skeleton-loader>
+            <ngx-skeleton-loader  count="1" [theme]="{ 
+                'border-radius': '5px',
+                height: '13px',
+                'width': '400px',
+                'margin-bottom': '0px',
+                border: '1px solid white'
+            }"></ngx-skeleton-loader>
+        </div>
+        <div class="_flex-column _ml-10" *ngIf="!podDataLoading">
+            <div class="_flex-box">
+                <h2 class="_mb-0">{{podData&&podData.name?podData.name:"No information available"}}</h2>
+                <div class="_flex-box _ml-10" *ngIf="podData&&podData.status">
+                    <status-tag *ngFor="let item of podData.status.conditions" [size]="'full'" [type]="item.status==='True'?'success':'error'" [data]="item.type"></status-tag>
+                </div>
+            </div>
+            <p class="secondary-text _mb-0" *ngIf="podData&&podData.status">Created: {{podData.status.startTime|formatteddate:'MMM D YYYY, h:mm A':true}} ({{podData.status.startTime|fromnow}} ago)</p>
+        </div>
+    </div>
+    <div class="_flex-column _flex-1 _overflow-y-auto _p-10">
+        <mat-tab-group (selectedTabChange)="handleTabChange($event)">
+            <mat-tab label="Actuator">
+                <ng-template matTabContent>
+                    <div class="card _flex-column _mt-10">
+                        <div class="header _flex-box">
+                            <span>Actuator</span>
+                            <span class="_ml-10" *ngIf="actuatorLoading">
+                                <ngx-skeleton-loader  count="1" [theme]="{ 
+                                    'border-radius': '5px',
+                                    'height': '12px',
+                                    'width': '50px',
+                                    'margin-bottom': '0px',
+                                    'border': '1px solid white'
+                                }"></ngx-skeleton-loader>
+                            </span>
+                            <span class="status" *ngIf="!actuatorLoading"
+                                [ngClass]="getStatusClass(actuatorHealth?actuatorHealth.status:'')">
+                                    {{actuatorHealth?actuatorHealth.status:'Not available'}}
+                            </span>
+                        </div>
+                        <div class="body _mt-10 _flex-box" *ngIf="actuatorHealth">
+                            <!-- skeleton template -->
+                            <div class="_flex-box _ai-stretch _flex-wrap" *ngIf="actuatorLoading">
+                                <div class="_flex-column _mr-10 _mb-10 card" style="min-width: 150px;" *ngFor="let item of actuatorSkeletonCount">
+                                    <div class="_flex-box">
+                                        <span class="component ready">
+                                            <ngx-skeleton-loader  count="1" [theme]="{ 
+                                                'border-radius': '5px',
+                                                'height': '15px',
+                                                'width': '50px',
+                                                'margin-bottom': '0px',
+                                                'border': '1px solid white'
+                                            }"></ngx-skeleton-loader>
+                                        </span>
+                                        <!-- <span class="_ml-10">
+                                            <ngx-skeleton-loader  count="1" [theme]="{ 
+                                                'border-radius': '5px',
+                                                'height': '15px',
+                                                'width': '50px',
+                                                'margin-bottom': '0px',
+                                                'border': '1px solid white'
+                                            }"></ngx-skeleton-loader>
+                                        </span> -->
+                                    </div>
+                                    <div class="_flex-column _mt-5">
+                                        <ngx-skeleton-loader  count="3" [theme]="{ 
+                                            'border-radius': '5px',
+                                            'display': 'block',
+                                            'height': '12px',
+                                            'width': '100px',
+                                            'margin-bottom': '5px',
+                                            'border': '1px solid white'
+                                        }"></ngx-skeleton-loader>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- template ends -->
+                            <div class="_flex-box _ai-stretch _flex-wrap" *ngIf="!actuatorLoading">
+                                <div class="_flex-column _mr-10 _mb-10 card" *ngFor="let component of actuatorHealth.components | keyvalue">
+                                    <div class="_flex-box">
+                                        <span class="component ready">{{component.key}}</span>
+                                        <span class="status"
+                                            [ngClass]="getStatusClass(component.value?component.value.status:'')">{{component.value?component.value.status:""}}</span>
+                                    </div>
+                                    <div>{{component.value&&component.value.description?component.value.description:""}}</div>
+                                    <div class="_flex-column _mt-5" *ngIf="component.value.details">
+                                        <div *ngFor="let detail of component.value.details | keyvalue">
+                                            <b>{{detail.key}}:</b> {{detail.value}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card _flex-column _mt-10 _mb-10">
+                        <div class="header _flex-box">
+                            <span>Info</span>
+                            <span class="_status-text _red-text _ml-10" *ngIf="!actuatorInfo&&!actuatorInfoLoading">Not Available</span>
+                        </div>
+                        <div class="_flex-box _mt-10 _ai-stretch _flex-wrap" *ngIf="actuatorInfoLoading">
+                            <div class="_flex-column _mr-10 _mb-10 card" style="min-width: 150px;" *ngFor="let item of actuatorInfoSkeletonCount">
+                                <div class="_flex-box">
+                                    <span class="component ready">
+                                        <ngx-skeleton-loader  count="1" [theme]="{ 
+                                            'border-radius': '5px',
+                                            'height': '15px',
+                                            'width': '50px',
+                                            'margin-bottom': '0px',
+                                            'border': '1px solid white'
+                                        }"></ngx-skeleton-loader>
+                                    </span>
+                                    <!-- <span class="_ml-10">
+                                        <ngx-skeleton-loader  count="1" [theme]="{ 
+                                            'border-radius': '5px',
+                                            'height': '15px',
+                                            'width': '50px',
+                                            'margin-bottom': '0px',
+                                            'border': '1px solid white'
+                                        }"></ngx-skeleton-loader>
+                                    </span> -->
+                                </div>
+                                <div class="_flex-column _mt-5">
+                                    <ngx-skeleton-loader  count="3" [theme]="{ 
+                                        'border-radius': '5px',
+                                        'display': 'block',
+                                        'height': '12px',
+                                        'width': '100px',
+                                        'margin-bottom': '5px',
+                                        'border': '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="body _mt-10 _flex-box _ai-stretch" *ngIf="actuatorInfo&&!actuatorInfoLoading">
+                            <div class="_flex-column _mr-10 _mb-10 card" *ngFor="let component of actuatorInfo | keyvalue">
+                                <div class="_flex-box">
+                                    <span class="component ready">{{component.key}}</span>
+                                </div>
+                                <div class="_flex-column _mt-5" *ngIf="component.value">
+                                    <div *ngFor="let detail of component.value | keyvalue">
+                                        <b>{{detail.key}}:</b> {{detail.value}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Metrics">
+                <ng-template matTabContent>
+                    <div class="_flex-box _flex-wrap _mt-10">
+                        <!-- skeleton template for metrics -->
+                        <div class="_flex-box _ai-stretch _flex-wrap" *ngIf="metricsLoading">
+                            <div class="_flex-column _mr-10 _mb-10 card" style="min-width: 150px;" *ngFor="let item of actuatorSkeletonCount">
+                                <div class="_flex-box">
+                                    <span class="component ready">
+                                        <ngx-skeleton-loader  count="1" [theme]="{ 
+                                            'border-radius': '5px',
+                                            'height': '15px',
+                                            'width': '50px',
+                                            'margin-bottom': '0px',
+                                            'border': '1px solid white'
+                                        }"></ngx-skeleton-loader>
+                                    </span>
+                                    <!-- <span class="_ml-10">
+                                        <ngx-skeleton-loader  count="1" [theme]="{ 
+                                            'border-radius': '5px',
+                                            'height': '15px',
+                                            'width': '50px',
+                                            'margin-bottom': '0px',
+                                            'border': '1px solid white'
+                                        }"></ngx-skeleton-loader>
+                                    </span> -->
+                                </div>
+                                <div class="_flex-column _mt-5">
+                                    <ngx-skeleton-loader  count="1" [theme]="{ 
+                                        'border-radius': '5px',
+                                        'display': 'block',
+                                        'height': '32px',
+                                        'width': '50px',
+                                        'margin': 'auto',
+                                        'margin-top': '10px',
+                                        'margin-bottom': '5px',
+                                        'border': '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                    <ngx-skeleton-loader  count="1" [theme]="{ 
+                                        'border-radius': '5px',
+                                        'display': 'block',
+                                        'height': '15px',
+                                        'width': '80px',
+                                        'margin': 'auto',
+                                        'margin-top': '5px',
+                                        'border': '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- template ends -->
+                        <div class="card small-card _mr-10 _mb-10" *ngFor="let metric of metricsData.data">
+                            <div class="title">{{metric.name}}</div>
+                            <div class="data">
+                                <div class="value" *ngIf="metric.name!=='process.start.time'">{{metric.measurements[0].value}}</div>
+                                <div class="_text" *ngIf="metric.name==='process.start.time'">
+                                    <div>{{metric.measurements[0].value|formatteddate:'MMM D YYYY, h:mm A':false}}</div>
+                                    <div>({{metric.measurements[0].value|fromnow:false}} ago)</div>
+                                </div>
+                                <div class="unit _mt-5">{{metric.baseUnit?metric.baseUnit:""}}</div>
+                            </div>
+                        </div>
+                        <div class="_w-100 _text-center" *ngIf="!metricsLoading&&!metricsData.data.length">No data available</div>
+                    </div>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Env">
+                <ng-template matTabContent>
+                    <div class="_mt-10" *ngIf="selectedTabIndex===2">
+                        <div *ngIf="envLoading">Loading editor</div>
+                        <ngx-monaco-editor class="_w-100 _overflow-hidden editor" [options]="editorOptions" [(ngModel)]="envData" (onInit)="onEnvInit($event)">
+                        </ngx-monaco-editor>
+                    </div>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Thread-dump">
+                <ng-template matTabContent>
+                    <div class="_mt-10"  *ngIf="selectedTabIndex===3">
+                        <div *ngIf="threadDumpLoading">Loading editor</div>
+                        <ngx-monaco-editor class="_w-100 _overflow-hidden editor" [options]="editorOptions" [(ngModel)]="threadDumpData" (onInit)="onThreadDumpInit($event)">
+                        </ngx-monaco-editor>
+                    </div>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

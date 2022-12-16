@@ -1,0 +1,40 @@
+<div class="custom-header">
+    <div class="_heading_1">Kubernetes Namespace</div>
+</div>
+
+<mat-dialog-content>
+    <div class="_pt-10 _pb-5">
+        <form #form="ngForm">
+            <div class="_flex-box _w-100">
+                <mat-form-field appearance="outline" class="name-input _w-100">
+                    <mat-label>Name</mat-label>
+                    <input matInput [(ngModel)]="nsObj.name" name="name" [disabled]="injectedData">
+                </mat-form-field>
+            </div>
+            <div class="_error-text" *ngIf="validator().required">Namespace is required</div>
+            <div class="_error-text" *ngIf="validator().length">Namespace must be less than 63 characters</div>
+            <div class="_error-text" *ngIf="validator().charset">NameSpace can only contain 0-9, a-z, -</div>
+            <div class="_error-text" *ngIf="validator().startEnd">Namespace must start and end with 0-9, a-z</div>
+            <div class="_flex-box _w-100 _mt-10">
+                <mat-form-field appearance="outline" class="name-input _w-100">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput [(ngModel)]="nsObj.description" name="description"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="_flex-box _w-100 _mt-10">
+                <mat-form-field appearance="outline" class="_w-100">
+                    <mat-label>Base URL</mat-label>
+                    <input matInput [(ngModel)]="nsObj.baseUrl" name="baseUrl">
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+
+</mat-dialog-content>
+<div class="custom-footer">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button (click)="save()" [disabled]="!canSubmit" cdkFocusInitial>
+        <mat-spinner diameter='20' *ngIf="isSaving"></mat-spinner>
+        <span *ngIf="!isSaving">Save</span>
+    </button>
+</div>

@@ -1,0 +1,29 @@
+@import "../../../assets/css/variables";
+
+.custom-chip-list{
+    max-height: 120px;
+}
+
+.custom-chip{
+    padding: 10px 15px;
+    background-color: $status-border-green;
+    border-radius: 15px;
+    min-width: 100px;
+    max-width: 130px;
+    h4{
+        font-size: 14px;
+        line-height: 14px;
+    }
+    span{
+        line-height: 11px;
+
+    }
+}
+
+.editor{
+    height: 313px;
+}
+
+.config-editor{
+    height: 480px;
+}

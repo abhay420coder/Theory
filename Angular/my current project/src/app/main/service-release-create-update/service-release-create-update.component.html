@@ -1,0 +1,71 @@
+<div class="custom-header">
+    <div class="_heading_1">{{injectedData?"Update":"Create"}} Service Release
+        {{injectedData&&injectedData.serviceName?" - "+injectedData.serviceName:""}}</div>
+</div>
+
+<mat-dialog-content style="max-width: 800px;">
+    <div class="_flex-box _pt-10 _pb-5">
+        <mat-form-field appearance="outline">
+            <mat-label>Service</mat-label>
+            <input type="text" matInput [value]="serviceName" [matAutocomplete]="auto" inputDebounce
+                (callBack)="filterServices($event)">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="optionSelected($event)">
+                <mat-option *ngFor="let option of serviceList" [value]="option">
+                    {{option.serviceName}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="_ml-10">
+            <mat-label>Branch Name</mat-label>
+            <input matInput [(ngModel)]="serviceRelObj.srBranch" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="_ml-10">
+            <mat-label>Release Version</mat-label>
+            <input matInput [(ngModel)]="serviceRelObj.srVersion" required>
+        </mat-form-field>
+    </div>
+    <div class="_flex-box">
+        <mat-form-field appearance="outline">
+            <mat-label>Port Number</mat-label>
+            <input type="number" matInput [(ngModel)]="serviceRelObj.portNumber" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="_ml-10">
+            <mat-label>Release Notes</mat-label>
+            <input matInput [(ngModel)]="serviceRelObj.releaseNote">
+        </mat-form-field>
+        <mat-checkbox  class="_ml-10" [color]="'primary'" [checked]="serviceRelObj.checkReadiness"
+            (change)="serviceRelObj.checkReadiness=!serviceRelObj.checkReadiness">
+            Perform Readiness Probe
+        </mat-checkbox>
+    </div>
+    <button mat-icon-button  class=" _mb-10" (click)="addMoreVolume()">
+        <span class="_add-icon"></span>
+    </button>
+    <div class="_flex-box _flex-wrap">
+        <div *ngFor="let vPath of serviceRelObj.volumePaths;let i = index" class="volume-child _flex-box">
+            <mat-form-field appearance="outline" >
+                <mat-label>Volume Path</mat-label>
+                <input matInput [(ngModel)]="vPath.path">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="_ml-10" >
+                <mat-label>Volume Mount Path</mat-label>
+                <input matInput [(ngModel)]="vPath.mountPath">
+            </mat-form-field>
+            <button mat-icon-button  class="_delete-icon _mb-10 _mr-10" (click)="deleteVolume(i)"></button>
+        </div>        
+    </div>
+</mat-dialog-content>
+<div class="custom-footer">
+    <div class="_flex-1">
+        <button mat-button (click)="openEnvEditor()">
+            <span>ENV</span>
+        </button>
+    </div>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button
+        *ngIf="!injectedData||(injectedData&&injectedData.actions&&injectedData.actions.includes('update'))"
+        (click)="save()" cdkFocusInitial>
+        <mat-spinner diameter='20' *ngIf="isSaving"></mat-spinner>
+        <span *ngIf="!isSaving">Save</span>
+    </button>
+</div>

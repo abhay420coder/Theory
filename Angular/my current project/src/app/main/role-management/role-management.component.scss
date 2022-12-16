@@ -1,0 +1,15 @@
+@import "../../../assets/css/_variables.scss";
+
+::ng-deep .rtDeployment-item .mat-expansion-panel-header {
+    padding: 0 16px !important;
+}
+
+.role-list{
+    max-height: calc(100% - 140px);
+    position: relative;
+    overflow: auto;
+}
+
+.mat-standard-chip{
+    font-size: 12px !important;
+}

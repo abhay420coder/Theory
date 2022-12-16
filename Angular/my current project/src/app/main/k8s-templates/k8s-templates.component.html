@@ -1,0 +1,67 @@
+<div class="container _h-100 _p-10 _overflow-hidden">
+    <div class="_flex-box _jc-sb">
+        <h2>K8S Object Templates</h2>
+        <div>
+            <button mat-stroked-button class="_mr-10" [matMenuTriggerFor]="createMenu">Add new</button>
+            <mat-menu #createMenu="matMenu">
+                <button mat-menu-item (click)="addEndpointTemplate()">Endpoint Template</button>
+                <button mat-menu-item (click)="addServiceTemplate()">Service Template</button>
+                <button mat-menu-item (click)="addRoleBindingTemplate()">Role-binding Template</button>
+                <!-- <button mat-menu-item (click)="addDeployment()">k8s Deployment</button> -->
+            </mat-menu>
+        </div>
+    </div>
+    <mat-tab-group (selectedTabChange)="handleTabChange($event)">
+        <mat-tab label="Endpoints"></mat-tab>
+        <mat-tab label="Services"></mat-tab>
+        <mat-tab label="Role-Binding"></mat-tab>
+    </mat-tab-group>
+    <div class="card-container _overflow-y-auto _mt-10">
+        <div class="list" *ngIf="loading">
+            <div class="_first-head-col _flex-box">
+                <ngx-skeleton-loader count="1" [theme]="{ 
+                    'border-radius': '5px',
+                    'height': '15px',
+                    'width': '150px',
+                    'margin-bottom': '0px',
+                    'border': '1px solid white'
+                    }"></ngx-skeleton-loader>
+            </div>
+            <div class="_flex-box">
+                <ngx-skeleton-loader count="1" [theme]="{ 
+                    'border-radius': '5px',
+                    'height': '15px',
+                    'width': '50px',
+                    'margin-bottom': '0px',
+                    'border': '1px solid white'
+                    }"></ngx-skeleton-loader>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="!loading">
+        <div *ngIf="!templateList.length && !loading else list" class="_flex-box _jc-c _mt-10">No templates to show.</div>
+        <ng-template #list>
+            <div class="_flex-box _sub-heading _padding-general _mt-10">
+                <div class="_first-head-col">Name</div>
+                <div>Active</div>
+            </div>
+            <div class="card-container _overflow-y-auto">
+                <div *ngFor="let template of templateList" class="list">
+                    <div class="_first-head-col _flex-box">
+                        <span>{{template.name}}</span>
+                    </div>
+                    <div class="_flex-box" (click)="$event.stopPropagation()">
+                        <mat-chip-list *ngIf="template.active">
+                            <mat-basic-chip class="deployment-chip">Active</mat-basic-chip>
+                        </mat-chip-list>
+                    </div>
+                    <div class="actions" (click)="$event.stopPropagation()">
+                        <button mat-icon-button class="_edit-icon" (click)="editTemplate(template)"></button>
+                        <button mat-icon-button class="_delete-icon" (click)="deleteTemplate(template)"></button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        
+    </ng-container>
+</div>

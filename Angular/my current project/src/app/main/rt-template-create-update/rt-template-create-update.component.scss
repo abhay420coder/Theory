@@ -1,0 +1,62 @@
+@import '../../../assets/css/_variables.scss';
+
+.card {
+    height: 80px;
+    padding: 10px 16px;
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    width: 24%;
+    min-width: 240px;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+    border: 1px solid $border-color;
+    border-radius:3px;
+    padding: 0px 5px;
+    width: 30px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.editor{
+  width: 80%;
+  height: 450px;
+}
+.title-input {
+  border: none;
+  font-size: 40px;
+  // margin-bottom: 10px;
+  background-color: #fafafa;
+ 
+}
+.title-input::placeholder {
+  color:#b3b3b1 ;
+
+}
+.ser-release-card{
+  min-width: 350px !important;
+}
+
+::ng-deep .search-box .mat-form-field-wrapper{
+  padding: 0;
+}
+
+.attached-services{
+  max-height: calc(100vh - 340px);
+  position: relative;
+  overflow: auto;
+}
+
+.input-error{
+  border-bottom: 1px solid;
+  border-color: $status-red;
+}
+
+.release-note{
+  color: $disabled-font-color;
+  font-size: 11px;
+  padding-left: 30px;
+}

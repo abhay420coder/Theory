@@ -1,0 +1,51 @@
+@import '../../../assets/css/variables';
+.navbar{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0 10px;
+    background-color: $navbar-bg;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 30%);
+    .logo{
+        color: white;
+    }
+    .nav{
+        .logout-button {
+            color: white;
+        }
+        .nav-button{
+            font-size: 20px;
+            color: $font-color;
+            margin: 0 5px;
+            .logout-button:hover{
+                color: $status-text-red;
+            }
+            .user-icon{
+                width: 32px;
+                height: 32px;
+                border-radius: 6px;
+            }
+        }
+    }
+}
+
+.company-logo {
+    height: 45px;
+    width: 80px;
+    background: url("/assets/images/business-logo.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.grafana-icon {
+    height: 30px;
+    width: 80px;
+    background: url("/assets/images/grafana_logo.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
