@@ -1,0 +1,32 @@
+<div class="container _h-100 _p-10 _overflow-hidden">
+    <div class="_flex-box _mb-10">
+        <button mat-icon-button class="_mr-10" (click)="moveBack()">
+            <span class="_back-icon"></span>
+        </button>
+        <div *ngIf="loading; else jobId">
+            <ngx-skeleton-loader count="1" [theme]="{ 
+                'border-radius': '5px',
+                'width': '100px',
+                'height': '50px',
+                'margin-bottom': '0px',
+                'border': '1px solid white'
+            }"></ngx-skeleton-loader>
+        </div>
+        <ng-template #jobId>
+            <h2 class="_mb-0">{{jobData.jobId}}</h2>
+        </ng-template>    
+    </div>
+
+    <h4 class="_mt-15 _mb-15">Job details:</h4>
+    <div class="card">
+        <div *ngIf="loading; else jobdata">Loading job data...</div>
+        <ng-template #jobdata>
+            <div class="_flex-box keyValue" *ngFor="let item of jobData | keyvalue">
+                <span class="key _mr-5">{{item.key}}:</span>
+                <span class="value" *ngIf="item.key==='deploymentLastModified'">{{item.value | formatteddate:"MMM D, YYYY h:mm:ss A":true}}</span>
+                <span class="value" *ngIf="item.key==='deploymentLastModifiedBy'">{{item.value | parseusername:employeeData}}</span>
+                <span class="value" *ngIf="item.key!=='deploymentLastModified'&&item.key!=='deploymentLastModifiedBy'">{{item.value}}</span>
+            </div>
+        </ng-template>
+    </div>
+</div>

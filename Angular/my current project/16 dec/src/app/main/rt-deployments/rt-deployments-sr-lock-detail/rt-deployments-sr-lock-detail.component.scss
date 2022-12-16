@@ -1,0 +1,43 @@
+@import '../../../../assets/css/variables';
+
+::ng-deep .active-unlocks .mat-expansion-panel{
+    margin: 0;
+    box-shadow: none;
+    border: 1px solid $border-color;
+    &:not(:last-child){
+        border-bottom: none;
+    }
+    .mat-content{
+        height: 100%;
+    }
+    .mat-badge-content{
+        top: 0;
+        right: -20px !important;
+        background-color: $status-red;
+    }
+}
+.artwork{
+    background-image: url('../../../../assets/images/undraw_secure_files_re_6vdh.svg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 26% 100%;
+    background-position-x: 30%;
+    background-position-y: 48%;
+    opacity: 0.9;
+}
+
+.active-unlocks{
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+.unlock-card{
+    background-color: #0091e51e;
+    border-radius: 10px;
+}
+
+.action-icon{
+    width: 20px;
+    height: 20px;
+}

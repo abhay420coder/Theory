@@ -1,0 +1,51 @@
+<div class="navbar _flex-box _jc-sb">
+    <div class="_flex-box">
+        <div class="logo _flex-box">
+            <div class="toggle-nav _cursor-pointer">
+                <span *ngIf="!navState" (click)="toggleNav()" class="_menu-open-icon"></span>
+                <span *ngIf="navState" (click)="toggleNav()" class="_menu-close-icon"></span>
+            </div>
+            <div class="company-logo _ml-10"></div>
+        </div>
+        <div class="_ml-25 _flex-box">
+            <div>
+                <a href="http://192.168.1.24:3005/" target="_blank">
+                    <div class="grafana-icon"></div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="nav _flex-box">
+        <div class="nav-button _mr-10 _cursor-pointer">
+            <img 
+                #icon 
+                matTooltip="{{currentUser.name}}"
+                [src]="currentUser.icon" 
+                alt="user-icon" 
+                class="user-icon" 
+                (error)="icon.src='assets/images/default-user-male.png'"
+                >
+        </div>
+        
+        <div class="nav-button">
+            <span class="_menu-icon" [matMenuTriggerFor]="popupMenu"></span>
+        </div>
+        <mat-menu #popupMenu="matMenu">
+            <button mat-menu-item
+                *ngIf="currentUser.isAdmin"
+                [routerLink]="['/main/role-management']"
+                [disabled]="!currentUser.isAdmin">
+                <div class="_flex-box">
+                    <span class="_roles-icon _ml-0 _mr-0"></span>
+                    <span class="_ml-10">Role Management</span>
+                </div>
+            </button>
+            <button mat-menu-item (click)="handleLogout()">
+                <div class="_flex-box">
+                    <span class="logout-button _logout-icon _ml-0 _mr-0"></span>
+                    <span class="_ml-10">Logout</span>
+                </div>
+            </button>
+        </mat-menu>
+    </div>
+</div>

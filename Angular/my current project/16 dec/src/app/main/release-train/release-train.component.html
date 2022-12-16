@@ -1,0 +1,86 @@
+<div class="container _h-100 _p-10">
+    <div class="_flex-box _jc-sb">
+        <h2>Release Train</h2>
+        <button mat-stroked-button *ngIf="canAdd()" (click)="createUpdateRt()">Create a Release Train</button>
+    </div>
+    <search-box (onChange)="handleSearch($event)"></search-box>
+    <div *ngIf="loading">
+        <ngx-skeleton-loader count="10" [theme]="{ 
+            'border-radius': '5px',
+            height: '50px',
+            'margin-bottom': '0px',
+            border: '1px solid white'
+          }"></ngx-skeleton-loader>
+    </div>
+    <ng-container *ngIf="!loading">
+        <div *ngIf="!rtList.length && !loading else list" class="_flex-box _jc-c _mt-10">No Release Trains yet.</div>
+        <ng-template #list>
+            <div class="_flex-box _sub-heading _padding-general">
+                <div class="_first-head-col">Name</div>
+                <div class="_mr-10" style="width: 100px;">Version</div>
+                <div class="_flex-1">Release Train Note</div>
+            </div>
+            <div class="card-container _overflow-hidden release-train-list"
+                infiniteScroll
+                [infiniteScrollDistance]="1"
+                [infiniteScrollThrottle]="10"
+                [infiniteScrollContainer]="'.release-train-list'"
+                [fromRoot]="true"
+                [scrollWindow]="false"
+                (scrolled)="onScroll()">
+                <mat-accordion displayMode='flat'>
+                    <div *ngFor="let rt of rtList" class="list _jc-sb">
+                            <div class="_first-head-col">{{rt.rtName}}</div>
+                            <div style="width: 100px;" class="_mr-10">{{rt.rtVersion || 0}}</div>
+                            <div class="_flex-1">{{rt.rtNote}}</div>
+                            <div class="actions" (click)="$event.stopPropagation()">
+                                <button mat-icon-button *ngIf="canManageRoles()" matTooltip="Manage Roles" class="_roles-icon" (click)="manageRole(rt)"></button>
+                                <button mat-icon-button *ngIf="rt.actions.includes('deploy')" [routerLink]="['./deploy/'+rt.rtId]" matTooltip="Deploy" class="_deploy-icon"></button>
+                                <button mat-icon-button
+                                    *ngIf="rt.serviceReleaseCount!==0"
+                                    [routerLink]="['/main/release-train/rt-template-create-update', rt.rtId,'new']" matTooltip="Add Template"
+                                    class="_add-icon">
+                                </button>
+                                <!-- <button mat-icon-button
+                                    [routerLink]="['/main/release-train/rt-templates', rt.rtId]" matTooltip="Templates" class="_templates-icon">
+                                </button> -->
+                                <button mat-icon-button *ngIf="canAdd()" (click)="copyReleaseTrain(rt)" matTooltip="Copy Release Train" class="_copy-release-train-icon">
+                                </button>
+                                <button mat-icon-button (click)="mapDependency(rt)" matTooltip="Add Service Release" class="_add-service-release-icon">
+                                </button>
+                                <button mat-icon-button *ngIf="rt.actions.includes('update')"
+                                    (click)="createUpdateRt(rt)" matTooltip="Edit" class="_edit-icon">
+                                </button>
+                                <button mat-icon-button *ngIf="rt.actions.includes('delete')" (click)="deleteRt(rt)" matTooltip="Delete" class="_delete-icon">
+                                </button>
+                            </div>
+                        <!-- <ng-template matExpansionPanelContent>
+                            <div *ngIf="loadingTemplates">
+                                <ngx-skeleton-loader count="4" [theme]="{ 
+                                'border-radius': '5px',
+                                height: '50px',
+                                'margin-bottom': '0px',
+                                border: '1px solid white'
+                              }"></ngx-skeleton-loader>
+                            </div>
+                            <div class="_flex-box _jc-c" *ngIf="(templateListObv |async)?.length===0&&!loadingSerRel">No template yet</div>
+                            <div class="_flex-box _jc-sb _flex-wrap">
+                                <div *ngFor="let template of templateListObv |async "
+                                    class="serRelBox _flex-box _jc-sb _mr-10 _pl-10 _pr-10 _mt-10">
+
+                                    <div>{{template.name}}</div>
+                                    <div>
+                                        <button mat-icon-button  [routerLink]="['/main/release-train/rt-template-create-update', rt.rtId,template.id]" matTooltip="Edit">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template> -->
+                    </div>
+                    <div *ngIf="lastPage" class="_list-end-message _jc-c">That's all!</div>
+                </mat-accordion>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>

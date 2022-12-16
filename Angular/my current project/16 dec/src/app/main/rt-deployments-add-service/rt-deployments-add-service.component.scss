@@ -1,0 +1,156 @@
+@import "../../../assets/css/variables";
+
+::ng-deep .custom-stepper{
+    // height: calc(100vh - 98px);
+    max-height: calc(100%);
+    overflow: hidden;
+}
+
+::ng-deep .specs .mat-chip-list-wrapper{
+    margin: 0;
+}
+.success-screen{
+    height: calc(100% - 48px);
+    font-size: 48px;
+    padding-left: 25px;
+    color: $status-text-green;
+    justify-content: space-around;
+    div{
+        max-width: 40%;
+        h2{
+            line-height: normal;
+            font-size: 48px;
+        }
+        h4{
+            line-height: normal;
+            font-size: 24px;
+        }
+    }
+    span{
+        font-size: 220px;
+    }
+}
+.red-dot::after{
+    content: "";
+    border: 3px solid red;
+    position: absolute;
+    margin-left: 5px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.chip{
+    padding: 3px 5px;
+    font-size: 11px;
+    line-height: 11px;
+    border-radius: 10px;
+    margin-right: 5px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.greenChip{
+    background-color: $status-green;
+    color: white;
+}
+
+._first-head-col{
+    min-width: 150px;
+}
+
+.attached-services{
+    height: calc(100vh - 290px);
+    overflow-y: auto;
+    align-content: flex-start;
+    .ser-release-card{
+        // width: 48% !important;
+    }
+    .card {
+        padding: 10px 16px;
+        border: 1px solid $border-color;
+        border-radius: 10px;
+        width: 24%;
+        min-width: 240px;
+        input[type=number] {
+            -moz-appearance: textfield;
+            border: 1px solid $border-color;
+            border-radius:3px;
+            padding: 5px;
+            width: 45px;
+        }
+        .release-note{
+            color: $disabled-font-color;
+            font-size: 11px;
+            padding-left: 30px;
+        }
+    }
+}
+
+
+.list-column{
+    padding: 15px 15px 0 15px;
+    width: 45%;
+    border: 1px solid $border-color;
+    border-radius: 5px;
+    h4{
+        text-align: center;
+        font-weight: 600;
+    }
+    .action-row{
+        font-size: 12px;
+        font-weight: 600;
+        color: $primary-color;
+    }
+
+    .spec-list{
+        height: calc(100vh - 390px);
+        overflow-y: auto;
+
+        .spec-item{
+            border-radius: 5px;
+            border: 1px solid $border-color;
+            &:hover{
+                border-color: $status-green;
+            }
+        }
+
+        .spec-item-active{
+            background-color: $status-border-green;
+        }
+    }
+
+    .services-list{
+        height: calc(100vh - 390px);
+        overflow-y: auto;
+        
+        .service-item{
+            border-radius: 5px;
+            border: 1px solid $border-color;
+            &:hover{
+                border-color: $status-green;
+            }
+            .release-note{
+                margin-left: 30px;
+            }
+            .specs{
+                max-height: 55px;
+            }
+        }
+        .service-item-active{
+            background-color: $status-border-green;
+        }
+        .mat-chip{
+            min-height: 18px;
+            font-size: 9px;
+        }
+    }
+}
+
+.service-release-list{
+    max-height: calc(100vh - 325px);
+}
+
+.config-editor{
+    height: 480px;
+}

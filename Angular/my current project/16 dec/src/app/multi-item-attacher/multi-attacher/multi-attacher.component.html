@@ -1,0 +1,95 @@
+<div class="_flex-box _jc-sb _ai-start _mt-10 _mb-10 _ml-10 _mr-10" style="height: 100%;">
+    <div class="list-column">
+        <h4 class="_mb-10 _mt-10">{{multiAttacherProps.attachmentTitle}}</h4>
+        <search-box (onChange)="attachmentSearch($event)"></search-box>
+        <div class="action-row _flex-box _jc-sb _mb-10">
+            <span class="_cursor-pointer" 
+                (click)="toggleAllAttachment(selectedAttachment.length===attachmentList.length)">
+                    {{selectedAttachment.length===attachmentList.length?"Deselect":"Select"}} All
+            </span>
+            <span class="_cursor-pointer" (click)="attach()">Attach ({{selectedAttachment.length}})</span>
+        </div>
+        <div class="spec-list"
+            infiniteScroll
+            [infiniteScrollDistance]="0"
+            [infiniteScrollThrottle]="10"
+            [infiniteScrollContainer]="'.spec-list'"
+            [fromRoot]="true"
+            [scrollWindow]="false"
+            [infiniteScrollDisabled]="!multiAttacherProps.attachmentPagination"
+            (scrolled)="onAttachmentScroll()">
+            <ng-container *ngFor="let attachment of attachmentList">
+                <div class="spec-item _p-10 _mb-10 _cursor-pointer" 
+                    *ngIf="attachment?.visible"
+                    [ngClass]="{'spec-item-active': attachment[multiAttacherProps.attachmentFilterBy] | isselected:selectedAttachment}"
+                    (click)="toggleAttachment(attachment)">
+                        <div>{{attachment[multiAttacherProps.attachmentDisplay]}}</div>
+                        <div class="_status-text _gray-text _mt-5">{{attachment[multiAttacherProps.attachmentDescription]}}</div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <div class="list-column">
+        <h4 class="_mb-10 _mt-10">{{multiAttacherProps.attachableTitle}}</h4>
+        <search-box (onChange)="attachableSearch($event)"></search-box>
+        <div class="action-row _mb-10 _flex-box _jc-sb">
+            <span class="_cursor-pointer" (click)="toggleAllAttachable(attachableList.length===selectedAttachables.length)">{{attachableList.length===selectedAttachables.length?"Deselect":"Select"}} All</span>
+            <span>{{selectedAttachables.length}} selected</span>
+        </div>
+        <div class="services-list"
+            infiniteScroll
+            [infiniteScrollDistance]="0"
+            [infiniteScrollThrottle]="10"
+            [infiniteScrollContainer]="'.services-list'"
+            [fromRoot]="true"
+            [scrollWindow]="false"
+            [infiniteScrollDisabled]="!multiAttacherProps.attachablePagination"
+            (scrolled)="onAttachableScroll()">
+            <ng-container *ngFor="let attachable of attachableList; let i=index">
+                <div class="service-item _flex-column _p-10 _mb-10 _cursor-pointer" 
+                    *ngIf="attachable.visible"
+                    [ngClass]="{'service-item-active': attachable[multiAttacherProps.attachableFilterBy] | isselected:selectedAttachables}"
+                    (click)="toggleAttachable(attachable)">
+                        <div class="_flex-box">
+                            <div class="_mr-10 _flex-box" style="width: 20px;" *ngIf="multiAttacherProps.attachableHasIcon">
+                                <img #iconImg [src]="multiAttacherProps.attachableIconPath+'/'+attachable[multiAttacherProps.attachableIcon]+multiAttacherProps.attachableIconExt" alt="" srcset="" (error)="iconImg.src='/assets/icons/services/unknown-default.svg'">
+                            </div>
+                            <div class="_flex-column _flex-1">
+                                <div>{{attachable[multiAttacherProps.attachableDisplay]}}</div> 
+                            </div>
+                            <button mat-icon-button *ngIf="multiAttacherProps.canViewAttached" class="_mr-10">
+                                <span class="material-icons _cursor-pointer" 
+                                    style="font-size: 20px;" 
+                                    (click)="multiAttacherProps.showAttachment(attachable); $event.stopPropagation();">
+                                        visibility
+                                </span>
+                            </button>
+                            <button mat-icon-button *ngIf="multiAttacherProps.canAddCustomAttachment">
+                                <span class="material-icons _cursor-pointer" 
+                                    style="font-size: 20px;" 
+                                    (click)="addAdditionalAttachment(attachable, i); $event.stopPropagation();">
+                                        drive_file_rename_outline
+                                </span>
+                            </button>
+                        </div>
+
+                        <div class="_status-text _gray-text _text-ellipsis _mt-5 _mb-5" [ngClass]="{'_ml-30': multiAttacherProps.attachableHasIcon}">
+                            {{attachable[multiAttacherProps.attachableDescription]?attachable[multiAttacherProps.attachableDescription]:"No notes"}} 
+                        </div>
+                        <div class="_mt-10 specs _overflow-hidden _overflow-y-auto ">
+                            <span class="_status-text" *ngIf="(!attachable[multiAttacherProps.attachmentKey]||attachable[multiAttacherProps.attachmentKey]?.length===0)&& !attachable[multiAttacherProps.customAttachmentKey]; else attachedList">Nothing attached</span>
+                            <ng-template #attachedList>
+                                <mat-chip-list>
+                                    <mat-chip *ngIf="multiAttacherProps.customAttachmentKey&&attachable[multiAttacherProps.customAttachmentKey]&&attachable[multiAttacherProps.customAttachmentKey]!==''" color="primary" [removable]="false" selected>Custom</mat-chip>
+                                    <mat-chip *ngFor="let item of attachable[multiAttacherProps.attachmentKey]" [removable]="true" (removed)="removeAttachment(item, attachable)">
+                                        {{item[multiAttacherProps.attachmentDisplay]}}
+                                        <span matChipRemove class="material-icons" style="font-size: 13px; width: 13px; height: 13px;">cancel</span>
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </ng-template>
+                        </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

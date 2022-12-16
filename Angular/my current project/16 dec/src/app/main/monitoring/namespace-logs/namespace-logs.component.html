@@ -1,0 +1,215 @@
+<div class="container _flex-column _h-100 _p-10 _overflow-hidden">
+    <div class="_flex-box _jc-sb _ai-stretch">
+        <h2 class="_mb-0">Logs</h2>
+        <div class="_flex-box">
+            <div class="_flex-1 _mr-10 date-time-picker">
+                <mat-form-field appearance="outline" class="_w-100">
+                    <mat-label>Search</mat-label>
+                    <input 
+                        matInput
+                        inputDebounce
+                        type="text"
+                        placeholder="Search"
+                        (callBack)="handleSearch($event)">
+                </mat-form-field>
+            </div>
+            <div *ngIf="nsListloading; else nsSelector">
+                <ngx-skeleton-loader count="1" [theme]="{ 
+                    'border-radius': '5px',
+                    'height': '52px',
+                    'width': '150px',
+                    'margin-bottom': '0px'
+                  }"></ngx-skeleton-loader>
+            </div>
+            <ng-template #nsSelector>
+                <mat-form-field appearance="outline" class="namespace-selector _mr-10">
+                    <mat-label>Namespace</mat-label>
+                    <mat-select matNativeControl name="namespace" placeholder="Namespace" [(value)]="selectedNs" (valueChange)="switchNs()">
+                    <mat-option *ngFor="let ns of nsList" [value]="ns">{{ns.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </ng-template>
+            <div>
+                <mat-form-field appearance="outline" class="_mr-10 date-time-picker">
+                    <mat-label>Created by bussiness:</mat-label>
+                    <input type="text"
+                           placeholder="Business name"
+                           aria-label="Number"
+                           matInput
+                           [formControl]="bussinessIdControl"
+                           [matAutocomplete]="business">
+                    <mat-autocomplete #business="matAutocomplete" [displayWith]="bussinessDisplayFn" (optionSelected)="filterBusinessId($event)">
+                      <mat-option *ngFor="let option of filteredBusinessList | async" [value]="option">
+                        {{option?.frontName}}
+                      </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            
+            <div *ngIf="modulesLoading; else moduleSelector">
+                <ngx-skeleton-loader count="1" [theme]="{ 
+                    'border-radius': '5px',
+                    'height': '52px',
+                    'width': '100px',
+                    'margin-bottom': '0px',
+                    'margin-left': '10px'
+                  }"></ngx-skeleton-loader>
+            </div>
+            <ng-template #moduleSelector>
+                <button mat-stroked-button class="modules-btn" style="height: 52px;" (click)="moduleSelectorVisible = !moduleSelectorVisible">
+                    <div class="_flex-column">
+                        <span>Select Modules</span>
+                        <span class="_mt-5 secondary-text">{{selectedModuleList.length}} Active</span>
+                    </div>
+                </button>
+            </ng-template>
+            <button 
+                mat-stroked-button 
+                class="_ml-10 modules-btn" 
+                style="height: 52px; width: 90px;" 
+                matTooltip="Quick Filters"
+                (click)="handleSort()">
+                <div class="_flex-box _w-100 _h-100">
+                    <div class="filter-icon _mr-10" [ngClass]="{'_up-icon-raw': ascSort, '_down-icon-raw': !ascSort}"></div>
+                    <div>{{ascSort?"Asc":"Dsc"}}</div>
+                </div>
+            </button>
+            <button 
+                mat-stroked-button 
+                class="_ml-10 modules-btn" 
+                style="height: 52px;" 
+                matTooltip="Quick Filters"
+                (click)="quickFilterVisible = !quickFilterVisible">
+                <div class="_quick-filter-raw filter-icon "
+                    [ngClass]="{'filter-active': filterExpArr.length}"></div>
+            </button>
+            <button 
+                mat-stroked-button 
+                class="_ml-10 modules-btn" 
+                style="height: 52px;" 
+                matTooltip="Advanced Filters"
+                [ngClass]="{'btn-active-border': advancedFilterVisible}"
+                (click)="advancedFilterVisible = !advancedFilterVisible">
+                <div class="_filter-icon-raw filter-icon "
+                    [ngClass]="{'filter-active': filterExpArr.length}"></div>
+            </button>
+        </div>
+    </div>
+    <div class="_mt-10 advanced-filter" *ngIf="advancedFilterVisible">
+        <filter-container [expressionData]="filterExpressionObj" [exclusionList]="filterExclusionList" (expressionSaved)="handleExpressionSaved($event)"></filter-container>
+    </div>
+    <div *ngIf="logsLoading">
+        <div class="_pl-10 _pr-10 _pt-10 _pb-10 log-item" *ngFor="let item of loaderCount">
+            <ngx-skeleton-loader count="1" [theme]="{ 
+                'border-radius': '5px',
+                'height': '9px',
+                'width': '50%',
+                'margin-bottom': '0px'
+              }"></ngx-skeleton-loader>
+            <ngx-skeleton-loader count="1" [theme]="{ 
+                'border-radius': '5px',
+                'height': '11px',
+                'width': '100%',
+                'margin-bottom': '0px'
+              }"></ngx-skeleton-loader>
+            <ngx-skeleton-loader count="1" [theme]="{ 
+                'border-radius': '5px',
+                'height': '11px',
+                'width': '40%',
+                'margin-bottom': '0px'
+              }"></ngx-skeleton-loader>
+        </div>
+    </div>
+    <div class="_overflow-y-auto _flex-1" *ngIf="!logsLoading">
+        <div class="_flex-box _jc-c _pt-10" *ngIf="!logList.length">No logs to show</div>
+        <div class="_flex-box _jc-c _pt-10" *ngIf="!selectedBussiness">Please select a namespace and business</div>
+        <div *ngFor="let log of logList" 
+            class="_pl-10 _pr-10 _pt-10 _pb-10 log-item"
+            [ngClass]="{
+                'border-gray': true,
+                'border-blue': log.logLevel === logLevelVar.info,
+                'border-orange': log.logLevel === logLevelVar.warn,
+                'border-red': log.logLevel === logLevelVar.error
+            }">
+            <div class="_flex-box secondary-text _gray-text">
+                <span class="_mr-5" 
+                    [ngClass]="{
+                        'text-blue': log.logLevel === logLevelVar.info,
+                        'text-orange': log.logLevel === logLevelVar.warn,
+                        'text-red': log.logLevel === logLevelVar.error
+                    }">[{{log.logLevel}}]</span>|
+                <span class="_ml-5 _mr-5">{{log.logTimeStamp | formatteddate:"MMM D, YYYY h:mm:ss A":true}}</span>|
+                <span class="_ml-5 _mr-5">User:{{log.loggedEmployeeId}}</span>|
+                <span class="_ml-5 _mr-5">{{log.moduleName}}</span>|
+                <span class="_ml-5 _mr-5">{{log.className}}</span>
+            </div>
+            <div>
+                {{log.message}}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="module-list _flex-column" *ngIf="moduleSelectorVisible">
+    <div class="_flex-box _jc-sb _pt-10 _pl-10 _pr-10">
+        <div>
+            <h2 class="_mb-0">Select Modules</h2>
+            <span class="secondary-text">{{selectedModuleList.length}} selected</span>
+        </div>
+        
+        <button mat-stroked-button (click)="handleModuleChange()">
+            Done
+        </button>
+    </div>
+    <div class="_pt-10 _pl-10 _pr-10 _flex-1 _overflow-y-auto">
+        <div *ngFor="let module of moduleList" 
+            class="module-list-item _pt-10 _pb-10 _pl-10 _pr-10 _mb-5 _cursor-pointer"
+            [ngClass]="{'module-selected': selectedModuleList.includes(module)}"
+            (click)="toggleModuleSelection(module)">
+            {{module}}
+        </div>
+    </div>
+</div>
+<div class="sidebar _pt-10 _pl-10 _pr-10" *ngIf="quickFilterVisible">
+    <div class="_flex-box _jc-sb _pt-10 _pb-10 _pl-10 _pr-10 _mb-10">
+        <div>
+            <h4 class="_mb-0">Quick filters</h4>
+        </div>
+        <button mat-icon-button (click)="quickFilterVisible = !quickFilterVisible" class="_close-icon"></button>
+    </div>
+    
+    <div class="_flex-column _mt-10">
+        <h4 class="_mb-0">Time range</h4>
+        <mat-form-field appearance="outline" class="_mr-10 date-time-picker _w-100">
+            <mat-label>From</mat-label>
+            <input matInput [ngxMatDatetimePicker]="fromPicker" placeholder="Choose a date" (dateChange)="onSelectFromDate($event)" [(ngModel)]="fromDate" readonly>
+            <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #fromPicker [showSeconds]="true" [enableMeridian]="true">
+            </ngx-mat-datetime-picker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="_mr-10 date-time-picker _w-100">
+            <mat-label>To</mat-label>
+            <input matInput [ngxMatDatetimePicker]="toPicker" placeholder="Choose a date" (dateChange)="onSelectToDate($event)" [(ngModel)]="toDate" readonly>
+            <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #toPicker [showSeconds]="true" [enableMeridian]="true">
+            </ngx-mat-datetime-picker>
+        </mat-form-field>
+    </div>
+    <div class="_mt-10 _w-100">
+        <multi-select-search [itemList]="employeeList" 
+            [filterKey]="'employeeName'" 
+            [selected]="selectedEmployees"
+            [title]="'Logged Employee'" 
+            [applyClass]="'_mr-10 _w-100'"
+            (callback)="filterEmployee($event)"></multi-select-search>
+    </div>
+    <div class="_mt-10 _w-100">
+        <mat-form-field appearance="outline" class=" _w-100">
+            <mat-label>Log Level</mat-label>
+            <mat-select multiple (selectionChange)="handleLogLevel($event)" [formControl]="logLevelFormControl">
+                <mat-option *ngFor="let level of logLevels" [value]="level.value">
+                    {{level.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>

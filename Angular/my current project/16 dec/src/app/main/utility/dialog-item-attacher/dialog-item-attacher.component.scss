@@ -1,0 +1,31 @@
+@import '../../../../assets/css/variables';
+// @import '../../../../assets/css/common';
+
+.tabular-container {
+    width: 100%;
+    display: table;
+    table-layout: fiexed;
+    padding: 5px 10px;
+}
+
+.tabular-container .column {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.hr-seperator {
+    border-bottom: solid 1px $gray-color;
+}
+
+.save-btn {
+    background: $green-color !important;
+    color: $white-color;
+    text-transform: capitalize;
+    margin-right: 15px;
+}
+.close-icon {
+    // @include commonIcon('close');
+}
+.refresh-icon {
+    // @include commonIcon('reload');
+}

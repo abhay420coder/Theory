@@ -1,0 +1,132 @@
+<div class="_mt-10">
+    <search-box (onChange)="handleRoleBindingSearch($event)"></search-box>
+</div>
+
+<div class="_mt-10">
+    <div class="_flex-box _sub-heading _padding-general" *ngIf="roleBindingData.length">
+        <div class="_mr-10" style="width: 250px;">Name</div>
+        <div class="_mr-10" style="width: 300px;">Role</div>
+        <div class="_flex-1">Created(Age)</div>
+    </div>
+    <!-- skeleton template for role-binding -->
+    <div class="card-container role-binding-list" *ngIf="roleBindingLoading">
+        <div *ngFor="let role of endpointSkeletonCount" class="list _jc-sb">
+            <div class="_mr-10" style="width: 250px;">
+                <ngx-skeleton-loader count="1" [theme]="{ 
+                    'display': 'block',
+                    'border-radius': '5px',
+                    'height': '12px',
+                    'width': '120px',
+                    'line-height': '20px',
+                    'margin-bottom': '0',
+                    'border': '1px solid white'
+                }"></ngx-skeleton-loader>
+            </div>
+            <div style="width: 300px;" class="_mr-10">
+                <ngx-skeleton-loader count="1" [theme]="{ 
+                    'display': 'block',
+                    'border-radius': '5px',
+                    'height': '12px',
+                    'width': '130px',
+                    'line-height': '20px',
+                    'margin-bottom': '0',
+                    'border': '1px solid white'
+                }"></ngx-skeleton-loader>
+            </div>
+            <div class="_flex-1">
+                <ngx-skeleton-loader count="1" [theme]="{ 
+                    'display': 'block',
+                    'border-radius': '5px',
+                    'height': '12px',
+                    'width': '150px',
+                    'line-height': '20px',
+                    'margin-bottom': '0',
+                    'border': '1px solid white'
+                }"></ngx-skeleton-loader>
+            </div>
+        </div>
+    </div>
+    <!-- skeleton template ends -->
+    <div *ngIf="!roleBindingLoading">
+        <!-- <h4 *ngIf="syncedRoleBinding.length" class="_pt-15">Synced K8S Role Binding</h4> -->
+        <div class="_flex-box _sub-heading _padding-general" *ngIf="syncedRoleBinding.length">
+            <div class="_mr-10" style="width: 250px;">Name</div>
+            <div class="_mr-10" style="width: 300px;">Role</div>
+            <div class="_flex-1">Created(Age)</div>
+        </div>
+        <div class="card-container role-binding-list">
+            <ng-container *ngFor="let role of syncedRoleBinding">
+                <div class="list _jc-sb" [ngClass]="{'unsynced': role?.dbData?.status === 'FAILURE'}"
+                    *ngIf="role.visible">
+                    <div class="_mr-10" style="width: 250px;">{{role&&role.metadata?role.metadata.name:""}}</div>
+                    <div style="width: 300px;" class="_mr-10">
+                        {{role&&role.roleRef?role.roleRef.kind:""}}/{{role&&role.roleRef?role.roleRef.name:""}}</div>
+                    <div class="_flex-1">{{role.metadata.creationTimestamp | formatteddate:"MMM D, YYYY h:mm:ss A":true}}
+                        ({{role.metadata.creationTimestamp | fromnow}})</div>
+                    <div class="_flex-box _pt-10 _jc-r" *ngIf="role&&role.dbData">
+                        <button class="_warning-icon" *ngIf="role.dbData?.status==='FAILURE'" mat-icon-button
+                            matTooltip="Error. Click for details" (click)="showErrorPopUp(role.dbData?.statusDisc)">
+                        </button>
+                        <button mat-icon-button *ngIf="role.dbData.actions&&role.dbData.actions.includes('update')"
+                            matTooltip="Patch Service" class="_edit-icon" (click)="patchRoleBinding(role.dbData)">
+                        </button>
+                        <button mat-icon-button *ngIf="role.dbData.actions&&role.dbData.actions.includes('update')"
+                            matTooltip="Replace Service" class="_redeploy-icon"
+                            (click)="replaceRoleBinding(role.dbData)">
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <h4 *ngIf="unsyncedRoleBindingDb.length" class="_pt-15">Failed K8S Role Binding</h4>
+        <div class="_flex-box _sub-heading _padding-general" *ngIf="unsyncedRoleBindingDb.length">
+            <div class="_mr-10" style="width: 250px;">Name</div>
+            <div class="_mr-10" style="width: 300px;">Role</div>
+            <div class="_flex-1">Created(Age)</div>
+        </div>
+        <div class="card-container role-binding-list">
+            <ng-container *ngFor="let role of unsyncedRoleBindingDb">
+                <div class="list _jc-sb unsynced" *ngIf="role.visible">
+                    <div class="_mr-10" style="width: 250px;">{{role?.name}}</div>
+                    <!-- <div style="width: 300px;" class="_mr-10">{{role&&role.roleRef?role.roleRef.kind:""}}/{{role&&role.roleRef?role.roleRef.name:""}}</div> -->
+                    <!-- <div class="_flex-1">{{role.metadata.creationTimestamp | formatteddate:"MMM D, YYYY h:mm:ss A"}} ({{role.metadata.creationTimestamp | fromnow}})</div> -->
+                    <div class="_flex-box _pt-10 _jc-r" *ngIf="role">
+                        <button class="_warning-icon" *ngIf="role.status==='FAILURE'" mat-icon-button
+                            matTooltip="Error. Click for details" (click)="showErrorPopUp(role.statusDisc)">
+                        </button>
+                        <button mat-icon-button *ngIf="role.actions&&role.actions.includes('update')"
+                            matTooltip="Retry Role Binding" class="_refresh-icon" (click)="retryRoleBinding(role)">
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <!-- <div *ngIf="!syncedRoleBinding.length" class="_w-100 _text-center _mt-10">No data available</div> -->
+        <h4 *ngIf="unsyncedRoleBinding.length" class="_pt-15">Unsynced K8S Role Binding</h4>
+        <div class="_flex-box _sub-heading _padding-general" *ngIf="unsyncedRoleBinding.length">
+            <div class="_mr-10" style="width: 250px;">Name</div>
+            <div class="_mr-10" style="width: 300px;">Role</div>
+            <div class="_flex-1">Created(Age)</div>
+        </div>
+        <div class="card-container role-binding-list">
+            <ng-container *ngFor="let role of unsyncedRoleBinding">
+                <div class="list _jc-sb" *ngIf="role.visible">
+                    <div class="_mr-10" style="width: 250px;">{{role&&role.metadata?role.metadata.name:""}}</div>
+                    <div style="width: 300px;" class="_mr-10">
+                        {{role&&role.roleRef?role.roleRef.kind:""}}/{{role&&role.roleRef?role.roleRef.name:""}}</div>
+                    <div class="_flex-1">{{role.metadata.creationTimestamp | formatteddate:"MMM D, YYYY h:mm:ss A":true}}
+                        ({{role.metadata.creationTimestamp | fromnow}})</div>
+                    <div class="_flex-box _pt-10 _jc-r" *ngIf="role&&role.dbData">
+                        <!--  <button mat-icon-button *ngIf="role.dbData.actions&&role.dbData.actions.includes('update')"
+                            matTooltip="Patch Service" class="_edit-icon" (click)="patchRoleBinding(role.dbData)">
+                        </button>
+                        <button mat-icon-button *ngIf="role.dbData.actions&&role.dbData.actions.includes('update')"
+                            matTooltip="Replace Service" class="_redeploy-icon"
+                            (click)="replaceRoleBinding(role.dbData)">
+                        </button> -->
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

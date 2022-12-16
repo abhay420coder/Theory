@@ -1,0 +1,25 @@
+<div 
+    class="_flex-box _cursor-pointer nav-item selectable"
+    [id]="data.url"
+    [routerLink]="data.url" 
+    [routerLinkActive]="'_active-link'"
+    [style.padding-left.px]="leftPadding"
+    *ngIf="!data.children.length&&!data.disabled">
+        <div class="_flex-box">
+            <div [class]="data.iconClass"></div>
+            <div>{{data.displayName}}</div>
+        </div>
+</div>
+<mat-expansion-panel *ngIf="data.children.length&&!data.disabled" class="nav-item" [expanded]="getExpansionState()">
+    <mat-expansion-panel-header [style.padding-left.px]="leftPadding">
+        <mat-panel-title  [ngClass]="getAdditionalClass()">
+            <div class="_flex-box">
+                <div [class]="data.iconClass"></div>
+                <div>{{data.displayName}}</div>
+            </div>
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="panel-body">
+        <nav-item *ngFor="let item of data.children" [data]="item" [depth]="depth+1"></nav-item>
+    </div>
+</mat-expansion-panel>

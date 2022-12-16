@@ -1,0 +1,46 @@
+//mobile view
+@media only screen and (max-width: 576px){
+  .main-sidenav{
+    width: 70vw !important;
+  }
+}
+
+// tablet view
+@media only screen and (min-width: 577px) and (max-width: 992px){
+  .main-sidenav{
+    width: 30vw !important;
+  }
+}
+
+::ng-deep .main-container .mat-drawer-content{
+  overflow: hidden;
+}
+
+.main-container {
+  width: 100%;
+  height: calc(100vh - 50px);
+}
+
+.main-sidenav-content {
+  height: 100%;
+}
+
+.main-sidenav {
+  // padding: 20px;
+  width: 18vw;
+}
+
+.company-logo {
+  height: 45px;
+  width: 80px;
+  background: url("/assets/images/business-logo.png");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.nav-item{
+  min-height: 50px;
+  border-bottom: 1px solid #e1e1e1;
+}

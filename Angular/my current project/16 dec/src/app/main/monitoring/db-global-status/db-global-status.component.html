@@ -1,0 +1,50 @@
+<div> 
+    <mat-tab-group  (selectedTabChange)="handleTabChange($event)">
+        <mat-tab label="Information Schema">
+            <div *ngIf="loading">
+                <ngx-skeleton-loader count="500" [theme]="{ 
+                    'border-radius': '5px',
+                    width : '200px',
+                    height: '105px',
+                    'margin-top': '20px',
+                    border: '1px solid white'
+                  }"></ngx-skeleton-loader>
+            </div>
+            
+            <div *ngIf="!loading" class="_flex-box _flex-wrap _mt-10">
+                <div class="card small-card _mr-10 _mb-10" *ngFor="let data of InformationPayload">
+                    <div class="title _flex-box _flex-wrap">
+                        <div class="_w-80">{{data.VARIABLE_NAME | split : "_" |titlecase}}</div> 
+                        <div class="_w-10" [matTooltip]="data.VARIABLE_NAME | globalStatusDescripton : desk"
+                        class="info _info-icon-raw _ml-10 _cursor-pointer"></div>  
+                    </div>
+                    <div class="data">{{data.VARIABLE_VALUE}}</div>
+                </div>
+            </div>
+        </mat-tab>
+
+
+        <mat-tab label="Performance Schema">
+            <div *ngIf="loading">
+                <ngx-skeleton-loader count="500" [theme]="{ 
+                    'border-radius': '5px',
+                    width : '200px',
+                    height: '105px',
+                    'margin-top': '20px',
+                    border: '1px solid white'
+                  }"></ngx-skeleton-loader>
+            </div>
+
+            <div *ngIf="!loading" class="_flex-box _flex-wrap _mt-10">
+                <div class="card small-card _mr-10 _mb-10" *ngFor="let data of PerformancePayload">
+                    <div class="title _flex-box _flex-wrap">
+                        <div class="_w-80">{{data.VARIABLE_NAME | split : "_" |titlecase}}</div> 
+                        <div class="_w-10" [matTooltip]="data.VARIABLE_NAME | globalStatusDescripton : desk"
+                        class="info _info-icon-raw _ml-10 _cursor-pointer"></div>  
+                    </div>
+                    <div class="data">{{data.VARIABLE_VALUE}}</div>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

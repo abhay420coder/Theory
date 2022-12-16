@@ -1,0 +1,164 @@
+<div class="_mt-10">
+    <search-box (onChange)="handleEndpointSearch($event)"></search-box>
+</div>
+<!-- skeleton template for Endpoints -->
+<div class="_flex-box _mb-10 _ai-stretch" *ngIf="endpointsLoading">
+    <div class="endpoint-card _p-10 _mr-10 _flex-column" *ngFor="let item of endpointSkeletonCount">
+        <div class="header _flex-box _ai-start">
+            <ngx-skeleton-loader count="1" [theme]="{ 
+                'border-radius': '10px',
+                'height': '20px',
+                'width': '20px',
+                'margin-bottom': '0px',
+                'border': '1px solid white'
+            }"></ngx-skeleton-loader>
+            <div class="_flex-column _ml-10">
+                <ngx-skeleton-loader count="1" [theme]="{ 
+                    'border-radius': '5px',
+                    'height': '20px',
+                    'width': '140px',
+                    'margin-bottom': '0px',
+                    'border': '1px solid white'
+                }"></ngx-skeleton-loader>
+                <ngx-skeleton-loader count="1" [theme]="{ 
+                    'border-radius': '5px',
+                    'height': '11px',
+                    'width': '80px',
+                    'line-height': '20px',
+                    'margin-bottom': '0px',
+                    'border': '1px solid white'
+                }"></ngx-skeleton-loader>
+            </div>
+        </div>
+        <div class="_flex-column _mt-10">
+            <ngx-skeleton-loader count="1" [theme]="{ 
+                'display': 'block',
+                'border-radius': '5px',
+                'height': '11px',
+                'width': '120px',
+                'line-height': '20px',
+                'margin-bottom': '5px',
+                'margin-left': '30px',
+                'border': '1px solid white'
+            }"></ngx-skeleton-loader>
+        </div>
+    </div>
+</div>
+<!-- endpoint skeleton template Ends -->
+<ng-container *ngIf="!endpointsLoading">
+    <div class="_flex-box _mb-10 _ai-stretch _flex-wrap">
+        <ng-container *ngFor="let endpoint of k8sEndpointsData">
+            <div class="endpoint-card _p-10 _mr-10 _mb-10 _flex-column" *ngIf="endpoint.visible" [ngClass]="{'unsynced': endpoint?.dbData?.status === 'FAILURE'}">
+                <div class="header _flex-box _ai-start">
+                    <div class="_mr-10 _flex-box _dynamic-icon"
+                        [dynamicBgIcon]="'/assets/icons/services/' + getServiceName(endpoint.metadata.name) + '.svg'">
+                    </div>
+                    <div class="_flex-column">
+                        <span class="_d-block">
+                            <span>{{endpoint.metadata.name}}</span>
+                        </span>
+                        <span class="secondary-text">Age: {{endpoint.metadata.creationTimestamp |
+                            fromnow:true}}</span>
+                    </div>
+                </div>
+                <div class="_flex-column _mt-10">
+                    <div *ngFor="let subset of endpoint.subsets">
+                        <ng-container *ngIf="subset.notReadyAddresses">
+                            <div class="ip-address not-ready"
+                                *ngFor="let address of subset.notReadyAddresses; let i=index" matTooltip="Not Ready">
+                                {{address.ip}}:{{subset.ports[0].port}}
+                                ({{subset.ports[0].protocol}})
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="subset.addresses">
+                            <div class="ip-address ready" *ngFor="let address of subset.addresses; let i=index"
+                                matTooltip="Ready">
+                                {{address.ip}}:{{subset.ports[0].port}}
+                                ({{subset.ports[0].protocol}})
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <hr class="_w-100" *ngIf="endpoint&&endpoint.dbData">
+                <div class="_flex-box _pt-10 _jc-r" *ngIf="endpoint&&endpoint.dbData">
+                    <button class="_warning-icon" *ngIf="endpoint.dbData?.status==='FAILURE'" mat-icon-button
+                        matTooltip="Error. Click for details" (click)="showErrorPopUp(endpoint.dbData?.statusDisc)">
+                    </button>
+                    <button mat-icon-button *ngIf="endpoint.dbData.actions&&endpoint.dbData.actions.includes('update')"
+                        matTooltip="Patch Endpoint" class="_edit-icon" (click)="patchEndpoint(endpoint.dbData)">
+                    </button>
+                    <button mat-icon-button *ngIf="endpoint.dbData.actions&&endpoint.dbData.actions.includes('update')"
+                        matTooltip="Replace Endpoint" class="_redeploy-icon" (click)="replaceEndpoint(endpoint.dbData)">
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+        <!-- <div *ngIf="!k8sEndpointsData.length" class="_w-100 _text-center">No data available</div> -->
+    </div>
+    <h4 *ngIf="unsyncedK8sEndpointsDb.length">Failed K8s Endpoints</h4>
+    <div class="_flex-box _mb-10 _ai-stretch _flex-wrap">
+        <ng-container *ngFor="let endpoint of unsyncedK8sEndpointsDb">
+            <div class="endpoint-card unsynced _p-10 _mr-10 _mb-10 _flex-column" *ngIf="endpoint.visible">
+                <div class="header _flex-box _ai-start">
+                    <!-- <div class="_mr-10 _flex-box _dynamic-icon" 
+                        [dynamicBgIcon]="'/assets/icons/services/' + getServiceName(endpoint.metadata.name) + '.svg'">
+                    </div> -->
+                    <div class="_flex-column">
+                        <span class="_d-block">
+                            <span>{{endpoint.name}}</span>
+                        </span>
+                        <!-- <span class="secondary-text">Age: {{endpoint.metadata.creationTimestamp | fromnow:false}}</span> -->
+                    </div>
+                </div>
+                <hr class="_w-100" *ngIf="endpoint&&endpoint.actions">
+                <div class="_flex-box _pt-10 _jc-r" *ngIf="endpoint&&endpoint.actions">
+                    <button mat-icon-button *ngIf="endpoint.actions&&endpoint.actions.includes('update')"
+                        matTooltip="Retry Endpoint" class="_refresh-icon" (click)="retryEndpoint(endpoint)">
+                    </button>
+                    <button class="_warning-icon" *ngIf="endpoint?.status==='FAILURE'" mat-icon-button
+                        matTooltip="Error. Click for details" (click)="showErrorPopUp(endpoint?.statusDisc)">
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+        <!-- <div *ngIf="!unsyncedK8sEndpointsDb.length" class="_w-100 _text-center">No data available</div> -->
+    </div>
+    <h4 *ngIf="unsyncedK8sEndpointsData.length">Unsynced K8s Endpoints</h4>
+    <div class="_flex-box _mb-10 _ai-stretch _flex-wrap">
+        <ng-container *ngFor="let endpoint of unsyncedK8sEndpointsData">
+            <div class="endpoint-card _p-10 _mr-10 _mb-10 _flex-column" *ngIf="endpoint.visible">
+                <div class="header _flex-box _ai-start">
+                    <div class="_mr-10 _flex-box _dynamic-icon"
+                        [dynamicBgIcon]="'/assets/icons/services/' + getServiceName(endpoint.metadata.name) + '.svg'">
+                    </div>
+                    <div class="_flex-column">
+                        <span class="_d-block">
+                            <span>{{endpoint.metadata.name}}</span>
+                        </span>
+                        <span class="secondary-text">Age: {{endpoint.metadata.creationTimestamp |
+                            fromnow:true}}</span>
+                    </div>
+                </div>
+                <div class="_flex-column _mt-10">
+                    <div *ngFor="let subset of endpoint.subsets">
+                        <ng-container *ngIf="subset.notReadyAddresses">
+                            <div class="ip-address not-ready"
+                                *ngFor="let address of subset.notReadyAddresses; let i=index" matTooltip="Not Ready">
+                                {{address.ip}}:{{subset.ports[0].port}}
+                                ({{subset.ports[0].protocol}})
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="subset.addresses">
+                            <div class="ip-address ready" *ngFor="let address of subset.addresses; let i=index"
+                                matTooltip="Ready">
+                                {{address.ip}}:{{subset.ports[0].port}}
+                                ({{subset.ports[0].protocol}})
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <!-- <div *ngIf="!unsyncedK8sEndpointsData.length" class="_w-100 _text-center">No data available</div> -->
+    </div>
+</ng-container>

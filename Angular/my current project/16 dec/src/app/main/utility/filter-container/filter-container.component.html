@@ -1,0 +1,78 @@
+<div class="container _border-general hideTopBorder">
+  <div class="custom-header">
+    <div class="_flex-1"><b>Condition Configuration</b></div>
+    <button mat-stroked-button (click)="clearFilter()">
+      Clear Filter
+    </button>
+    <button mat-stroked-button class="mat-btn-success _ml-5 _mr-10" (click)="saveOptionExpression()">
+      Save
+    </button>
+    <span class="_theme-link _cursor-pointer" (click)="showTools = !showTools">Advanced Tools</span>
+  </div>
+  <div class="_flex-box" style="height: calc(50vh - 50px)">
+    <div class="left-vertical-bar" *ngIf="!expressionData.warning">
+      <mat-form-field class="_custom-mat-input select-panel-top _w-100">
+        <input matInput type="text" placeholder="Variable Name" [(ngModel)]="searchKey"
+          name="Variable Name" (callBack)="searchVariables()" inputDebounce>
+      </mat-form-field>
+      <div class="scrollableContent" infinite-scroll [scrollWindow]="false" *ngIf="!loadingItems">
+        <div *ngFor="let variable of recentlyUsedVars" class="_simple-list custom-padding _cursor-pointer"
+          (click)="addItemToOptionExp(variable.variableName,'variable',variable)">
+          {{variable?.variableDisplayName || variable?.variableDisplayName | titlecase}}
+        </div>
+      </div>
+      <div class="scrollableContent" *ngIf="loadingItems">
+        <!-- <list-loader [loaderItems]="loaderItems"></list-loader> -->
+      </div>
+    </div>
+    <div class="_flex-box _justify-content-center _w-100 warning-message" *ngIf="expressionData.warning">
+      <span class="warning-icon"></span> {{expressionData.warning}}
+    </div>
+    <div class="_flex-1 middle-box" style="padding-left: 20px;">
+      <div dragula="expItems" [(dragulaModel)]="conditionExp">
+        <div class="element-box" *ngFor="let expItem of conditionExp;let expIndex = index;"
+          [class.editable]="expItem['type'] === 'literals'">
+          <span *ngIf="expItem['type'] !== 'literals' && expItem['type'] !== 'date'">
+            {{expItem.displayName ||  expItem['value'] | titlecase}}
+          </span>
+          <input [(ngModel)]="expItem['value']" class="styleInput" style="width: 90px;" name="{{'literals'+expIndex}}"
+            *ngIf="expItem['type'] === 'literals'">
+          <mat-form-field   class="_custom-mat-input styleInput _p-0" style="height: 0px"
+            *ngIf="expItem['type'] === 'date'">
+            <input matInput [matDatepicker]="datePicker" [(ngModel)]="expItem['value']">
+            <mat-datepicker-toggle matSuffix [for]="datePicker">
+              <span matDatepickerToggleIcon class="date-picker-icon"></span>
+            </mat-datepicker-toggle>
+            <mat-datepicker #datePicker></mat-datepicker>
+          </mat-form-field>
+          <span [matMenuTriggerFor]="menu" class="_menu-icon-black menu-vert more"></span>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item class="_red-text"
+              (click)="conditionExp.splice(expIndex,1)">Delete</button>
+            <button mat-menu-item (click)="expItem['value'] = 'OR'" *ngIf="expItem['value'] === 'AND'">
+              Replace with OR</button>
+            <button mat-menu-item (click)="expItem['value'] = 'AND'" *ngIf="expItem['value'] === 'OR'">
+              Replace with AND</button>
+          </mat-menu>
+        </div>
+      </div>
+    </div>
+    <div class="right-vertical-bar" *ngIf="showTools">
+      <div class="_mt-10 _w-100">
+        <div class="header-label">Expression Tools</div>
+        <div class="_flex-box _flex-wrap _mt-10">
+          <button mat-stroked-button class="tool-btn" *ngFor="let exprTool of exprToolList"
+            (click)="addItemToOptionExp(exprTool,'operator')">
+            {{exprTool}}
+          </button>
+          <button mat-stroked-button class="tool-btn" (click)="addItemToOptionExp('abc','literals')">
+            Literals
+          </button>
+          <button mat-stroked-button class="tool-btn" (click)="addItemToOptionExp('currentDate','date')">
+            Date
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

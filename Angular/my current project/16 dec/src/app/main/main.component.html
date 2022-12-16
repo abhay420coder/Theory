@@ -1,0 +1,50 @@
+<navbar [navState]="navbarOpen" (navClick)="handleNavClick($event)"></navbar>
+<mat-drawer-container class="main-container" autosize>
+  <mat-drawer #drawer class="main-sidenav " [mode]="sideNavMode" [opened]="navbarOpen">   
+    <!-- <div class="">
+      <div [routerLink]="'service'" class="list _cursor-pointer" [routerLinkActive]="'_active-link'">Services</div>
+      <div id="service-release" [routerLink]="'service-release'" class="list _cursor-pointer" [routerLinkActive]="'_active-link'">Service Release</div>
+      <div [routerLink]="'release-train'" class="list _cursor-pointer" [routerLinkActive]="'_active-link'">Release Train</div>
+      <div [routerLink]="'kubernetes-namespace'" class="list _cursor-pointer" [routerLinkActive]="'_active-link'">K8s Namespace</div>
+      <div [routerLink]="'rt-deployments'" class="list _cursor-pointer" [routerLinkActive]="'_active-link'">Release Train Deployment</div>
+    </div> -->
+    <div *ngIf="navLoading">
+      <div class="_flex-box nav-item" *ngFor="let item of skeletonCount">
+        <div>
+          <ngx-skeleton-loader count="1" [theme]="{ 
+            'border-radius': '5px',
+            'height': '20px',
+            'width': '20px',
+            'margin': '0',
+            'margin-left': '10px',
+            'margin-top': '10px',
+            'border': '1px solid white'
+          }"></ngx-skeleton-loader>
+        </div>
+        <div>
+          <ngx-skeleton-loader count="1" [theme]="{ 
+            'border-radius': '5px',
+            'height': '14px',
+            'width': '150px',
+            'margin': '0',
+            'margin-left': '10px',
+            'margin-top': '10px',
+            'border': '1px solid white'
+          }"></ngx-skeleton-loader>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!navLoading">
+      <div *ngFor="let menuItem of navMenu">
+        <nav-item [data]="menuItem" [depth]="1"></nav-item>
+      </div>
+    </div>
+  </mat-drawer>
+
+  <div class="main-sidenav-content">
+    <!-- <div> -->
+      <router-outlet></router-outlet>
+    <!-- </div> -->
+  </div>
+
+</mat-drawer-container>

@@ -1,0 +1,15 @@
+@import '../../../assets/css/_variables.scss';
+
+.release-train-list{
+    max-height: calc(100% - 140px);
+    position: relative;
+    overflow: auto;
+}
+
+.serRelBox {
+    min-width: 45%;
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    height: 40px;
+    background-color: #0091e530;
+}

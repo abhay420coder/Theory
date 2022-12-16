@@ -1,0 +1,22 @@
+.nav-item {
+    box-shadow: none;
+}
+
+::ng-deep .nav-item .mat-expansion-panel-header{
+    padding-right: 16px !important;
+}
+
+::ng-deep .nav-item .mat-expansion-panel-body{
+    padding: 0 !important;
+}
+
+.nav-item{
+    min-height: 50px;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.selectable{
+    &:hover{
+        background-color: #eeeeee;
+    }
+}

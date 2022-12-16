@@ -1,0 +1,85 @@
+<div class="container _h-100 _p-10 _overflow-hidden">
+    <div *ngIf="rtObj">
+        <div class="_flex-box _jc-sb">
+            <div class="_flex-box _jc-sb">
+                <button mat-icon-button (click)="navigateBack()" class="_back-icon">
+                </button>
+                <h1 class="_mb-0 _ml-10">{{rtObj.rtName}}</h1>
+            </div>
+            <button mat-stroked-button (click)="save()">
+                <mat-spinner diameter='20' *ngIf="isSaving"></mat-spinner>
+                <span *ngIf="!isSaving">Save</span>
+            </button>
+        </div>
+        <div>
+            <input type="text" placeholder="Title..." class="title-input" [(ngModel)]="templateObj.name" [ngClass]="{'input-error': titleError}">
+            <p class="_error-status-text _mb-0 _mt-5" *ngIf="titleError">This field is required</p>
+        </div>
+        <mat-tab-group>
+            <mat-tab label="Replicas">
+                <div class="_info-box _mt-10"><strong class="_mr-5">Note:</strong>
+                    Maximum number of replicas is 99.
+                </div>
+                <search-box (onChange)="handleSearch($event)"></search-box>
+                <div *ngIf="loading">
+                    <ngx-skeleton-loader count="6" class="_flex-wrap _flex-box attached-services" [theme]="{ 
+                        'display': 'flex',
+                        'width': '350px',
+                        'height': '40px',
+                        'margin': '10px 10px 0 0'
+                        }"></ngx-skeleton-loader>
+                </div>
+                <div class="_flex-wrap _flex-box attached-services"
+                    infiniteScroll
+                    infiniteScroll
+                    [infiniteScrollDistance]="1"
+                    [infiniteScrollThrottle]="10"
+                    [infiniteScrollContainer]="'.attached-services'"
+                    [fromRoot]="true"
+                    [scrollWindow]="false"
+                    (scrolled)="onScroll()"
+                    *ngIf="!loading">
+                    <div *ngFor="let sr of serReleaseList" class="ser-release-card card _mt-10 _mr-10 _flex-column">
+                        <div class="_flex-box _jc-sb">
+                            <div class="_flex-box">
+                                <div class="_mr-10 _flex-box" style="width: 20px;">
+                                    <img #iconImg src="/assets/icons/services/{{sr.serviceName}}.svg" alt="" srcset="" (error)="iconImg.src='/assets/icons/services/unknown-default.svg'">
+                                </div>
+                                <div>{{sr.serviceName}}</div>
+                            </div>
+                            <div class="_flex-box">
+                                <!-- <span class="material-icons _mr-10 _cursor-pointer" [matTooltip]="sr.releaseNote">info</span> -->
+                                <input type="number" min="1" max="99"
+                                    onKeyPress="if(this.value.length==2) return false;" [(ngModel)]="sr.replicaCount">
+                                <button mat-icon-button class="_edit-icon" (click)="editSpec(sr)" matTooltip="Edit">
+                                </button>
+                                <button mat-icon-button class="" (click)="viewSpec(sr)" matTooltip="View">
+                                    <span class="material-icons">visibility</span>
+                                </button>
+                                <!-- <ng-template #viewLoader>
+                                <mat-spinner diameter='20'></mat-spinner>
+                                </ng-template> -->
+                            </div>
+                        </div>
+                        <div class="_w-100 _text-ellipsis release-note" [matTooltip]="sr.releaseNote&&sr.releaseNote.length>60?sr.releaseNote.length:''">{{sr.releaseNote?sr.releaseNote:"No notes"}}</div>
+                    </div>
+                    <div *ngIf="lastPage" class="_flex-box _h-30 _p-10 _mt-10 _jc-c _w-100">That's all!</div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Specs">
+                <ng-template matTabContent>
+                    <div class="_info-box _mt-10"><strong class="_mr-5">Note:</strong>
+                        This spec applies to all attached service release.
+                        If you want to update individual service release please edit in previous tab.
+                    </div>
+                    <div class="_p-10">
+                        <div *ngIf="editorLoader">Loading Editor...</div>
+                        <ngx-monaco-editor class="editor" [options]="editorOptions" [(ngModel)]="templateObj.spec"
+                            (onInit)="onInit($event)"></ngx-monaco-editor>
+
+                    </div>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

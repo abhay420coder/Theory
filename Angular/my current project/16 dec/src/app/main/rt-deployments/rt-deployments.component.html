@@ -1,0 +1,284 @@
+<div class="container _h-100 _p-10 _overflow-hidden">
+    <div class="_flex-box _jc-sb">
+        <h2>Release Train Deployments</h2>
+        <!-- <button mat-stroked-button (click)="createUpdateRt()">Create a Release Train</button> -->
+    </div>
+    <search-box (onChange)="handleSearch($event)"></search-box>
+    <div *ngIf="loading">
+        <ngx-skeleton-loader count="10" [theme]="{ 
+            'border-radius': '5px',
+            height: '50px',
+            'margin-bottom': '0px',
+            border: '1px solid white'
+          }"></ngx-skeleton-loader>
+    </div>
+    <ng-container *ngIf="!loading">
+        <div *ngIf="!rtDeploymentList.length && !loading else list" class="_flex-box _jc-c _mt-10">No deployments yet.
+        </div>
+        <ng-template #list>
+            <div class="_flex-box _sub-heading _padding-general">
+                <div class="_mr-10" style="width: 35px;"></div>
+                <div class="_mr-10" style="width: 200px;">Namespace</div>
+                <div class="_mr-10" style="width: 100px;">Tag</div>
+                <div class="_mr-10" style="width: 100px;">Status</div>
+                <div class="_mr-10" style="width: 150px;">Release Train</div>
+                <div class="_mr-10" style="width: 100px;">Last Deployed</div>
+                <div class="_mr-10" style="width: 150px;">Deployed By</div>
+            </div>
+            <div class="card-container rt-deployment-list"
+                infiniteScroll
+                infiniteScroll
+                [infiniteScrollDistance]="1"
+                [infiniteScrollThrottle]="10"
+                [infiniteScrollContainer]="'.rt-deployment-list'"
+                [fromRoot]="true"
+                [scrollWindow]="false"
+                (scrolled)="onScroll()">
+                <mat-accordion displayMode='flat' multi='true'>
+                    <mat-expansion-panel 
+                        *ngFor="let rtDeployment of rtDeploymentList" 
+                        class="expansion-list _jc-sb rtDeployment-item"
+                        [expanded]="rtDeployment&&rtDeployment.deploymentId===expandedItem"
+                        (opened)="getSerRel(rtDeployment)"
+                        (closed)="clearExpandedItem(rtDeployment)">
+                        <mat-expansion-panel-header class="_flex-box panel-header">
+                            <div class="_mr-10 _flex-box " style="width: 35px;"  >
+                                <button mat-icon-button  
+                                    class="_lock-icon _m-0 " 
+                                    [ngClass]="{'_inactive-icon': !rtDeployment.isLocked, '_green-icon':rtDeployment.isLocked}"
+                                    (click)="lockDescription(rtDeployment) ; $event.stopPropagation();"
+                                    [matTooltip]="rtDeployment?.activeLockUnlockInfo?.actionDescription?rtDeployment?.activeLockUnlockInfo?.actionDescription:'No Lock Description'">
+                                </button>
+                            </div>
+                            <div class="_mr-10 _flex-box " style="width: 200px;" 
+                                [matTooltip]="rtDeployment.deploymentNamespace.length>11?rtDeployment.deploymentNamespace:''">
+                                    <span class="_text-ellipsis">{{rtDeployment.deploymentNamespace}}</span>
+                            </div>
+                            <div style="width: 100px;" class="_mr-10 _flex-box" 
+                                [matTooltip]="rtDeployment.deploymentTag.length>11?rtDeployment.deploymentTag:''">
+                                    <span class="_text-ellipsis">{{rtDeployment.deploymentTag}}</span>
+                            </div>
+                            <div class="_mr-10" style="width: 100px;" [ngClass]="rtDeployment.deploymentStatus | statuscolor" class="_mr-10 _flex-box">
+                                {{rtDeployment.deploymentStatus |
+                                titlecase}}</div>
+                            <div class="_mr-10 _flex-box" style="width: 150px;" 
+                                [matTooltip]="rtDeployment.releaseTrainName.length>30?rtDeployment.releaseTrainName:''">
+                                    <span class="_text-ellipsis">{{rtDeployment.releaseTrainName}}</span>
+                            </div>
+                            <div class="_mr-10 dateTime" style="width: 100px;">
+                                <div>{{rtDeployment.deploymentLastModified | formatteddate:'MMM D, YYYY':true}}</div>
+                                <div>{{rtDeployment.deploymentLastModified | formatteddate:'h:mm A':true}}</div>
+                            </div>
+                            <div 
+                                class="_mr-10 _flex-box " 
+                                style="width: 220px;"
+                                [matTooltip]="(rtDeployment.deploymentLastModifiedBy | employeename:employeeDetailData).length>30?(rtDeployment.deploymentLastModifiedBy | employeename:employeeDetailData):''">
+                                    <span class="_text-ellipsis">{{rtDeployment.deploymentLastModifiedBy | employeename:employeeDetailData}}</span>
+                                    
+                            </div>
+                            <div class="actions _mr-10" (click)="$event.stopPropagation()">
+                                <span *ngIf="!rtDeployment.isLocked">
+                                    <button mat-icon-button 
+                                        (click)="addServiceRel(rtDeployment)" 
+                                        matTooltip="Deploy New Service Release" 
+                                        class="_add-service-release-icon">
+                                    </button>
+                                    <button mat-icon-button 
+                                        *ngIf="rtDeployment&&rtDeployment.deploymentId===expandedItem"
+                                        (click)="refreshServiceList(rtDeployment)" 
+                                        matTooltip="Refresh Service List" 
+                                        class="_refresh-icon">
+                                    </button>
+                                    <button mat-icon-button 
+                                        *ngIf="rtDeployment.actions.includes('re-deploy')"
+                                        (click)="redeploy(rtDeployment)" 
+                                        matTooltip="Re-deploy" 
+                                        class="_redeploy-icon">
+                                    </button>
+                                </span>
+                                <span>
+                                    <button mat-icon-button 
+                                        [routerLink]="['./deployment-history/deployment/'+rtDeployment.deploymentId]"
+                                        matTooltip="Deployment History" 
+                                        class="_deployment-history-icon">
+                                    </button>
+                                </span>
+                                <!-- (click)="lockedRtDeployment(rtDeployment)"  -->
+                                <span>
+                                    <!-- lockedDeployemnt by Abhay  -->
+                                    <button *ngIf="canCurrentUserLock" mat-icon-button (click)="lockDeployment(rtDeployment)" 
+                                        class="_black-icon"
+                                        [matTooltip]="rtDeployment.isLocked ? 'Unlock Deployemnt':'Lock Deployemnt'" 
+                                        [class]="rtDeployment.isLocked ? '_unlock-icon':'_lock-icon'">
+                                    </button>
+                                </span>
+                                
+                                <!-- <button mat-icon-button *ngIf="rtDeployment.actions.includes('delete')"
+                                    (click)="deleteRtDeployment(rtDeployment)" matTooltip="Delete" class="_delete-icon">
+                                </button> -->
+                            </div>
+                        </mat-expansion-panel-header>
+                        <ng-template matExpansionPanelContent>
+                            <div class="_flex-box">
+                                <div class="_w-70">
+                                    <search-box (onChange)="handleSerSearch(rtDeployment, $event)"></search-box>
+                                </div>
+                                <div class="_w-30  _flex-box">
+                                    <!-- one  tab status filter -->
+                                    <mat-form-field appearance="outline" class=" _w-50  _ml-10">
+                                        <mat-label>Status</mat-label>
+                                        <mat-select #matRef multiple (selectionChange)="filterStatus($event)"
+                                            [formControl]="statusControl">
+
+                                            <mat-option *ngFor="let groupFilter of status" [value]="groupFilter.value">
+                                                {{groupFilter.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <!-- one  tab pods filter -->
+                                    <mat-form-field appearance="outline" class="  _w-50 _ml-10">
+                                        <mat-label>Pods</mat-label>
+                                        <mat-select #matRef multiple (selectionChange)="filterPods($event)"
+                                            [formControl]="podsControl">
+
+                                            <mat-option *ngFor="let groupFilter of pods" [value]="groupFilter.value">
+                                                {{groupFilter.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div *ngIf="loadingSerRel">
+                                <ngx-skeleton-loader count="4" [theme]="{ 
+                                    'border-radius': '5px',
+                                    height: '50px',
+                                    'margin-bottom': '0px',
+                                    border: '1px solid white'
+                                }"></ngx-skeleton-loader>
+                            </div>
+                            <div class="_flex-box _jc-c" *ngIf="filtersSerRelObv.length===0&&!loadingSerRel">No services yet</div>
+                            <div class="_flex-box _jc-sb _flex-wrap">
+                                <div *ngFor="let ser of filtersSerRelObv"
+                                    class="serRelBox _flex-box _jc-sb _pl-10 _pr-10 _mr-10 _mt-10"
+                                    [ngClass]="getClass(ser.deploymentStatus)">
+                                    <div class="_flex-box _w-100">
+                                        <div class="_flex-box _w-70">
+                                            <div class="_flex-column _jc-c _mr-10">
+                                                <div class="_dynamic-icon _ml-0 _mb-5" style="width: 20px;"
+                                                    [dynamicBgIcon]="'/assets/icons/services/' + ser.serviceName + '.svg'">
+                                                </div>
+                                                <status-tag 
+                                                    class="_jc-c"
+                                                    [size]="'icon-only'" 
+                                                    [type]="
+                                                        successKeywords.includes(ser.deploymentStatus)?'success':
+                                                        failureKeywords.includes(ser.deploymentStatus)?'error':'info'"
+                                                    [matTooltip]="
+                                                        failureKeywords.includes(ser.deploymentStatus)?'Error':
+                                                        successKeywords.includes(ser.deploymentStatus)?'Success':'Pending'"></status-tag>
+                                            </div>
+                                            <div class="_flex-column">
+                                                <div>{{ser.serviceName}}</div>
+                                                <div class="dateTime">
+                                                    <div>{{ser.deploymentLastModified | formatteddate:"MMM D, YYYY h:mm:ss A":true}}</div>
+                                                    <!-- <div>{{getDate(rtDeployment.deploymentLastModified)}}</div>
+                                                    <div>{{getTime(rtDeployment.deploymentLastModified)}}</div> -->
+                                                </div>
+                                                <div class="dateTime">
+                                                    {{ser.deploymentLastModifiedBy | employeename:employeeDetailData}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="_flex-column _w-25" [ngClass]="getStatusColor(ser.replica)">
+                                            <div class="replica-status" *ngIf="!ser.replica">Loading...</div>
+                                            <div class="replica-status" *ngIf="ser.replica"
+                                                matTooltip="{{ser.replica?ser.replica.available+' available '+ser.replica.total+' total':'Loading data'}}">
+                                                Ready: {{ser.replica?ser.replica.available:0}}/{{ser.replica?ser.replica.total:0}}
+                                            </div>
+                                            <div class="release-note">{{ser.releaseNote?ser.releaseNote:"No notes"}}</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="_flex-box">
+                                        <button class="_warning-icon" *ngIf="failureKeywords.includes(ser.deploymentStatus)" mat-icon-button matTooltip="Error. Click for details" (click)="showErrorPopUp(ser)">
+                                        </button>
+                                        <button mat-icon-button [matMenuTriggerFor]="overflowMenu" class="_menu-icon-black">
+                                        </button>
+                                        <mat-menu #overflowMenu="matMenu">
+                                            <button mat-menu-item 
+                                                    (click)="showDeploymentConfig(ser); $event.stopPropagation();">
+                                                <div class="_flex-box">
+                                                    <span class="_view-spec-icon _ml-0 _mr-0"></span>
+                                                    <span class="_ml-10">View Spec</span>
+                                                </div>
+                                            </button>
+                                            <button mat-menu-item 
+                                                *ngIf="successKeywords.includes(ser.deploymentStatus)" 
+                                                (click)="showDeploymentLog(rtDeployment, ser)">
+                                                    <div class="_flex-box">
+                                                        <span class="_log-icon _ml-0 _mr-0"></span>
+                                                        <span class="_ml-10">Logs</span>
+                                                    </div>
+                                            </button>
+                                            <button mat-menu-item 
+                                                *ngIf="!pendingKeywords.includes(ser.deploymentStatus) && (ser.actions&&ser.actions.includes('deploy'))" 
+                                                (click)="redeployServiceRel(rtDeployment,ser)"
+                                                [disabled]="rtDeployment.isLocked">
+                                                <div class="_flex-box">
+                                                    <span class="_redeploy-icon _ml-0 _mr-0"></span>
+                                                    <span class="_ml-10">Re-deploy service</span>
+                                                </div>
+                                            </button>
+                                            <button mat-menu-item 
+                                                *ngIf="(ser.actions&&ser.actions.includes('deploy'))" 
+                                                (click)="hardRedeployServiceRel(rtDeployment,ser)"
+                                                [disabled]="rtDeployment.isLocked">
+                                                <div class="_flex-box">
+                                                    <span class="_redeploy-icon _ml-0 _mr-0"></span>
+                                                    <span class="_ml-10">Hard Re-deploy service</span>
+                                                </div>
+                                            </button>
+                                            <button mat-menu-item 
+                                                    [routerLink]="['./deployment-history/service/'+ser.srId]" 
+                                                    [queryParams]="{deploymentId: rtDeployment.deploymentId}">
+                                                <div class="_flex-box">
+                                                    <span class="_deployment-history-icon _ml-0 _mr-0"></span>
+                                                    <span class="_ml-10">Deployment History</span>
+                                                </div>
+                                            </button>
+                                            <button mat-menu-item 
+                                                *ngIf="isApiService(ser)"
+                                                [routerLink]="['pod-health/'+rtDeployment.nsId+'/'+ser.srId]"
+                                                [disabled]="!rtDeployment.baseUrl">
+                                                <div class="_flex-box">
+                                                    <span class="_actuators-icon _ml-0 _mr-0"></span>
+                                                    <span class="_ml-10">Health</span>
+                                                </div>
+                                            </button>
+                                          </mat-menu>
+                                        <!-- <button mat-icon-button>
+                                            <span class="material-icons" (click)="showDeploymentConfig(ser); $event.stopPropagation();">visibility</span>
+                                        </button>
+                                        <button *ngIf="successKeywords.includes(ser.deploymentStatus)" (click)="showDeploymentLog(rtDeployment, ser)" mat-icon-button matTooltip="Logs" class="_log-icon">
+                                        </button>
+                                        <button mat-icon-button *ngIf="!pendingKeywords.includes(ser.deploymentStatus) && (ser.actions&&ser.actions.includes('deploy'))"
+                                            (click)="redeployServiceRel(rtDeployment,ser)" matTooltip="Re-deploy service" class="_redeploy-icon">
+                                        </button> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+
+                    </mat-expansion-panel>
+                    <div *ngIf="lastPage" class="_list-end-message _jc-c">That's all!</div>
+                </mat-accordion>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>
+
+<crate-update-deployment-lock 
+    [canShow]="lockPanelVisible" 
+    [rtDeployment]="deploymentObjToLock"
+    (onPanelClose)="handleLockUnlock($event)"></crate-update-deployment-lock>

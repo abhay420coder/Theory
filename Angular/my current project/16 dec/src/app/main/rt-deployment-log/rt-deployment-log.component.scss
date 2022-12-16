@@ -1,0 +1,68 @@
+@import "../../../assets/css/variables";
+
+.editor {
+  width: 100%;
+  height: calc(100vh - 150px);
+}
+
+.editorContainer:fullscreen  .editor{
+    width: 100%;
+    height: calc(100vh - 30px);
+}
+
+.properties {
+  border-left: 1px solid $border-color;
+  padding: 0 0 0 10px;
+  margin-left: 10px;
+  height: calc(100vh - 60px);
+
+  h2 {
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 0;
+  }
+}
+
+.segment {
+  padding: 10px 0;
+  border-top: 1px solid $border-color;
+}
+
+.segment:first-child {
+  padding: 0 0 10px 0 !important;
+}
+
+.content-row {
+  display: flex;
+  flex-direction: row;
+  font-size: 12px;
+  .key {
+    font-weight: 550;
+  }
+  .value {
+    padding-left: 5px;
+    text-transform: capitalize;
+  }
+}
+
+.pod-list {
+  width: 100%;
+}
+
+.tags-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.loader {
+  width: 100%;
+  text-align: -webkit-center;
+}
+
+.logsActionBar {
+    background-color: $app-background-color;
+    height: 30px;
+    flex-direction: row-reverse ;
+    padding: 0px 16px;
+}

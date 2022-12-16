@@ -1,0 +1,127 @@
+<div class="_flex-column _w-100 _pt-10 _h-100">
+    <div class="_flex-box _jc-sb">
+        <div class="_flex-box">
+            <button mat-icon-button [routerLink]="['../']" class="_back-icon">
+            </button>
+            <div *ngIf="nsDataLoading" class="_flex-column _ml-10">
+                <ngx-skeleton-loader count="1" [theme]="{ 
+                    'border-radius': '5px',
+                    height: '30px',
+                    'width': '250px',
+                    'margin-bottom': '0px',
+                    border: '1px solid white'
+                }"></ngx-skeleton-loader>
+                <ngx-skeleton-loader count="1" [theme]="{ 
+                    'border-radius': '5px',
+                    height: '13px',
+                    'width': '400px',
+                    'margin-bottom': '0px',
+                    border: '1px solid white'
+                }"></ngx-skeleton-loader>
+            </div>
+            <div class="_flex-column _ml-10" *ngIf="!nsDataLoading">
+                <h2 class="_mb-0">{{nsData&&nsData.name?nsData.name:""}}</h2>
+                <p class="secondary-text _mb-0">{{nsData&&nsData.description?nsData.description:""}}</p>
+            </div>
+        </div>
+        <div>
+            <button mat-stroked-button class="_mr-10" [matMenuTriggerFor]="createMenu">Add new</button>
+            <mat-menu #createMenu="matMenu">
+                <button mat-menu-item (click)="addEndpoint()">k8s Endpoint</button>
+                <button mat-menu-item (click)="addService()">k8s Service</button>
+                <button mat-menu-item (click)="addRoleBinding()">k8s Role-binding</button>
+                <!-- <button mat-menu-item (click)="addDeployment()">k8s Deployment</button> -->
+            </mat-menu>
+        </div>
+    </div>
+    <div class="_flex-1 _p-10 _overflow-y-auto">
+        <mat-tab-group (selectedTabChange)="handleTabChange($event)">
+            <mat-tab label="k8s Services">
+                <ng-template matTabContent>
+                    <k8s-services [nsId]="nsId" [nsData]="nsData" [refreshTrigger]="refreshComponent"></k8s-services>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="k8s Endpoints">
+                <ng-template matTabContent>
+                    <k8s-endpoints [nsId]="nsId" [nsData]="nsData" [refreshTrigger]="refreshComponent"></k8s-endpoints>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="k8s Role-binding">
+                <ng-template matTabContent>
+                    <k8s-role-binding [nsId]="nsId" [nsData]="nsData" [refreshTrigger]="refreshComponent"></k8s-role-binding>
+                </ng-template>
+            </mat-tab>
+            <!-- <mat-tab label="k8s Deployments">
+                <ng-template matTabContent>
+                    <div class="_mt-10">
+                        <search-box (onChange)="deploymentSearch($event)"></search-box>
+                    </div>
+
+                    <div class="_mt-10">
+                        <div class="_flex-box _sub-heading _padding-general" *ngIf="k8sDeployments.length">
+                            <div class="_mr-10" style="width: 250px;">Name</div>
+                        </div> -->
+                        <!-- skeleton template for role-binding -->
+                        <!--<div class="card-container role-binding-list" *ngIf="k8sDeploymentsLoading">
+                            <div *ngFor="let role of endpointSkeletonCount" class="list _jc-sb">
+                                <div class="_mr-10" style="width: 250px;">
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                        'display': 'block',
+                                        'border-radius': '5px',
+                                        'height': '12px',
+                                        'width': '120px',
+                                        'line-height': '20px',
+                                        'margin-bottom': '0',
+                                        'border': '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </div>
+                                <div style="width: 300px;" class="_mr-10">
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                        'display': 'block',
+                                        'border-radius': '5px',
+                                        'height': '12px',
+                                        'width': '130px',
+                                        'line-height': '20px',
+                                        'margin-bottom': '0',
+                                        'border': '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </div>
+                                <div class="_flex-1">
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                        'display': 'block',
+                                        'border-radius': '5px',
+                                        'height': '12px',
+                                        'width': '150px',
+                                        'line-height': '20px',
+                                        'margin-bottom': '0',
+                                        'border': '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- skeleton template ends -->
+                        <!-- <div class="card-container role-binding-list" *ngIf="!k8sDeploymentsLoading">
+                            <div *ngFor="let deployment of k8sDeployments" class="list _jc-sb">
+                                <div class="_mr-10" style="width: 250px;">
+                                    {{deployment&&deployment.name?deployment.name:""}}</div>
+                                <div class="actions" (click)="$event.stopPropagation()">
+                                    <button mat-icon-button
+                                        *ngIf="deployment&&deployment.actions&&deployment.actions.includes('update')"
+                                        matTooltip="Patch" class="_edit-icon" (click)="patchDeployment(deployment)">
+                                    </button>
+                                    <button mat-icon-button
+                                        *ngIf="deployment&&deployment.actions&&deployment.actions.includes('update')"
+                                        matTooltip="Hard Redeploy" class="_redeploy-icon"
+                                        (click)="hardRedeploy(deployment)">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="!k8sDeploymentsLoading&&!k8sDeployments.length" class="_w-100 _text-center _mt-10">No
+                        data available</div>
+                </ng-template>
+            </mat-tab> -->
+        </mat-tab-group>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="custom-header">
+    <div class="_heading_1">Kubernetes Cluster</div>
+</div>
+
+<mat-dialog-content>
+    <div class="_pt-10 _pb-5">
+        <form #form="ngForm">
+            <div class="_flex-box _w-100">
+                <mat-form-field appearance="outline" class="_mr-10">
+                    <mat-label>Cluster Name</mat-label>
+                    <input matInput [(ngModel)]="clusterObj.k8sClusterName" name="k8sClusterName" required>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="_mr-10">
+                    <mat-label>Cluster Provider</mat-label>
+                    <input matInput [(ngModel)]="clusterObj.k8sClusterProvider" name="k8sClusterProvider" required>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Cluster Base URI</mat-label>
+                    <input matInput [(ngModel)]="clusterObj.k8sClusterBaseUri" name="k8sClusterBaseUri" required>
+                </mat-form-field>
+            </div>
+            <div class="_flex-box _w-100">
+                <mat-form-field appearance="outline" class="_mr-10">
+                    <mat-label>Cluster Ca Cert</mat-label>
+                    <input matInput [(ngModel)]="clusterObj.k8sClusterCaCert" name="k8sClusterCaCert" required>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="_mr-10">
+                    <mat-label>Cluster Client Cert</mat-label>
+                    <input matInput [(ngModel)]="clusterObj.k8sClusterClientCert" name="k8sClusterClientCert" required>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Cluster Client Key</mat-label>
+                    <input matInput [(ngModel)]="clusterObj.k8sClusterClientKey" name="k8sClusterClientKey" required>
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+
+</mat-dialog-content>
+<div class="custom-footer">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button (click)="save()" [disabled]="!form.valid" cdkFocusInitial>
+        <mat-spinner diameter='20' *ngIf="isSaving"></mat-spinner>
+        <span *ngIf="!isSaving">Save</span>
+    </button>
+</div>

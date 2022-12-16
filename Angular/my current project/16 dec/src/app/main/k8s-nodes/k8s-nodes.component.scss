@@ -1,0 +1,146 @@
+@import '../../../assets/css/variables';
+
+::ng-deep .node-list .mat-expansion-panel-body{
+    background-color: rgba($color: $disabled-font-color, $alpha: 0.045);
+}
+
+.expansion-list{
+    box-shadow: none;
+}
+
+.loader-wrapper{
+    background-color: white;
+}
+
+.info-item{
+    .key{
+        font-size: 11px;
+        color: $disabled-font-color;
+    }
+    .value{
+        font-size: 12px;
+    }
+}
+
+.label-chip{
+    font-size: 12px;
+    // line-height: 26px;
+    font-weight: 400;
+    color: white;
+    border-radius: 5px;
+    overflow: hidden;
+    .key{
+        background-color: rgba($navbar-bg, 0.75);
+        padding: 5px;
+    }
+    .value{
+        background-color: rgba($status-green, 0.8);
+        padding: 5px;
+    }
+}
+
+.custom-label{
+    background-color: rgba($status-red, 0.8) !important;
+}
+
+.card-container{
+    overflow: hidden;
+}
+
+.text-inactive{
+    color: $disabled-font-color;
+}
+
+.cluster{
+    align-items: flex-start;
+    margin: 25px;
+    .master{
+        margin: 25px 0;
+        align-items: stretch;
+        .node{
+            width: fit-content;
+            min-width: 100px;
+            max-width: 185px;
+            border: 1px solid;
+            border-radius: 10px;
+            margin: 0 10px;
+            .taint{
+                font-size: 11px;
+            }
+            .label{
+                font-size: 11px;
+                margin: 0;
+            }
+        }
+    }
+
+    .worker{
+        margin: 25px 0;
+        align-items: stretch;
+        .node{
+            width: fit-content;
+            min-width: 100px;
+            max-width: 185px;
+            border: 1px solid;
+            border-radius: 10px;
+            margin: 0 10px;
+            .taint{
+                font-size: 11px;
+            }
+            .label{
+                font-size: 11px;
+                margin: 0;
+            }
+        }
+    }
+}
+
+
+.healthy{
+    border-color: $status-border-green !important;
+}
+
+.warning{
+    border-color: $status-border-orange !important;
+}
+
+.error{
+    border-color: $status-border-red !important;
+}
+
+.inactive{
+    border-color: $status-border-gray !important;
+}
+
+
+
+
+
+// .header{
+//     padding: 10px;
+//     border: 1px solid lightblue;
+//     border-radius: 10px;
+//     width: fit-content;
+// }
+// .workers{
+//     list-style: none;
+//     border-top: 1px solid gray;
+//     padding: 0;
+//     margin: 25px 0;
+//     .worker{
+//         margin: 0 25px;
+//         margin-top: -12px;
+//         .icon-wrapper{
+//             text-align: center;
+//             .icon{
+//                 background-color: white;
+//             }
+//         }
+        
+//         .stats{
+//             padding: 10px;
+//             border: 1px solid lightblue;
+//             border-radius: 10px;
+//         }
+//     }
+// }

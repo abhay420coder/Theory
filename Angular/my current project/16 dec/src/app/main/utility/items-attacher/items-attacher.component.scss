@@ -1,0 +1,62 @@
+@import "../../../../assets/css/variables";
+// @import '../../../../assets/css/common';
+
+._search-box-card {
+    // @include _search-box-card;
+    // @include no-inner-card;
+}
+.main-container {
+  width: 100%;
+  /*height: 400px;*/
+  background-color: white;
+}
+.tabular-container {
+  width: 100%;
+  display: table;
+  table-layout: fiexed;
+}
+.tabular-container .column {
+  display: table-cell;
+  vertical-align: middle;
+}
+.hr-seperator {
+  border-bottom: solid 1px $gray-color;
+}
+.border-box {
+  border: solid 1px $gray-color;
+  width: 40%;
+  vertical-align: top;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.center-align {
+  text-align: center;
+}
+.save-btn {
+  background: $green-color !important;
+  color: $white-color;
+  text-transform: capitalize;
+  margin-right: 15px;
+}
+.scrollable-box {
+  width: 100%;
+  height: calc(63vh - 170px);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.secondary-text {
+  // @include secondary-text-font;
+  font-size: 0.7em;
+}
+.search-btn {
+  position: absolute;
+  top: -10px;
+  right: -7px;
+}
+._search-box-card {
+  margin: 8px 0px;
+}
+
+.item-attacher-container ::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0px !important;
+}
