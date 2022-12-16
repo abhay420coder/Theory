@@ -1145,7 +1145,7 @@ const routes: Routes = [{ path: '', component: PreferencesComponent }];
 export class PreferencesRoutingModule { }
 ```
 
-![http://localhost:4300/app1#/preferences](2022-12-15-15-54-05.png)
+![http://localhost:4300/app1#/preferences](./image%20-%20007%20Router%20Guards%20in%20ANgular/2022-12-15-15-54-05.png)
 
 ## Route Guards. CanLoad by Angular.io
 
@@ -1236,8 +1236,8 @@ export class UnsavedGuard implements CanDeactivate<unknown> {
 
 
 
-![when you click on Admin then you get](2022-12-15-17-07-31.png)
-![when you click on ok then you get](2022-12-15-17-08-27.png)
+![when you click on Admin then you get](./image%20-%20007%20Router%20Guards%20in%20ANgular/2022-12-15-17-07-31.png)
+![when you click on ok then you get](./image%20-%20007%20Router%20Guards%20in%20ANgular/2022-12-15-17-08-27.png)
 
 
 
@@ -1768,8 +1768,8 @@ export class AppComponent {
   }
 ```
 
-![Dark Theme](2022-12-16-11-12-24.png)
-![Light Theme](2022-12-16-11-12-54.png)
+![Dark Theme](./image%20-%20007%20Router%20Guards%20in%20ANgular/2022-12-16-11-12-24.png)
+![Light Theme](./image%20-%20007%20Router%20Guards%20in%20ANgular/2022-12-16-11-12-54.png)
 
 ## Angular Applications Dark Theme Switch Tutorial | Angular Material Dark Mode Toggle Tutorial by Angular.io
 
@@ -2021,7 +2021,7 @@ export class LeadsGridComponent implements OnInit {
 ```
 
 we can see in console we are getting data.
-![resolve](2022-12-16-16-51-59.png)
+![resolve](./image%20-%20007%20Router%20Guards%20in%20ANgular/2022-12-16-16-51-59.png)
 
 
 ## Route Guards. Resolve by Angular.io
