@@ -1801,4 +1801,227 @@ export class AppComponent {
 * If some data is "MANDATORY" for a component — try using the logic from ngOnit to Resolve
 * Using the` activatedRoute.snapshot.data` we can access data and process it.
 
+### example :- 
+
+**create resolver guard**
+
+```ts
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\simpleCRM>ng g  guard resolver          
+? Which interfaces would you like to implement? CanActivate
+CREATE src/app/resolver.guard.spec.ts (362 bytes)
+CREATE src/app/resolver.guard.ts (463 bytes)
+```
+
+**resolver.guard.ts**
+
+```ts
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Resolve, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+/* export class ResolverGuard implements CanActivate {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return true;
+  }
+  
+} */
+export class ResolverGuard implements Resolve<any> {
+  // we will have a service - call service API to get  details
+
+  /* 
+
+  this.userService.getAccountInformation(userId).subscribe(data => {
+
+  } );
+
+  */
+
+  userObj = {
+    userId:10,
+    userName:'Soorya'
+  };
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    // throw new Error('Method not implemented.');
+    return this.userObj;
+  }
+
+  
+  
+  
+}
+```
+
+**resolver.guard.spec.ts**
+
+```ts
+import { TestBed } from '@angular/core/testing';
+
+import { ResolverGuard } from './resolver.guard';
+
+describe('ResolverGuard', () => {
+  let guard: ResolverGuard;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    guard = TestBed.inject(ResolverGuard);
+  });
+
+  it('should be created', () => {
+    expect(guard).toBeTruthy();
+  });
+});
+```
+
+**app-routing.module.ts**
+
+```ts
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AddLoansComponent } from './add-loans/add-loans.component';
+import { AdminAccessGuard } from './admin-access.guard';
+import { AdminDeleteComponent } from './admin-delete/admin-delete.component';
+import { AdminEditComponent } from './admin-edit/admin-edit.component';
+import { AdminManageComponent } from './admin-manage/admin-manage.component';
+import { AdminGuard } from './admin.guard';
+import { AdminComponent } from './admin/admin.component';
+import { AuthGuard } from './auth.guard';
+import { ClientsComponent } from './clients/clients.component';
+import { LeadsGridComponent } from './leads/leads-listing/leads-grid/leads-grid.component';
+import { LoanTypesComponent } from './loan-types/loan-types.component';
+import { LoansComponent } from './loans/loans.component';
+import { P1Component } from './p1/p1.component';
+import { P2Component } from './p2/p2.component';
+import { P3Component } from './p3/p3.component';
+import { P4Component } from './p4/p4.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PreferencesCheckGuard } from './preferences-check.guard';
+import { ProductComponent } from './product/product.component';
+import { ResolverGuard } from './resolver.guard';
+import { SearchComponent } from './search/search.component';
+import { SuperAdminGuard } from './super-admin.guard';
+import { UnsavedGuard } from './unsaved.guard';
+
+
+
+const routes: Routes = [
+ 
+  { 
+    path:'product/:id' , 
+    component:ProductComponent
+  } ,
+  { 
+    path:'product/:productId/photos/:photoId' , 
+    component:ProductComponent
+  } ,
+  {
+    path:'clients',
+    component: ClientsComponent,
+    canActivate:[AuthGuard]  // it takes more than one routes
+  },
+  {
+    path:'',
+    redirectTo:'leads',
+    pathMatch:'full'
+  },
+  {
+    path:'leads',
+    component:LeadsGridComponent,
+    // canActivate:[AuthGuard , AdminGuard]  // it takes more than one routes // all guard should return access(means true)
+    resolve:{
+      data:ResolverGuard , // whenever this path is trying to be loaded before route is activated
+    }
+    //  when i will be launch this route ResolverGuard will be resolve f irst then this route will be initiated
+  },
+  {
+    path:'search',
+    component:SearchComponent,
+    canDeactivate:[UnsavedGuard]
+  },
+
+  // CanActivateChile Auth Guard
+  {
+    path:'admin',
+    canActivate:[SuperAdminGuard] ,// http://localhost:4300/app1#/admin will work if SuperAdminGuard will give Access.
+    children:[
+      { path:'', component:AdminComponent }, //  http://localhost:4300/app1#/admin will work
+      {
+        path:'',
+        canActivateChild:[AdminAccessGuard],
+        children:[
+          { path:'manage', component:AdminManageComponent }, //  http://localhost:4300/app1#/admin/manage will work
+          { path:'delete', component:AdminDeleteComponent }, //  http://localhost:4300/app1#/admin/delete will work
+          { path:'edit', component:AdminEditComponent }, //  http://localhost:4300/app1#/admin/edit will work
+        ]
+      },
+    ]
+  },
+ 
+  //{ path: 'payments', loadChildren: () => import('./payments/payments.module').then(m => m.PaymentsModule) },  // lazy modules
+  //{ path: 'customers', loadChildren: () => import('./customers/customers.module').then(m => m.CustomersModule) },  // lazy modules
+ 
+
+
+  { path: 'preferences', 
+     canLoad:[PreferencesCheckGuard],
+    loadChildren: () => import('./preferences/preferences.module').then(m => m.PreferencesModule) 
+  },  // lazy modules
+
+
+
+  {
+    path:'**',
+    component:PageNotFoundComponent
+  }
+];
+
+
+@NgModule({
+  imports: [
+    // CommonModule,
+    RouterModule.forRoot(routes)
+  ],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+```
+
+**leads-grid.component.ts**
+
+```ts
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+@Component({
+  selector: 'app-leads-grid',
+  templateUrl: './leads-grid.component.html',
+  styleUrls: ['./leads-grid.component.scss']
+})
+export class LeadsGridComponent implements OnInit {
+
+  constructor(private ActivatedRoute:ActivatedRoute) { }
+
+  ngOnInit(): void {
+    console.log(this.ActivatedRoute.snapshot.data);
+  }
+
+}
+```
+
+**leads-grid.component.html**
+
+```html
+<p>leads-grid works!</p>
+```
+
+we can see in console we are getting data.
+![resolve](2022-12-16-16-51-59.png)
+
+
 ## Route Guards. Resolve by Angular.io
