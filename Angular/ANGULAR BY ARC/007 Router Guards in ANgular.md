@@ -1260,9 +1260,299 @@ export class UnsavedGuard implements CanDeactivate<unknown> {
 
 `npm i @angular/cli`
 
+
+```js
+Microsoft Windows [Version 10.0.19044.2364]
+(c) Microsoft Corporation. All rights reserved.
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\DARK-THEME>npm i @angular/cli
+npm WARN deprecated @npmcli/move-file@2.0.1: This functionality has been moved to @npmcli/fs
+npm WARN deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+
+added 231 packages, and audited 232 packages in 51s
+
+26 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\DARK-THEME>
+
+```
+
 #### step-2 Create The Angular Project
 
 `ng new ProductBoard`
+
+
+```js
+Microsoft Windows [Version 10.0.19044.2364]
+(c) Microsoft Corporation. All rights reserved.
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\DARK-THEME>ng new ProductBoard
+? Would you like to add Angular routing? Yes
+? Which stylesheet format would you like to use? SCSS   [ https://sass-lang.com/documentation/syntax#scss
+   ]
+CREATE ProductBoard/angular.json (2905 bytes)
+CREATE ProductBoard/package.json (1044 bytes)
+CREATE ProductBoard/README.md (1066 bytes)   
+CREATE ProductBoard/tsconfig.json (901 bytes)
+CREATE ProductBoard/.editorconfig (274 bytes)
+CREATE ProductBoard/.gitignore (548 bytes)
+CREATE ProductBoard/tsconfig.app.json (263 bytes)
+CREATE ProductBoard/tsconfig.spec.json (273 bytes)
+CREATE ProductBoard/.vscode/extensions.json (130 bytes)
+CREATE ProductBoard/.vscode/launch.json (474 bytes)
+CREATE ProductBoard/.vscode/tasks.json (938 bytes)
+CREATE ProductBoard/src/favicon.ico (948 bytes)
+CREATE ProductBoard/src/index.html (298 bytes)
+CREATE ProductBoard/src/main.ts (214 bytes)
+CREATE ProductBoard/src/styles.scss (80 bytes)
+CREATE ProductBoard/src/assets/.gitkeep (0 bytes)
+CREATE ProductBoard/src/app/app-routing.module.ts (245 bytes)
+CREATE ProductBoard/src/app/app.module.ts (393 bytes)
+CREATE ProductBoard/src/app/app.component.html (23115 bytes)
+CREATE ProductBoard/src/app/app.component.spec.ts (1091 bytes)
+CREATE ProductBoard/src/app/app.component.ts (217 bytes)
+CREATE ProductBoard/src/app/app.component.scss (0 bytes)
+✔ Packages installed successfully.
+    Directory is already under version control. Skipping initialization of git.
+
+```
+
+#### step-3 Install Angular Material
+* `ng add @angular/material`
+  * theming options
+* `npm i @angular/material`
+
+
+
+```js
+Microsoft Windows [Version 10.0.19044.2364]
+(c) Microsoft Corporation. All rights reserved.
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\DARK-THEME\ProductBoard>ng add @angular/material
+? Would you like to share pseudonymous usage data about this project with the Angular Team
+at Google under Google's Privacy Policy at https://policies.google.com/privacy. For more  
+details and how to change this setting, see https://angular.io/analytics. Yes
+
+Thank you for sharing pseudonymous usage data. Should you change your mind, the following
+command will disable this feature entirely:
+
+    ng analytics disable
+
+Global setting: enabled
+Local setting: enabled
+Effective status: enabled
+ℹ Using package manager: npm
+✔ Found compatible package version: @angular/material@15.0.3.
+✔ Package information loaded.
+
+The package @angular/material@15.0.3 will be installed and executed.
+Would you like to proceed? Yes
+✔ Packages successfully installed.
+? Choose a prebuilt theme name, or "custom" for a custom theme: Custom
+? Set up global Angular Material typography styles? Yes  
+? Include the Angular animations module? Include and enable animations
+UPDATE package.json (1110 bytes)
+✔ Packages installed successfully.
+UPDATE src/app/app.module.ts (502 bytes)
+UPDATE src/styles.scss (1652 bytes)
+UPDATE src/index.html (580 bytes)
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\DARK-THEME\ProductBoard>
+
+```
+
+
+#### step-4 Run The Applocation
+* `ng serve`
+
+
+```js
+Microsoft Windows [Version 10.0.19044.2364]
+(c) Microsoft Corporation. All rights reserved.
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\DARK-THEME\ProductBoard>ng s --port 4400
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files   | Names         |  Raw Size
+vendor.js             | vendor        |   2.33 MB |
+polyfills.js          | polyfills     | 314.28 kB |
+styles.css, styles.js | styles        | 310.46 kB |
+main.js               | main          |  48.44 kB |
+runtime.js            | runtime       |   6.52 kB |
+
+                      | Initial Total |   2.99 MB
+
+Build at: 2022-12-15T23:22:08.674Z - Hash: 022cce9b8f3d00c3 - Time: 66127ms
+
+** Angular Live Development Server is listening on localhost:4400, open your browser on http://localhost:4400/ **     
+
+
+√ Compiled successfully.
+
+```
+
+##### all command run in Angular CLI
+
+```js
+Microsoft Windows [Version 10.0.19044.2364]
+(c) Microsoft Corporation. All rights reserved.
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\DARK-THEME>npm i @angular/cli
+npm WARN deprecated @npmcli/move-file@2.0.1: This functionality has been moved to @npmcli/fs
+npm WARN deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+
+added 231 packages, and audited 232 packages in 51s
+
+26 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\DARK-THEME>ng new ProductBoard
+? Would you like to add Angular routing? Yes
+? Which stylesheet format would you like to use? SCSS   [ https://sass-lang.com/documentation/syntax#scss
+   ]
+CREATE ProductBoard/angular.json (2905 bytes)
+CREATE ProductBoard/package.json (1044 bytes)
+CREATE ProductBoard/README.md (1066 bytes)   
+CREATE ProductBoard/tsconfig.json (901 bytes)
+CREATE ProductBoard/.editorconfig (274 bytes)
+CREATE ProductBoard/.gitignore (548 bytes)
+CREATE ProductBoard/tsconfig.app.json (263 bytes)
+CREATE ProductBoard/tsconfig.spec.json (273 bytes)
+CREATE ProductBoard/.vscode/extensions.json (130 bytes)
+CREATE ProductBoard/.vscode/launch.json (474 bytes)
+CREATE ProductBoard/.vscode/tasks.json (938 bytes)
+CREATE ProductBoard/src/favicon.ico (948 bytes)
+CREATE ProductBoard/src/index.html (298 bytes)
+CREATE ProductBoard/src/main.ts (214 bytes)
+CREATE ProductBoard/src/styles.scss (80 bytes)
+CREATE ProductBoard/src/assets/.gitkeep (0 bytes)
+CREATE ProductBoard/src/app/app-routing.module.ts (245 bytes)
+CREATE ProductBoard/src/app/app.module.ts (393 bytes)
+CREATE ProductBoard/src/app/app.component.html (23115 bytes)
+CREATE ProductBoard/src/app/app.component.spec.ts (1091 bytes)
+CREATE ProductBoard/src/app/app.component.ts (217 bytes)
+CREATE ProductBoard/src/app/app.component.scss (0 bytes)
+✔ Packages installed successfully.
+    Directory is already under version control. Skipping initialization of git.
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\DARK-THEME>cd ProductBoard
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\DARK-THEME\ProductBoard>ng add @angular/material
+? Would you like to share pseudonymous usage data about this project with the Angular Team
+at Google under Google's Privacy Policy at https://policies.google.com/privacy. For more  
+details and how to change this setting, see https://angular.io/analytics. Yes
+
+Thank you for sharing pseudonymous usage data. Should you change your mind, the following
+command will disable this feature entirely:
+
+    ng analytics disable
+
+Global setting: enabled
+Local setting: enabled
+Effective status: enabled
+ℹ Using package manager: npm
+✔ Found compatible package version: @angular/material@15.0.3.
+✔ Package information loaded.
+
+The package @angular/material@15.0.3 will be installed and executed.
+Would you like to proceed? Yes
+✔ Packages successfully installed.
+? Choose a prebuilt theme name, or "custom" for a custom theme: Custom
+? Set up global Angular Material typography styles? Yes  
+? Include the Angular animations module? Include and enable animations
+UPDATE package.json (1110 bytes)
+✔ Packages installed successfully.
+UPDATE src/app/app.module.ts (502 bytes)
+UPDATE src/styles.scss (1652 bytes)
+UPDATE src/index.html (580 bytes)
+
+D:\theory\Theory\Angular\ANGULAR BY ARC\project\DARK-THEME\ProductBoard>ng s --port 4400
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files   | Names         |  Raw Size
+vendor.js             | vendor        |   2.33 MB |
+polyfills.js          | polyfills     | 314.28 kB |
+styles.css, styles.js | styles        | 310.46 kB |
+main.js               | main          |  48.44 kB |
+runtime.js            | runtime       |   6.52 kB |
+
+                      | Initial Total |   2.99 MB
+
+Build at: 2022-12-15T23:22:08.674Z - Hash: 022cce9b8f3d00c3 - Time: 66127ms
+
+** Angular Live Development Server is listening on localhost:4400, open your browser on http://localhost:4400/ **     
+
+
+√ Compiled successfully.
+
+```
+
+
+#### step-5 Clean app.component.html
+
+```html
+<p> hi this is app component html</p>
+
+<router-outlet></router-outlet>
+```
+
+#### step-6 add some angular-material-module in app.module.ts
+
+* MatSlideToggleModule,
+* MatCardModule,
+* MatIconModule,
+* MatButtonModule,
+* MatToolbarModule
+
+**app.module.ts**
+
+```ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
+import {MatCardModule} from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,MatCardModule,MatIconModule,MatButtonModule,MatToolbarModule,
+    FormsModule,
+
+    
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+#### step-7   Customize the Dark Mode Theme
+
+* `style.css`
+  * make and enable dark theme when class is .dark-theme
+
+
+### example
+
+
 
 ## Angular Applications Dark Theme Switch Tutorial | Angular Material Dark Mode Toggle Tutorial by Angular.io
 
