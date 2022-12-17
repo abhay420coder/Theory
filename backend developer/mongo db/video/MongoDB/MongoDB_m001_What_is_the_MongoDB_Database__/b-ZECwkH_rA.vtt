@@ -1,0 +1,105 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:00.500
+
+
+2
+00:00:00.500 --> 00:00:02.910
+So what is the MongoDB Database.
+
+3
+00:00:02.910 --> 00:00:07.350
+A database, meaning a structured
+way to store and access data.
+
+4
+00:00:07.350 --> 00:00:10.950
+More specifically, it
+is a NoSQL database.
+
+5
+00:00:10.950 --> 00:00:14.610
+NoSQL is a very generic term
+used to describe any data store
+
+6
+00:00:14.610 --> 00:00:19.240
+that doesn't use legacy approach
+of related tables of data.
+
+7
+00:00:19.240 --> 00:00:22.360
+This means that you're storing
+your data in an organized way,
+
+8
+00:00:22.360 --> 00:00:24.870
+but not in rows and columns
+
+9
+00:00:24.870 --> 00:00:26.910
+An example of
+NoSQL databases can
+
+10
+00:00:26.910 --> 00:00:29.610
+be anything from a
+library card catalog,
+
+11
+00:00:29.610 --> 00:00:33.240
+to a more sophisticated
+data store like MongoDB.
+
+12
+00:00:33.240 --> 00:00:36.630
+Since the range of what
+NoSQL means is so wide,
+
+13
+00:00:36.630 --> 00:00:39.740
+we must narrow our
+definition further.
+
+14
+00:00:39.740 --> 00:00:43.500
+MongoDB is a NoSQL
+document database.
+
+15
+00:00:43.500 --> 00:00:47.240
+This means that data in
+MongoDB is stored as documents.
+
+16
+00:00:47.240 --> 00:00:51.570
+We will cover what a document
+is in the next lesson.
+
+17
+00:00:51.570 --> 00:00:54.080
+These documents are in
+turn stored in what we
+
+18
+00:00:54.080 --> 00:00:56.270
+call collections of documents.
+
+19
+00:00:56.270 --> 00:01:00.830
+That's why MongoDB is
+categorized as a NoSQL document
+
+20
+00:01:00.830 --> 00:01:02.240
+database.
+
+21
+00:01:02.240 --> 00:01:04.819
+In conclusion, the
+MongoDB database
+
+22
+00:01:04.819 --> 00:01:07.930
+is a NoSQL document database.

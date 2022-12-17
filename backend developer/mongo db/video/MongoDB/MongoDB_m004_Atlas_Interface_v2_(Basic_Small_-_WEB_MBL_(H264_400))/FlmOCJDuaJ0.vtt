@@ -1,0 +1,201 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:00.500
+
+
+2
+00:00:00.500 --> 00:00:03.210
+Now that you have created your
+cluster, loaded in the data,
+
+3
+00:00:03.210 --> 00:00:05.910
+and even created the first
+user for your database,
+
+4
+00:00:05.910 --> 00:00:09.240
+it is time to explore the
+Atlas interface a little more.
+
+5
+00:00:09.240 --> 00:00:11.790
+There are two navigation
+panels, one at the top
+
+6
+00:00:11.790 --> 00:00:13.870
+and one on the
+left of the screen.
+
+7
+00:00:13.870 --> 00:00:16.440
+The top navigation panel
+allows you to access services
+
+8
+00:00:16.440 --> 00:00:18.990
+like charts and realms,
+which we'll discuss later
+
+9
+00:00:18.990 --> 00:00:21.360
+in the last chapter
+of this course.
+
+10
+00:00:21.360 --> 00:00:24.330
+The left navigation panel will
+pertain more to the cluster
+
+11
+00:00:24.330 --> 00:00:25.560
+management itself.
+
+12
+00:00:25.560 --> 00:00:28.080
+Here, you can manage the
+security settings and clusters
+
+13
+00:00:28.080 --> 00:00:30.525
+that you have as
+part of this project.
+
+14
+00:00:30.525 --> 00:00:32.400
+There are other features
+here in the Atlas UI
+
+15
+00:00:32.400 --> 00:00:33.940
+which we will discuss later.
+
+16
+00:00:33.940 --> 00:00:36.090
+For now, let's focus on
+this brand new cluster
+
+17
+00:00:36.090 --> 00:00:36.900
+that we created.
+
+18
+00:00:36.900 --> 00:00:39.120
+Mine is called sandbox.
+
+19
+00:00:39.120 --> 00:00:41.670
+In this course, we will interact
+with our cluster and data
+
+20
+00:00:41.670 --> 00:00:43.390
+in two different ways.
+
+21
+00:00:43.390 --> 00:00:45.510
+One way is through
+the Data Explorer,
+
+22
+00:00:45.510 --> 00:00:48.090
+which you can navigate to
+by clicking the Collections
+
+23
+00:00:48.090 --> 00:00:48.960
+button.
+
+24
+00:00:48.960 --> 00:00:50.910
+This displays the
+databases and collections
+
+25
+00:00:50.910 --> 00:00:52.500
+that you have in your cluster.
+
+26
+00:00:52.500 --> 00:00:55.140
+We will use this extensively
+and go into more details
+
+27
+00:00:55.140 --> 00:00:56.850
+in the following chapters.
+
+28
+00:00:56.850 --> 00:00:59.190
+The other way we will
+interact with this cluster
+
+29
+00:00:59.190 --> 00:01:02.520
+is through the shell, which we
+will use in the next exercise.
+
+30
+00:01:02.520 --> 00:01:04.959
+Hit the Connect button.
+
+31
+00:01:04.959 --> 00:01:08.080
+If you haven't created a
+user that is allowed access
+
+32
+00:01:08.080 --> 00:01:11.660
+to your cluster yet, then you
+will be prompted to do so,
+
+33
+00:01:11.660 --> 00:01:15.220
+as well as to add any IP address
+that should be allowed access
+
+34
+00:01:15.220 --> 00:01:16.600
+to this database.
+
+35
+00:01:16.600 --> 00:01:22.480
+For this course, you can
+add 0.0.0.0 as the IP
+
+36
+00:01:22.480 --> 00:01:28.300
+to the access list, which will
+allow access from anywhere.
+
+37
+00:01:28.300 --> 00:01:29.640
+Then create a user.
+
+38
+00:01:29.640 --> 00:01:34.645
+The username should be
+m001-student, with the password
+
+39
+00:01:34.645 --> 00:01:35.980
+m001-mongodb-basics.
+
+40
+00:01:35.980 --> 00:01:38.650
+
+
+41
+00:01:38.650 --> 00:01:42.850
+When you're done with adding the
+IP address to the access list
+
+42
+00:01:42.850 --> 00:01:44.860
+and creating a user,
+you can move on
+
+43
+00:01:44.860 --> 00:01:47.250
+to connecting to your cluster.
