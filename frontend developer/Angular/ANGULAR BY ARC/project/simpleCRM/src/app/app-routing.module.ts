@@ -8,6 +8,7 @@ import { AdminEditComponent } from './admin-edit/admin-edit.component';
 import { AdminManageComponent } from './admin-manage/admin-manage.component';
 import { AdminGuard } from './admin.guard';
 import { AdminComponent } from './admin/admin.component';
+import { AppComponent } from './app.component';
 import { AuthGuard } from './auth.guard';
 import { ClientsComponent } from './clients/clients.component';
 import { LeadsGridComponent } from './leads/leads-listing/leads-grid/leads-grid.component';
@@ -42,11 +43,7 @@ const routes: Routes = [
     component: ClientsComponent,
     canActivate:[AuthGuard]  // it takes more than one routes
   },
-  {
-    path:'',
-    redirectTo:'leads',
-    pathMatch:'full'
-  },
+  
   {
     path:'leads',
     component:LeadsGridComponent,
@@ -80,8 +77,8 @@ const routes: Routes = [
     ]
   },
  
-  //{ path: 'payments', loadChildren: () => import('./payments/payments.module').then(m => m.PaymentsModule) },  // lazy modules
-  //{ path: 'customers', loadChildren: () => import('./customers/customers.module').then(m => m.CustomersModule) },  // lazy modules
+  { path: 'payments', loadChildren: () => import('./payments/payments.module').then(m => m.PaymentsModule) },  // lazy modules
+  { path: 'customers', loadChildren: () => import('./customers/customers.module').then(m => m.CustomersModule) },  // lazy modules
  
 
 
