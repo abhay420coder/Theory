@@ -1,7 +1,12 @@
+
+// FOR RUN AND COMPILE
+// javac BasicsToArray.java && java BasicsToArray
+
+import java.math.BigDecimal;
 public class BasicsToArray {
     public static void main(String[] args) {
 
-        System.out.println("java variables example");
+        /* System.out.println("java variables example");
         Variable variable = new Variable(10);
         variable.printVariable();
 
@@ -26,6 +31,13 @@ public class BasicsToArray {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n java String data types example")  ;
 
         dataTypes.stringDataTypes();
+
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n java Big Decimal Class example")  ; */
+
+        BigDecimalExample bigDecimalExample = new BigDecimalExample();
+        bigDecimalExample.bigDecimalOldExample();
+        bigDecimalExample.bigDecimalExample();
+        
     }
 }
 
@@ -333,6 +345,18 @@ class DataTypes{
 
 class BigDecimalExample
 {
+    void bigDecimalOldExample(){
+        double a=0.03;
+        double b=0.04;
+        double c=b-a;
+        System.out.println("DOuble of c :-  "+c);
+
+        BigDecimal _a = new BigDecimal("0.03");
+        BigDecimal _b = new BigDecimal("0.04");
+        BigDecimal _c = _b.subtract(_a);
+        System.out.println("Big Decimal of c :- "+_c);
+    }
+
 	void bigDecimalExample()
 	{
 		// Create two new BigDecimals
@@ -340,27 +364,27 @@ class BigDecimalExample
 		BigDecimal bd2 = new BigDecimal("987654321.123456789");
 		
 		// Addition of two BigDecimals
-		bd1 = bd1.add(bd2);
-		System.out.println("BigDecimal1 = " + bd1);
+		BigDecimal bdAdd = bd1.add(bd2);
+		System.out.println("BigDecimal add = " + bdAdd);
 
 		// Multiplication of two BigDecimals
-		bd1 = bd1.multiply(bd2);
-		System.out.println("BigDecimal1 = " + bd1);
+		BigDecimal bdMultiPly = bd1.multiply(bd2);
+		System.out.println("BigDecimal multiply = " + bdMultiPly);
 
 		// Subtraction of two BigDecimals
-		bd1 = bd1.subtract(bd2);
-		System.out.println("BigDecimal1 = " + bd1);
+		BigDecimal bdSubtract = bd1.subtract(bd2);
+		System.out.println("BigDecimal subtract = " + bdSubtract);
 
 		// Division of two BigDecimals
-		bd1 = bd1.divide(bd2);
-		System.out.println("BigDecimal1 = " + bd1);
+		BigDecimal bdDivide = bd1.divide(bd2);
+		System.out.println("BigDecimal divide = " + bdDivide);
 
 		// BigDecima1 raised to the power of 2
-		bd1 = bd1.pow(2);
-		System.out.println("BigDecimal1 = " + bd1);
+		BigDecimal bdPower = bd1.pow(2);
+		System.out.println("BigDecimal power = " + bdPower);
 
 		// Negate value of BigDecimal1
-		bd1 = bd1.negate();
-		System.out.println("BigDecimal1 = " + bd1);
+		BigDecimal bdNegate = bd1.negate();
+		System.out.println("BigDecimal negate = " + bdNegate);
 	}	
 }		

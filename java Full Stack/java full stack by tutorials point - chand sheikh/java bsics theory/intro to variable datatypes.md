@@ -1297,69 +1297,90 @@ D:\theory\java Full Stack\java full stack by tutorials point - chand sheikh\java
 
 ## BigDecimal class introduction
 
-Methods of BigDecimal Class:
+* The BigDecimal class provides operations on double numbers 
+  * for **arithmetic, scale handling, rounding, comparison, format conversion and hashing.**
+* It can handle 
+  * very large and very small floating point numbers with great precision
+  *  but compensating with the time complexity a bit.
+* If greater than or equal to zero, 
+  * then scale is the number of digits to the right of the decimal point. 
+* If less than zero, 
+  * then unscaled value of the number is multiplied by 10^(-scale). 
 
-BigDecimal abs​(): This method returns a BigDecimal whose value is the absolute value of this BigDecimal, and whose scale is this.scale().
-BigDecimal abs​(MathContext mc): This method returns a BigDecimal whose value is the absolute value of this BigDecimal, with rounding according to the context settings.
-BigDecimal add​(BigDecimal augend): This method returns a BigDecimal whose value is (this + augend), and whose scale is max(this.scale(), augend.scale()).
-BigDecimal add​(BigDecimal augend, MathContext mc): This method returns a BigDecimal whose value is (this + augend), with rounding according to the context settings.
-byte byteValueExact​(): This method converts this BigDecimal to a byte, checking for lost information.
-int compareTo​(BigDecimal val): This method compares this BigDecimal with the specified BigDecimal.
-BigDecimal divide​(BigDecimal divisor): This method returns a BigDecimal whose value is (this / divisor), and whose preferred scale is (this.scale() – divisor.scale()); if the exact quotient cannot be represented (because it has a non-terminating decimal expansion) an ArithmeticException is thrown.
-BigDecimal divide​(BigDecimal divisor, int scale, RoundingMode roundingMode): This method returns a BigDecimal whose value is (this / divisor), and whose scale is as specified.
-BigDecimal divide​(BigDecimal divisor, MathContext mc): This method returns a BigDecimal whose value is (this / divisor), with rounding according to the context settings.
-BigDecimal divide​(BigDecimal divisor, RoundingMode roundingMode): This method returns a BigDecimal whose value is (this / divisor), and whose scale is this.scale().
-BigDecimal[] divideAndRemainder​(BigDecimal divisor): This method returns a two-element BigDecimal array containing the result of divideToIntegralValue followed by the result of remainder on the two operands.
-BigDecimal[] divideAndRemainder​(BigDecimal divisor, MathContext mc): This method returns a two-element BigDecimal array containing the result of divideToIntegralValue followed by the result of remainder on the two operands calculated with rounding according to the context settings.
-BigDecimal divideToIntegralValue​(BigDecimal divisor): This method returns a BigDecimal whose value is the integer part of the quotient (this / divisor) rounded down.
-BigDecimal divideToIntegralValue​(BigDecimal divisor, MathContext mc): This method returns a BigDecimal whose value is the integer part of (this / divisor).
-double doubleValue​(): This method converts this BigDecimal to a double.
-boolean equals​(Object x): This method compares this BigDecimal with the specified Object for equality.
-float floatValue​(): This method converts this BigDecimal to a float.
-int hashCode​(): This method returns the hash code for this BigDecimal.
-int intValue​(): This method converts this BigDecimal to an int.
-int intValueExact​(): This method converts this BigDecimal to an int, checking for lost information.
-long longValue​(): This method converts this BigDecimal to a long.
-long longValueExact​(): This method converts this BigDecimal to a long, checking for lost information.
-BigDecimal max​(BigDecimal val): This method returns the maximum of this BigDecimal and val.
-BigDecimal min​(BigDecimal val): This method returns the minimum of this BigDecimal and val.
-BigDecimal movePointLeft​(int n): This method returns a BigDecimal which is equivalent to this one with the decimal point moved n places to the left.
-BigDecimal movePointRight​(int n): This method returns a BigDecimal which is equivalent to this one with the decimal point moved n places to the right.
-BigDecimal multiply​(BigDecimal multiplicand): This method returns a BigDecimal whose value is (this × multiplicand), and whose scale is (this.scale() + multiplicand.scale()).
-BigDecimal multiply​(BigDecimal multiplicand, MathContext mc): This method returns a BigDecimal whose value is (this × multiplicand), with rounding according to the context settings.
-BigDecimal negate​(): This method returns a BigDecimal whose value is (-this), and whose scale is this.scale().
-BigDecimal negate​(MathContext mc): This method returns a BigDecimal whose value is (-this), with rounding according to the context settings.
-BigDecimal plus​(): This method returns a BigDecimal whose value is (+this), and whose scale is this.scale().
-BigDecimal plus​(MathContext mc): This method returns a BigDecimal whose value is (+this), with rounding according to the context settings.
-BigDecimal pow​(int n): This method returns a BigDecimal whose value is (thisn), The power is computed exactly, to unlimited precision.
-BigDecimal pow​(int n, MathContext mc): This method returns a BigDecimal whose value is (thisn).
-int precision​(): This method returns the precision of this BigDecimal.
-BigDecimal remainder​(BigDecimal divisor): This method returns a BigDecimal whose value is (this % divisor).
-BigDecimal remainder​(BigDecimal divisor, MathContext mc): This method returns a BigDecimal whose value is (this % divisor), with rounding according to the context settings.
-BigDecimal round​(MathContext mc): This method returns a BigDecimal rounded according to the MathContext settings.
-int scale​(): This method returns the scale of this BigDecimal.
-BigDecimal scaleByPowerOfTen​(int n): This method returns a BigDecimal whose numerical value is equal to (this * 10n).
-BigDecimal setScale​(int newScale): This method returns a BigDecimal whose scale is the specified value, and whose value is numerically equal to this BigDecimal’s.
-BigDecimal setScale​(int newScale, RoundingMode roundingMode): This method returns a BigDecimal whose scale is the specified value, and whose unscaled value is determined by multiplying or dividing this BigDecimal’s unscaled value by the appropriate power of ten to maintain its overall value.
-short shortValueExact​(): This method converts this BigDecimal to a short, checking for lost information.
-int signum​(): This method returns the signum function of this BigDecimal.
-BigDecimal sqrt​(MathContext mc): This method returns an approximation to the square root of this with rounding according to the context settings.
-BigDecimal stripTrailingZeros​(): This method returns a BigDecimal which is numerically equal to this one but with any trailing zeros removed from the representation.
-BigDecimal subtract​(BigDecimal subtrahend): This method returns a BigDecimal whose value is (this – subtrahend), and whose scale is max(this.scale(), subtrahend.scale()).
-BigDecimal subtract​(BigDecimal subtrahend, MathContext mc): This method returns a BigDecimal whose value is (this – subtrahend), with rounding according to the context settings.
-BigInteger toBigInteger​(): This method converts this BigDecimal to a BigInteger.
-BigInteger toBigIntegerExact​(): This method converts this BigDecimal to a BigInteger, checking for lost information.
-String toEngineeringString​(): This method returns a string representation of this BigDecimal, using engineering notation if an exponent is needed.
-String toPlainString​(): This method returns a string representation of this BigDecimal without an exponent field.
-String toString​(): This method returns the string representation of this BigDecimal, using scientific notation if an exponent is needed.
-BigDecimal ulp​(): This method returns the size of an ulp, a unit in the last place, of this BigDecimal.
-BigInteger unscaledValue​(): This method returns a BigInteger whose value is the unscaled value of this BigDecimal.
-static BigDecimal valueOf​(double val): This method translates a double into a BigDecimal, using the double’s canonical string representation provided by the Double.toString(double) method.
-static BigDecimal valueOf​(long val): This method translates a long value into a BigDecimal with a scale of zero.
-static BigDecimal valueOf​(long unscaledVal, int scale): This method translates a long unscaled value and an int scale into a BigDecimal.
+### step for create BigDecimal
+
+
+#### step-1 import java.math.BigDecimal;
+
+`import java.math.BigDecimal;`
+
+#### step-2 create object of  BigDecimal with the help of Passing value from BigDecimal constructor
+
+`BigDecimal objectName = new BigDecimal("value");`
+
+### example
+
+```java
+import java.math.BigDecimal;
+public class BasicsToArray {
+    public static void main(String[] args) {
+
+        BigDecimalExample bigDecimalExample = new BigDecimalExample();
+        bigDecimalExample.bigDecimalOldExample();
+        
+    }
+}
+
+class BigDecimalExample
+{
+    void bigDecimalOldExample(){
+        double a=0.03;
+        double b=0.04;
+        double c=b-a;
+        System.out.println("DOuble of c :-  "+c);
+
+        BigDecimal _a = new BigDecimal("0.03");
+        BigDecimal _b = new BigDecimal("0.04");
+        BigDecimal _c = _b.subtract(_a);
+        System.out.println("Big Decimal of c :- "+_c);
+    }
+
+	void bigDecimalExample()
+	{
+		// Create two new BigDecimals
+		BigDecimal bd1 = new BigDecimal("124567890.0987654321");
+		BigDecimal bd2 = new BigDecimal("987654321.123456789");
+		
+		// Addition of two BigDecimals
+		BigDecimal bdAdd = bd1.add(bd2);
+		System.out.println("BigDecimal add = " + bdAdd);
+
+		// Multiplication of two BigDecimals
+		BigDecimal bdMultiPly = bd1.multiply(bd2);
+		System.out.println("BigDecimal multiply = " + bdMultiPly);
+
+		// Subtraction of two BigDecimals
+		BigDecimal bdSubtract = bd1.subtract(bd2);
+		System.out.println("BigDecimal subtract = " + bdSubtract);
+
+		// Division of two BigDecimals
+		BigDecimal bdDivide = bd1.divide(bd2);
+		System.out.println("BigDecimal divide = " + bdDivide);
+
+		// BigDecima1 raised to the power of 2
+		BigDecimal bdPower = bd1.pow(2);
+		System.out.println("BigDecimal power = " + bdPower);
+
+		// Negate value of BigDecimal1
+		BigDecimal bdNegate = bd1.negate();
+		System.out.println("BigDecimal negate = " + bdNegate);
+	}	
+}		
+
+```
 
 ## string basics
 
 ## type casting
 
-# Java : Some good to know information
+
