@@ -1,82 +1,115 @@
 <p>add-customer works!</p>
 
-<form #addCustomerForm="ngForm" (submit)="addCustormer(addCustomerForm)">
-    <input type="text" name="FirstName" [(ngModel)]="firstName" > <br>
-    <input type="text"  name="LastName" [(ngModel)]="lastName"><br>
-    <input type="checkbox" name="Check" [(ngModel)]="OK"><br>
-    <input type="radio" name="Radio" [(ngModel)]="radio"><br>
+<form #FormName="ngForm" (submit)="submitFormFunctionName(FormName)">
+    <div>
+        <input type="text" name="FirstName" [(ngModel)]="firstName" required minlength="10"> <br>  
+        <!-- name = "key"  [(ngModel)]="value"          is manadatory for every input,select&option,textarea,etc-->
+    </div>
+    <div>
+        <input type="text"  name="LastName" [(ngModel)]="lastName" required>
+    </div>
+    <div>
+        <input type="checkbox" name="Check" [(ngModel)]="OK"  required> Accept all terms and condition
+    </div>
+    <div>
+        <input type="radio" name="Radio" [(ngModel)]="radio">   Radio
+    </div>
+
+    <div>
+        <select name="customerType" [(ngModel)]="customerType" required>
+            <option value="premium">Premium</option>
+            <option value="vip">VIP</option>
+            <option value="economic">Economic</option>
+        </select>
+    </div>
+
     
-   
-
-
-    <input type="submit" name="SUBMIT" value="Add customers"><br>
-    <!-- <button type="submit">Add customers</button> -->
-</form>
-
-your input is {{firstName}}
-
-<!-- <form>
-    <div class="form-group">
-      <label for="exampleInputEmail1">Email address</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <div>
+        <mat-form-field appearance="outline" class=" _w-50  _ml-10">
+            <mat-label>Status</mat-label>
+            <mat-select  [multiple]="false" name="StatusValue" [(ngModel)]="statusArr" [required]="true">
+        
+                <mat-option *ngFor="let groupFilter of status" [value]="groupFilter.value">
+                    {{groupFilter.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
-    <div class="form-group">
-      <label for="exampleInputPassword1">Password</label>
-      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-    </div>
-    <div class="form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-      <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form> -->
-
-
-<br><br><br>
-<br><br><br>
-
-
-<div>
-    <!-- <mat-form-field appearance="outline">
+    
+  
+  <div>
+    <mat-form-field appearance="outline" class="  _w-50 _ml-10">
+        <mat-label>Pods</mat-label>
+        <mat-select [multiple]="true" name="PodsValue" [(ngModel)]="podsArr" [required]="true">
+            <mat-option *ngFor="let groupFilter of pods" [value]="groupFilter.value">
+                {{groupFilter.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+  </div>
+  
+  <div>
+        <mat-form-field appearance="outline">
         <mat-label>Favorite food</mat-label>
-        <mat-select>
-          <mat-option *ngFor="let food of foods" [value]="food.value">
+        <mat-select name="foodValue" [(ngModel)]="foodArr" [required]="true" >
+          <mat-option *ngFor="let food of foods" [value]="food.value" >
             {{food.viewValue}}
           </mat-option>
         </mat-select>
-      </mat-form-field> -->
-
-      <mat-slide-toggle>Slide me!</mat-slide-toggle>
-
-
-</div>
-
-
+      </mat-form-field>
+  </div>
+  
+  <div>
+    <mat-slide-toggle name="toggle" [(ngModel)]="togglevalue" >Slide me!</mat-slide-toggle>
+  </div>
 
 
+    <input type="submit" name="SUBMIT" value="Add customers submit" [disabled]="!FormName.valid"><br>
+    <!-- <button type="submit">Add customers</button> -->
 
+    <!-- <input type="submit" ><br> -->
+   <button class="btn btn-link" (click)="resetForm()"></button>
+</form>
 
-
-<!-- <mat-form-field appearance="outline" class=" _w-50  _ml-10">
-    <mat-label>Status</mat-label>
-    <mat-select  multiple (selectionChange)="filterStatus($event)">
-
-        <mat-option *ngFor="let groupFilter of status" [value]="groupFilter.value">
-            {{groupFilter.name}}
-        </mat-option>
-    </mat-select>
-</mat-form-field> -->
+your input is :-        {{firstName}} 
 
 
 
 
-<!-- <mat-form-field appearance="outline" class="  _w-50 _ml-10">
-    <mat-label>Pods</mat-label>
-    <mat-select  multiple (selectionChange)="filterPods($event)">
 
-        <mat-option *ngFor="let groupFilter of pods" [value]="groupFilter.value">
-            {{groupFilter.name}}
-        </mat-option>
-    </mat-select>
-</mat-form-field> -->
+
+<!-- name = "key"  [(ngModel)]="value"          is manadatory for every     input,select&option,textarea,toggle,etc
+
+formsValue.value : {Check : true, FirstName : " raj shinghania ", LastName :  " singh", PodsValue : ['zeroReady', 'partialReady'], Radio : undefined, StatusValue :  "FAILED", customerType : "economic", foodValue : "steak-0" , toggle : true }
+
+formsValue.form.value : {Check : true, FirstName : " raj shinghania ", LastName :  " singh", PodsValue : ['zeroReady', 'partialReady'], Radio : undefined, StatusValue :  "FAILED", customerType : "economic", foodValue : "steak-0" , toggle : true }
+
+formsValue.form.value : {
+                            Check : true,
+                            FirstName : " raj shinghania " ,
+                            LastName :  " singh",
+                            PodsValue : ['zeroReady', 'partialReady'],
+                            Radio : false,
+                            StatusValue :  "FAILED",
+                            customerType : "economic",
+                            foodValue : "steak-0" ,
+                            toggle : true,
+                            [[Prototype]] : Object
+                        }
+formsValue.value :    {
+                          Check : true,
+                          FirstName : " raj shinghania ",
+                          LastName :  " singh",
+                          PodsValue : ['zeroReady', 'partialReady'],
+                          Radio : false,
+                          StatusValue :  "FAILED"
+                          customerType : "economic",
+                          foodValue : "steak-0" ,
+                          toggle : true,
+                          [[Prototype]] : Object
+                      }
+-->
+
+
+
+

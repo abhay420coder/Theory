@@ -60,6 +60,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // all angular material API imported  ended
 
 
@@ -86,6 +87,7 @@ import {MatTreeModule} from '@angular/material/tree';
     BrowserModule,
     AppRoutingModule, // routing module add in  imports array
     FormsModule,
+    BrowserAnimationsModule,
     
         // all angular material module imported started
         MatAutocompleteModule,MatBadgeModule,MatBottomSheetModule,MatButtonModule,MatButtonToggleModule,

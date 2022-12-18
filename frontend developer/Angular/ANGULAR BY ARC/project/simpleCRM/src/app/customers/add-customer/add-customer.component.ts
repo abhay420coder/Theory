@@ -13,11 +13,15 @@ interface Food {
 })
 export class AddCustomerComponent implements OnInit {
 
-  firstName :string=" ";
-  lastName :string=" ";
-  OK :string="OK"
-  radio:string="Radio Button";
-
+  firstName :any;
+  lastName :any;
+  OK:any;
+  radio:any=false;
+  podsArr:any;
+  statusArr:any;
+  foodArr:any;
+  customerType:any;
+  togglevalue:any;
   status: any = [
     { name: "Success", value: "SUCCESS" },
     { name: "Error", value: "FAILED" },
@@ -29,6 +33,18 @@ export class AddCustomerComponent implements OnInit {
     { name: "Partial Ready", value: "partialReady" },
   ];
 
+
+  /* 
+  interface Food {
+  value: string;
+  viewValue: string;
+}
+  foods: Food[] = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'},
+  ];
+  */
   foods: Food[] = [
     {value: 'steak-0', viewValue: 'Steak'},
     {value: 'pizza-1', viewValue: 'Pizza'},
@@ -40,9 +56,13 @@ export class AddCustomerComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  addCustormer(formsValue:NgForm){
+  submitFormFunctionName(formsValue:NgForm){
     console.log("formsValue.form.value  :-  ",formsValue.form.value)
     console.log("formsValue.value  :-  ",formsValue.value)
+
+    // validations
+    // data processing
+    // then call API to save this data
   }
 
 }

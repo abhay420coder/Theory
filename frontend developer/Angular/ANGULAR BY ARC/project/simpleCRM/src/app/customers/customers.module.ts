@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 
 
 // all angular material API imported  started
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
