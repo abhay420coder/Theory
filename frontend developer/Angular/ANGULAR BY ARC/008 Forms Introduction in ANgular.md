@@ -297,8 +297,8 @@ formsValue.value :    {
 -->
 ```
 
-![this is the form](2022-12-18-13-47-03.png)
-![when you click on submit you will be get this one](2022-12-18-13-45-47.png)
+![this is the form](./image%20-%20008%20Forms%20Introduction%20in%20ANgular/2022-12-18-13-47-03.png)
+![when you click on submit you will be get this one](./image%20-%20008%20Forms%20Introduction%20in%20ANgular/2022-12-18-13-45-47.png)
 
 **add-customer.component.ts**
 
@@ -908,8 +908,8 @@ formsValue.value :    {
 
 ```
 
-![this is the form](2022-12-18-21-59-04.png)
-![when you click on submit you will be get this one](2022-12-18-21-58-34.png)
+![this is the form](./image%20-%20008%20Forms%20Introduction%20in%20ANgular/2022-12-18-21-59-04.png)
+![when you click on submit you will be get this one](./image%20-%20008%20Forms%20Introduction%20in%20ANgular/2022-12-18-21-58-34.png)
 
 **add-customer.component.ts**
 
@@ -1064,6 +1064,8 @@ export class AddCustomerComponent implements OnInit {
 
     <input type="submit" name="SUBMIT" value="Submit Button Value" [disabled]="!FormName.valid"><br>
     <!-- <button type="submit">Add customers</button> -->
+
+   <button  (click)="resetForm(FormName)">Reset Form</button>
 </form>
 ```
 
@@ -1097,8 +1099,214 @@ export class formComponent implements OnInit {
     // then call API to save this data
   }
 
+  resetForm(formsValue:NgForm){
+    // formsValue.reset();
+    // or
+    formsValue.resetForm();
+  }
+
 }
 ```
+
+
+### Example :-
+
+**add-customer.component.html**
+
+```html
+<p>add-customer works!</p>
+
+<form #FormName="ngForm" (submit)="submitFormFunctionName(FormName)">
+    <div>
+        <input type="text" name="FirstName" [(ngModel)]="firstName" required minlength="10"> <br>  
+        <!-- name = "key"  [(ngModel)]="value"          is manadatory for every input,select&option,textarea,etc-->
+    </div>
+    <div>
+        <input type="text"  name="LastName" [(ngModel)]="lastName" required>
+    </div>
+    <div>
+        <input type="checkbox" name="Check" [(ngModel)]="OK"  required> Accept all terms and condition
+    </div>
+    <div>
+        <input type="radio" name="Radio" [(ngModel)]="radio">   Radio
+    </div>
+
+    <div>
+        <select name="customerType" [(ngModel)]="customerType" required>
+            <option value="premium">Premium</option>
+            <option value="vip">VIP</option>
+            <option value="economic">Economic</option>
+        </select>
+    </div>
+
+    
+    <div>
+        <mat-form-field appearance="outline" class=" _w-50  _ml-10">
+            <mat-label>Status</mat-label>
+            <mat-select  [multiple]="false" name="StatusValue" [(ngModel)]="statusArr" [required]="true">
+        
+                <mat-option *ngFor="let groupFilter of status" [value]="groupFilter.value">
+                    {{groupFilter.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    
+  
+  <div>
+    <mat-form-field appearance="outline" class="  _w-50 _ml-10">
+        <mat-label>Pods</mat-label>
+        <mat-select [multiple]="true" name="PodsValue" [(ngModel)]="podsArr" [required]="true">
+            <mat-option *ngFor="let groupFilter of pods" [value]="groupFilter.value">
+                {{groupFilter.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+  </div>
+  
+  <div>
+        <mat-form-field appearance="outline">
+        <mat-label>Favorite food</mat-label>
+        <mat-select name="foodValue" [(ngModel)]="foodArr" [required]="true" >
+          <mat-option *ngFor="let food of foods" [value]="food.value" >
+            {{food.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  </div>
+  
+  <div>
+    <mat-slide-toggle name="toggle" [(ngModel)]="togglevalue" >Slide me!</mat-slide-toggle>
+  </div>
+
+
+    <input type="submit" name="SUBMIT" value="Add customers submit" [disabled]="!FormName.valid"><br>
+    <!-- <button type="submit">Add customers</button> -->
+
+    <!-- <input type="submit" ><br> -->
+   <button  (click)="resetForm(FormName)">Reset Form</button>
+</form>
+
+your input is :-        {{firstName}} 
+
+
+
+
+
+
+<!-- name = "key"  [(ngModel)]="value"          is manadatory for every     input,select&option,textarea,toggle,etc
+
+formsValue.value : {Check : true, FirstName : " raj shinghania ", LastName :  " singh", PodsValue : ['zeroReady', 'partialReady'], Radio : undefined, StatusValue :  "FAILED", customerType : "economic", foodValue : "steak-0" , toggle : true }
+
+formsValue.form.value : {Check : true, FirstName : " raj shinghania ", LastName :  " singh", PodsValue : ['zeroReady', 'partialReady'], Radio : undefined, StatusValue :  "FAILED", customerType : "economic", foodValue : "steak-0" , toggle : true }
+
+formsValue.form.value : {
+                            Check : true,
+                            FirstName : " raj shinghania " ,
+                            LastName :  " singh",
+                            PodsValue : ['zeroReady', 'partialReady'],
+                            Radio : false,
+                            StatusValue :  "FAILED",
+                            customerType : "economic",
+                            foodValue : "steak-0" ,
+                            toggle : true,
+                            [[Prototype]] : Object
+                        }
+formsValue.value :    {
+                          Check : true,
+                          FirstName : " raj shinghania ",
+                          LastName :  " singh",
+                          PodsValue : ['zeroReady', 'partialReady'],
+                          Radio : false,
+                          StatusValue :  "FAILED"
+                          customerType : "economic",
+                          foodValue : "steak-0" ,
+                          toggle : true,
+                          [[Prototype]] : Object
+                      }
+-->
+
+```
+
+![if all input filled pr form filled](./image%20-%20008%20Forms%20Introduction%20in%20ANgular/2022-12-18-22-42-48.png)
+![after clicking on reset button](./image%20-%20008%20Forms%20Introduction%20in%20ANgular/2022-12-18-22-43-31.png)
+
+**add-customer.component.ts**
+
+```ts
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
+interface Food {
+  value: string;
+  viewValue: string;
+}
+
+@Component({
+  selector: 'app-add-customer',
+  templateUrl: './add-customer.component.html',
+  styleUrls: ['./add-customer.component.scss']
+})
+export class AddCustomerComponent implements OnInit {
+
+  firstName :any;
+  lastName :any;
+  OK:any;
+  radio:any=false;
+  podsArr:any;
+  statusArr:any;
+  foodArr:any;
+  customerType:any;
+  togglevalue:any;
+  status: any = [
+    { name: "Success", value: "SUCCESS" },
+    { name: "Error", value: "FAILED" },
+    { name: "Pending", value: "PENDING" },
+  ];
+  pods: any = [
+    { name: "All Ready", value: "allReady" },
+    { name: "Zero Ready", value: "zeroReady" },
+    { name: "Partial Ready", value: "partialReady" },
+  ];
+
+
+  /* 
+  interface Food {
+  value: string;
+  viewValue: string;
+}
+  foods: Food[] = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'},
+  ];
+  */
+  foods: Food[] = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'},
+  ];
+  constructor() { }
+
+  
+  ngOnInit(): void {
+  }
+
+  submitFormFunctionName(formsValue:NgForm){
+    console.log("formsValue.form.value  :-  ",formsValue.form.value)
+    console.log("formsValue.value  :-  ",formsValue.value)
+
+    // validations
+    // data processing
+    // then call API to save this data
+  }
+  resetForm(formsValue:NgForm){
+    // formsValue.reset();
+    formsValue.resetForm();
+  }
+}
+```
+
 ## Angular Reset Forms Tutorial by  Angular.io
 
 # Angular Set Form Value Tutorial
@@ -1181,6 +1389,8 @@ export class formComponent implements OnInit {
 
     <input type="submit" name="SUBMIT" value="Submit Button Value" [disabled]="!FormName.valid"><br>
     <!-- <button type="submit">Add customers</button> -->
+
+   <button  (click)="resetForm(FormName)">Reset Form</button>
 </form>
 ```
 
@@ -1214,6 +1424,238 @@ export class formComponent implements OnInit {
     // then call API to save this data
   }
 
+  resetForm(formsValue:NgForm){
+    // formsValue.reset();
+    // or
+    formsValue.resetForm();
+  }
+
+  setForm(formsValue: NgForm) {
+    let userDetails = {
+      inputName: value,
+    }
+    formsValue.setValue(userDetails);
+  }
+
 }
 ```
+
+### Example :-
+
+**add-customer.component.html**
+
+```html
+<p>add-customer works!</p>
+
+<form #FormName="ngForm" (submit)="submitFormFunctionName(FormName)">
+    <div>
+        <input type="text" name="FirstName" [(ngModel)]="firstName" required minlength="10"> <br>  
+        <!-- name = "key"  [(ngModel)]="value"          is manadatory for every input,select&option,textarea,etc-->
+    </div>
+    <div>
+        <input type="text"  name="LastName" [(ngModel)]="lastName" required>
+    </div>
+    <div>
+        <input type="checkbox" name="Check" [(ngModel)]="OK"  required> Accept all terms and condition
+    </div>
+    <div>
+        <input type="radio" name="Radio" [(ngModel)]="radio">   Radio
+    </div>
+
+    <div>
+        <select name="customerType" [(ngModel)]="customerType" required>
+            <option value="premium">Premium</option>
+            <option value="vip">VIP</option>
+            <option value="economic">Economic</option>
+        </select>
+    </div>
+
+    
+    <div>
+        <mat-form-field appearance="outline" class=" _w-50  _ml-10">
+            <mat-label>Status</mat-label>
+            <mat-select  [multiple]="false" name="StatusValue" [(ngModel)]="statusArr" [required]="true">
+        
+                <mat-option *ngFor="let groupFilter of status" [value]="groupFilter.value">
+                    {{groupFilter.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    
+  
+  <div>
+    <mat-form-field appearance="outline" class="  _w-50 _ml-10">
+        <mat-label>Pods</mat-label>
+        <mat-select [multiple]="true" name="PodsValue" [(ngModel)]="podsArr" [required]="true">
+            <mat-option *ngFor="let groupFilter of pods" [value]="groupFilter.value">
+                {{groupFilter.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+  </div>
+  
+  <div>
+        <mat-form-field appearance="outline">
+        <mat-label>Favorite food</mat-label>
+        <mat-select name="foodValue" [(ngModel)]="foodArr" [required]="true" >
+          <mat-option *ngFor="let food of foods" [value]="food.value" >
+            {{food.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  </div>
+  
+  <div>
+    <mat-slide-toggle name="toggle" [(ngModel)]="togglevalue" >Slide me!</mat-slide-toggle>
+  </div>
+
+
+    <input type="submit" name="SUBMIT" value="Add customers submit" [disabled]="!FormName.valid"><br>
+    <!-- <button type="submit">Add customers</button> -->
+
+    <!-- <input type="submit" ><br> -->
+   <button  (click)="resetForm(FormName)">Reset Form</button>
+   <button  (click)="setForm(FormName)">Set Form</button>
+</form>
+
+your input is :-        {{firstName}} 
+
+
+
+
+
+
+<!-- name = "key"  [(ngModel)]="value"          is manadatory for every     input,select&option,textarea,toggle,etc
+
+formsValue.value : {Check : true, FirstName : " raj shinghania ", LastName :  " singh", PodsValue : ['zeroReady', 'partialReady'], Radio : undefined, StatusValue :  "FAILED", customerType : "economic", foodValue : "steak-0" , toggle : true }
+
+formsValue.form.value : {Check : true, FirstName : " raj shinghania ", LastName :  " singh", PodsValue : ['zeroReady', 'partialReady'], Radio : undefined, StatusValue :  "FAILED", customerType : "economic", foodValue : "steak-0" , toggle : true }
+
+formsValue.form.value : {
+                            Check : true,
+                            FirstName : " raj shinghania " ,
+                            LastName :  " singh",
+                            PodsValue : ['zeroReady', 'partialReady'],
+                            Radio : false,
+                            StatusValue :  "FAILED",
+                            customerType : "economic",
+                            foodValue : "steak-0" ,
+                            toggle : true,
+                            [[Prototype]] : Object
+                        }
+formsValue.value :    {
+                          Check : true,
+                          FirstName : " raj shinghania ",
+                          LastName :  " singh",
+                          PodsValue : ['zeroReady', 'partialReady'],
+                          Radio : false,
+                          StatusValue :  "FAILED"
+                          customerType : "economic",
+                          foodValue : "steak-0" ,
+                          toggle : true,
+                          [[Prototype]] : Object
+                      }
+-->
+
+```
+
+![before clicking on `Set Form` button](./image%20-%20008%20Forms%20Introduction%20in%20ANgular/2022-12-18-23-29-34.png)
+![after clicking on `Set Form` button](./image%20-%20008%20Forms%20Introduction%20in%20ANgular/2022-12-18-23-30-04.png)
+
+
+**add-customer.component.ts**
+
+```ts
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
+interface Food {
+  value: string;
+  viewValue: string;
+}
+
+@Component({
+  selector: 'app-add-customer',
+  templateUrl: './add-customer.component.html',
+  styleUrls: ['./add-customer.component.scss']
+})
+export class AddCustomerComponent implements OnInit {
+
+  firstName: any;
+  lastName: any;
+  OK: any;
+  radio: any = false;
+  podsArr: any;
+  statusArr: any;
+  foodArr: any;
+  customerType: any;
+  togglevalue: any;
+  status: any = [
+    { name: "Success", value: "SUCCESS" },
+    { name: "Error", value: "FAILED" },
+    { name: "Pending", value: "PENDING" },
+  ];
+  pods: any = [
+    { name: "All Ready", value: "allReady" },
+    { name: "Zero Ready", value: "zeroReady" },
+    { name: "Partial Ready", value: "partialReady" },
+  ];
+
+
+  /* 
+  interface Food {
+  value: string;
+  viewValue: string;
+}
+  foods: Food[] = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'},
+  ];
+  */
+  foods: Food[] = [
+    { value: 'steak-0', viewValue: 'Steak' },
+    { value: 'pizza-1', viewValue: 'Pizza' },
+    { value: 'tacos-2', viewValue: 'Tacos' },
+  ];
+
+  constructor() { }
+
+
+  ngOnInit(): void {
+
+  }
+
+  submitFormFunctionName(formsValue: NgForm) {
+    console.log("formsValue.form.value  :-  ", formsValue.form.value)
+    console.log("formsValue.value  :-  ", formsValue.value)
+
+    // validations
+    // data processing
+    // then call API to save this data
+  }
+  resetForm(formsValue: NgForm) {
+    // formsValue.reset();
+    formsValue.resetForm();
+  }
+  setForm(formsValue: NgForm) {
+    let userDetails = {
+      Check: true,
+      FirstName: " raj shinghania ",
+      LastName: " singh",
+      PodsValue: ['zeroReady', 'partialReady'],
+      Radio: false,
+      StatusValue: "FAILED",
+      customerType: "economic",
+      foodValue: "steak-0",
+      toggle: true,
+    }
+
+    formsValue.setValue(userDetails);
+  }
+}
+
+```
+
 ## Angular Set Form Value Tutorial by  Angular.io
