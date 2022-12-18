@@ -1,0 +1,54 @@
+<div class="container _h-100 _p-10 _overflow-hidden">
+    <div class="_flex-box _jc-sb">
+        <h2>Service</h2>
+        <button mat-stroked-button  *ngIf="canAdd()" (click)="createUpdateService()">Add a service</button>
+    </div>
+    <search-box (onChange)="handleSearch($event)"></search-box>
+    <div *ngIf="loading">
+        <ngx-skeleton-loader count="10" [theme]="{ 
+            'border-radius': '5px',
+            height: '50px',
+            'margin-bottom': '0px',
+            border: '1px solid white'
+          }"></ngx-skeleton-loader>
+    </div>
+    <ng-container *ngIf="!loading">
+        <div *ngIf="!serviceList.length && !loading else list" class="_flex-box _jc-c _mt-10">No services yet.</div>
+        <ng-template #list>
+            <div class="_flex-box _sub-heading _padding-general">
+                <div class="_mr-10 _pl-10" style="width: 20px;">#</div>
+                <div class="_first-head-col">Name</div>
+                <div class="_mr-10" style="width: 150px;">Service Release Count</div>
+                <div class="_flex-1">Description</div>
+            </div>
+            <div class="card-container service-list"
+                infiniteScroll
+                [infiniteScrollDistance]="1"
+                [infiniteScrollThrottle]="10"
+                [infiniteScrollContainer]="'.service-list'"
+                [fromRoot]="true"
+                [scrollWindow]="false"
+                (scrolled)="onScroll()">
+                <div *ngFor="let service of serviceList" class="list _jc-sb">
+                    <div class="_mr-10 _flex-box _dynamic-icon" 
+                        [dynamicBgIcon]="'/assets/icons/services/' + service.serviceName + '.svg'">
+                    </div>
+                    <div class="_first-head-col">{{service.serviceName}}</div>
+                    <div style="width: 150px;" class="_mr-10">{{service.serviceReleaseCount || 0}}</div>
+                    <div class="_flex-1">{{service.serviceDescription}}</div>
+                    <div class="actions">
+                        <button mat-icon-button matTooltip="Open docs in Swagger" class="_swagger-icon" (click)="redirectToSwagger(service)"></button>
+                        <button mat-icon-button *ngIf="canManageRoles()" matTooltip="Manage Roles" class="_roles-icon" (click)="manageRole(service)"></button>
+                        <button mat-icon-button *ngIf="service.actions.includes('update')"
+                            (click)="createUpdateService(service)" matTooltip="Edit" class="_edit-icon">
+                        </button>
+                        <button mat-icon-button *ngIf="service.actions.includes('delete')"
+                            (click)="deleteService(service)" matTooltip="Delete" class="_delete-icon">
+                        </button>
+                    </div>
+                </div>
+                <div *ngIf="lastPage" class="_list-end-message _jc-c">That's all!</div>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>

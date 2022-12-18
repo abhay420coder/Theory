@@ -1,0 +1,36 @@
+@import '../../../../assets/css/variables';
+
+.info{
+    width: 20px;
+    height: 20px;
+}
+
+.card {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px 1px rgba($box-shadow-color, 0.07);
+}
+
+.small-card {
+    width: 200px;
+    height: 105px;
+
+    .title {
+        font-size: 11px;
+    }
+
+    .data {
+        text-align: center;
+        margin-top: 20px;
+
+        font-size: 28px;
+        font-weight: 200;
+        line-height: 28px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+    }
+
+}

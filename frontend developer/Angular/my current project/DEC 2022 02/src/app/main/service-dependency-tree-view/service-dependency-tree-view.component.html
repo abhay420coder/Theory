@@ -1,0 +1,15 @@
+<div class="container _h-100 _p-10">
+    <div class="_flex-box _jc-sb">
+        <div class="_flex-box _jc-sb">
+            <button mat-icon-button (click)="navigateBack()" class="_back-icon">
+            </button>
+            <h2 class="_mb-0 _ml-10">Service Dependency Tree</h2>
+        </div>
+        
+        <button mat-stroked-button (click)="refreshTree()">Refresh</button>
+    </div>
+    <div class="main-content" id="treeContainer">
+        <div *ngIf="loading" class="loader"><mat-spinner></mat-spinner></div>
+        <svg #svg id="treeView" class="tree-view" [hidden]="loading"></svg>
+    </div>
+</div>

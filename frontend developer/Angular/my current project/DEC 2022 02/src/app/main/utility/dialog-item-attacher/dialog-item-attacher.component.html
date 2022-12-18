@@ -1,0 +1,23 @@
+<div class="custom-header">
+    <div class="column">
+        {{data['title']}}
+    </div>
+    <div class="column _ml-auto show-tooltip" style="width: 50px;">
+      <button mat-icon-button (click)=" refreshList()">
+        <span class="material-icons">refresh</span>
+      </button>
+  </div>
+    <div class="column" style="width: 80px;">
+        <button mat-stroked-button *ngIf="!saveHandlerLoading" class="mat-btn-success" (click)="saveAttachments()">
+            <span>Save</span>
+        </button>
+    <animated-dots-loader *ngIf="saveHandlerLoading" class="_ml-10" style="width: 70px;" [loaderColor]="'#1dbd0a'"></animated-dots-loader>
+
+    </div>
+    <div class="column" style="width: 40px;">
+        <button mat-icon-button (click)="closeDialog()">
+            <span class="material-icons">close</span>
+        </button>
+    </div>
+</div>
+<app-items-attacher *ngIf="data" [inputData]="data" (outputData)="attachItems($event)"></app-items-attacher>

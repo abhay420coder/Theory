@@ -1,0 +1,87 @@
+@import '../../../../assets/css/variables';
+
+.info{
+    width: 20px;
+    height: 20px;
+}
+
+th, td{
+    // border-left: 1px solid $border-color;
+    border-right: 1px solid rgba($color: #000000, $alpha: 0.2);
+}
+
+tr:nth-child(even){
+    background-color: rgba($border-color, 0.65);
+}
+
+.filter{
+    border-radius: 10px;
+    overflow: hidden;
+
+    span{
+        padding: 5px 10px;
+        font-size: 12px;
+        line-height: 12px;
+    }
+    .key{
+        background-color: $navbar-bg;
+        color: white;
+    }
+    .val{
+        background-color: $status-border-blue;
+        padding-right: 30px;
+    }
+    .remove{
+        border: none;
+        background-color: #00000000;
+        height: 17px;
+        margin-left: -27px;
+        .mat-icon{
+            font-size: 15px;
+            line-height: 15px;
+            height: 15px;
+            width: 15px;
+        }
+    }
+}
+
+.remove-all{
+    background-color: $status-border-red;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 12px;
+}
+
+
+
+.card {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px 1px rgba($box-shadow-color, 0.07);
+}
+
+.small-card {
+    width: 200px;
+    height: 105px;
+
+    .title {
+        font-size: 11px;
+    }
+
+    .data {
+        text-align: center;
+        margin-top: 20px;
+
+        font-size: 28px;
+        font-weight: 200;
+        line-height: 28px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+    }
+
+}

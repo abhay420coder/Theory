@@ -1,0 +1,107 @@
+@import '../../../assets/css/variables';
+
+$hexagonSize: 80px;
+$hexagonMargin: 4px;
+$offset: calc((#{$hexagonSize} * 1.732) + (#{$hexagonMargin} * 4));
+.hexagon-row{
+    display: flex;
+    padding: 20px 20px 40px 20px;
+    width: fit-content;
+    margin: auto;
+    .hexagon-wrapper{
+        font-size: 0;
+        .hexagon{
+            width: $hexagonSize;
+            margin: $hexagonMargin;
+            height: calc(#{$hexagonSize} * 1.1547);
+            margin-bottom: calc(#{$hexagonMargin} - #{$hexagonSize} * 0.286);
+            clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 11px;
+            background-color: $status-blue;
+            color: white;
+        }
+        &::before{
+            content: "";
+            width: calc(#{$hexagonSize} / 2 + #{$hexagonMargin});
+            float: left;
+            height: 100%;
+            shape-outside: repeating-linear-gradient(#0000 0 calc(#{$offset} - 3px), #000 0 #{$offset});
+        }
+    }
+}
+
+.legend{
+    font-weight: 550;
+}
+
+.status-card{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin: 5px;
+    border: 1px solid $border-color;
+    border-radius: 5px;
+    .header{
+        padding: 5px;
+        font-size: 12px;
+        font-weight: 600;
+        border-bottom: 1px solid $border-color;
+    }
+    .body{
+        flex: 1;
+        padding: 5px;
+        padding-top: 15px;
+    }
+}
+
+.data-card{
+    width: 113px;
+    height: 100px;
+    .body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+    }
+}
+
+.graph-card{
+    width: 236px;
+    height: 210px;
+    .body{
+        .chart-wrapper{
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .overlay{
+            text-align: center;
+            margin-top: -70px;
+            h6{
+                margin-bottom: 10px;
+                font-weight: bold;
+                letter-spacing: 1px;
+                color: $disabled-font-color;
+            }
+            span{
+                display: block;
+                font-size: 24px;
+            }
+        }
+        .status{
+            margin-top: 20px;
+            padding: 5px;
+            text-align: center;
+            color: $disabled-font-color;
+        }
+    }
+}
+
+/* Hiding Garfana nav bar */
+
+iframe ::ng-deep .css-hq7z1q {
+    display: none !important;
+}

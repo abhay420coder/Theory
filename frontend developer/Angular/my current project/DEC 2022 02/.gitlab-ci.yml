@@ -1,0 +1,57 @@
+stages: 
+  - build
+  - package
+  - deploy
+
+cache:
+  paths:
+    - node_modules/
+  key: "$CI_BUILD_REF_NAME"
+
+npm_build:
+  stage: build
+  image: node:lts-alpine3.13
+  tags:
+    - vca-devops
+  before_script: 
+    - "npm install -g @angular/cli"
+    - "npm install"
+  script: 
+    -  "ng build --configuration production --base-href=/"
+  artifacts:
+    paths:
+     - ./dist/
+  when: manual       
+
+docker_build:
+  image: docker:stable
+  services:
+    - name: docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  stage: package
+  tags:
+    - vca-devops
+  before_script:
+  - docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWD"     
+  script: 
+    - docker login -u vca-devops-ui -p "feS8wTx4RyxDPehcDbpA" "$REGISTRY_URL":"$REGISTRY_PORT"
+    - docker build -t "$REGISTRY_URL":"$REGISTRY_PORT"/vca/devops/vca-devops-ui:DEV0.1 .
+    - docker push "$REGISTRY_URL":"$REGISTRY_PORT"/vca/devops/vca-devops-ui:DEV0.1
+  when: manual    
+
+image_deploy:
+  stage: deploy
+  image: kroniak/ssh-client
+  tags:
+    - vca-devops
+  script:
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - echo "$DEV_REMOTE_KEY_DEV" > ~/.ssh/id_rsa
+    - chmod 400 ~/.ssh/id_rsa
+    - ssh "$DEV_REMOTE_HOST_DEV" 'cd ~ && sh deploy-ui.sh "/vca/devops/vca-devops-ui" '
+  when: manual    

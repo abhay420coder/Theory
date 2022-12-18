@@ -1,0 +1,222 @@
+<div class="_mt-10">
+    <search-box (onChange)="handleServiceSearch($event)"></search-box>
+</div>
+<!-- skeleton template for Services -->
+<div class="_flex-box _mb-10 _ai-stretch" *ngIf="servicesLoading">
+    <div class="endpoint-card _p-10 _mr-10 _flex-column" *ngFor="let item of serviceSkeletonCount">
+        <div class="header _flex-box _ai-start">
+            <ngx-skeleton-loader count="1" [theme]="{ 
+                'border-radius': '10px',
+                'height': '20px',
+                'width': '20px',
+                'margin-bottom': '0px',
+                'border': '1px solid white'
+            }"></ngx-skeleton-loader>
+            <div class="_flex-column _ml-10">
+                <ngx-skeleton-loader count="1" [theme]="{ 
+                    'border-radius': '5px',
+                    'height': '20px',
+                    'width': '80px',
+                    'margin-bottom': '0px',
+                    'border': '1px solid white'
+                }"></ngx-skeleton-loader>
+                <ngx-skeleton-loader count="1" [theme]="{ 
+                    'border-radius': '5px',
+                    'height': '11px',
+                    'width': '140px',
+                    'line-height': '20px',
+                    'margin-bottom': '0px',
+                    'border': '1px solid white'
+                }"></ngx-skeleton-loader>
+            </div>
+        </div>
+        <div class="_flex-column _mt-10">
+            <ngx-skeleton-loader count="1" [theme]="{ 
+                'display': 'block',
+                'border-radius': '5px',
+                'height': '11px',
+                'width': '70px',
+                'line-height': '20px',
+                'margin-bottom': '10px',
+                'margin-left': '0px',
+                'border': '1px solid white'
+            }"></ngx-skeleton-loader>
+            <ngx-skeleton-loader count="2" [theme]="{ 
+                'display': 'block',
+                'border-radius': '5px',
+                'height': '11px',
+                'width': '120px',
+                'line-height': '20px',
+                'margin-bottom': '5px',
+                'margin-left': '10px',
+                'border': '1px solid white'
+            }"></ngx-skeleton-loader>
+        </div>
+        <div class="_flex-column _mt-10">
+            <ngx-skeleton-loader count="1" [theme]="{ 
+                'display': 'block',
+                'border-radius': '5px',
+                'height': '11px',
+                'width': '70px',
+                'line-height': '20px',
+                'margin-bottom': '10px',
+                'margin-left': '0px',
+                'border': '1px solid white'
+            }"></ngx-skeleton-loader>
+            <ngx-skeleton-loader count="2" [theme]="{ 
+                'display': 'block',
+                'border-radius': '5px',
+                'height': '11px',
+                'width': '120px',
+                'line-height': '20px',
+                'margin-bottom': '5px',
+                'margin-left': '10px',
+                'border': '1px solid white'
+            }"></ngx-skeleton-loader>
+        </div>
+    </div>
+</div>
+<!-- service skeleton template Ends -->
+<!-- <h4 *ngIf="syncedServicesData.length" class="_pt-15">Synced K8S services</h4> -->
+<div class="_flex-box _mb-10 _ai-stretch _flex-wrap" *ngIf="!servicesLoading">
+    <ng-container *ngFor="let service of syncedServicesData">
+        <div class="endpoint-card _p-10 _mr-10 _mb-10 _flex-column"
+            [ngClass]="{'unsynced': service?.dbData?.status === 'FAILURE'}" *ngIf="service.visible">
+            <div class="header _flex-box _ai-start">
+                <div class="_mr-10 _flex-box _dynamic-icon" style="min-width: 20px;"
+                    [dynamicBgIcon]="'/assets/icons/services/' + getServiceName(service.metadata.name) + '.svg'">
+                </div>
+                <div class="_flex-column">
+                    <span>{{service.metadata.name}}</span>
+                    <!-- <span>{{service.name}}</span> -->
+                    <span class="secondary-text">Created: {{service.metadata.creationTimestamp |
+                        formatteddate:"MMM D, YYYY h:mm:ss A":true}}
+                        ({{service.metadata.creationTimestamp | fromnow}} ago)</span>
+                </div>
+            </div>
+            <div class="_flex-column _mt-10">
+                <div class="_sub-heading">Networking</div>
+                <div class="_ml-10">
+                    <div class="_status-text">
+                        Cluster IP:
+                        {{service&&service.spec&&service.spec.clusterIP?service.spec.clusterIP:'Not available'}}
+                    </div>
+                    <div class="_status-text" *ngFor="let port of service.spec.ports">
+                        <span>{{port.targetPort}}({{port.protocol}})</span>
+                        <span class="material-icons _status-text _ml-10 _mr-10">east</span>
+                        <span>{{port.nodePort}}({{port.protocol}})</span>
+                    </div>
+                </div>
+                <div class="_sub-heading _mt-10">Specs</div>
+                <div class="_ml-10">
+                    <div class="_status-text">Selector:
+                        {{service&&service.spec&&service.spec.selector&&service.spec.selector.app?service.spec.selector.app:'Not available'}}</div>
+                    <div class="_status-text">Type:
+                        {{service&&service.spec&&service.spec.type?service.spec.type:'Not available'}}</div>
+                </div>
+            </div>
+            <hr class="_w-100" *ngIf="service&&service.dbData">
+            <div class="_flex-box _pt-10 _jc-r" *ngIf="service&&service.dbData">
+                <button class="_warning-icon" *ngIf="service.dbData?.status==='FAILURE'"
+                    mat-icon-button matTooltip="Error. Click for details"
+                    (click)="showErrorPopUp(service.dbData?.statusDisc)">
+                </button>
+                <button mat-icon-button
+                    *ngIf="service.dbData.actions&&service.dbData.actions.includes('update')"
+                    matTooltip="Patch Service" class="_edit-icon"
+                    (click)="patchService(service.dbData)">
+                </button>
+                <button mat-icon-button
+                    *ngIf="service.dbData.actions&&service.dbData.actions.includes('update')"
+                    matTooltip="Replace Service" class="_redeploy-icon"
+                    (click)="replaceService(service.dbData)">
+                </button>
+            </div>
+        </div>
+    </ng-container>
+    <!-- <div *ngIf="!syncedServicesData.length" class="_w-100 _text-center">No data available</div> -->
+</div>
+<h4 *ngIf="unsyncedDbServices.length">Failed K8s services</h4>
+<div class="_flex-box _mb-10 _ai-stretch _flex-wrap" *ngIf="!servicesLoading">
+    <ng-container *ngFor="let service of unsyncedDbServices">
+        <div class="endpoint-card unsynced _p-10 _mr-10 _mb-10 _flex-column"
+            *ngIf="service.visible">
+            <div class="header _flex-box _ai-start">
+                <!-- <div class="_mr-10 _flex-box _dynamic-icon" style="min-width: 20px;"
+                    [dynamicBgIcon]="'/assets/icons/services/' + getServiceName(service.metadata.name) + '.svg'">
+                </div> -->
+                <div class="_flex-column">
+                    <!-- <span>{{service.metadata.name}}</span> -->
+                    <span>{{service.name}}</span>
+                    <!-- <span class="secondary-text">Created: {{service.metadata.creationTimestamp | formatteddate:"MMM D, YYYY h:mm:ss A"}} ({{service.metadata.creationTimestamp | fromnow}} ago)</span> -->
+                </div>
+            </div>
+            <hr class="_w-100" *ngIf="service&&service.actions">
+            <div class="_flex-box _pt-10 _jc-r" *ngIf="service&&service.actions">
+                <button class="_warning-icon" *ngIf="service.status==='FAILURE'"
+                    mat-icon-button matTooltip="Error. Click for details"
+                    (click)="showErrorPopUp(service?.statusDisc)">
+                </button>
+                <button mat-icon-button *ngIf="service.actions&&service.actions.includes('update')"
+                    matTooltip="Retry Service" class="_refresh-icon"
+                    (click)="retryService(service)">
+                </button>
+            </div>
+        </div>
+    </ng-container>
+    <!-- <div *ngIf="!unsyncedDbServices.length" class="_w-100 _text-center">No data available</div> -->
+</div>
+<h4 *ngIf="unsyncedServicesData.length">Unsynced K8s Services</h4>
+<div class="_flex-box _mb-10 _ai-stretch _flex-wrap" *ngIf="!servicesLoading">
+    <ng-container *ngFor="let service of unsyncedServicesData">
+        <div class="endpoint-card _p-10 _mr-10 _mb-10 _flex-column" *ngIf="service.visible">
+            <div class="header _flex-box _ai-start">
+                <div class="_mr-10 _flex-box _dynamic-icon" style="min-width: 20px;"
+                    [dynamicBgIcon]="'/assets/icons/services/' + getServiceName(service.metadata.name) + '.svg'">
+                </div>
+                <div class="_flex-column">
+                    <span>{{service.metadata.name}}</span>
+                    <!-- <span>{{service.name}}</span> -->
+                    <span class="secondary-text">Created: {{service.metadata.creationTimestamp |
+                        formatteddate:"MMM D, YYYY h:mm:ss A":true}}
+                        ({{service.metadata.creationTimestamp | fromnow}} ago)</span>
+                </div>
+            </div>
+            <div class="_flex-column _mt-10">
+                <div class="_sub-heading">Networking</div>
+                <div class="_ml-10">
+                    <div class="_status-text">
+                        Cluster IP:
+                        {{service&&service.spec&&service.spec.clusterIP?service.spec.clusterIP:'Not available'}}
+                    </div>
+                    <div class="_status-text" *ngFor="let port of service.spec.ports">
+                        <span>{{port.targetPort}}({{port.protocol}})</span>
+                        <span class="material-icons _status-text _ml-10 _mr-10">east</span>
+                        <span>{{port.nodePort}}({{port.protocol}})</span>
+                    </div>
+                </div>
+                <div class="_sub-heading _mt-10">Specs</div>
+                <div class="_ml-10">
+                    <div class="_status-text">Selector:
+                        {{service&&service.spec&&service.spec.selector&&service.spec.selector.app?service.spec.selector.app:
+                            'Not available'}}</div>
+                    <div class="_status-text">Type:
+                        {{service&&service.spec&&service.spec.type?service.spec.type: 'Not available'}}</div>
+                </div>
+            </div>
+            <hr class="_w-100" *ngIf="service&&service.dbData">
+            <div class="_flex-box _pt-10 _jc-r" *ngIf="service&&service.dbData">
+                <button mat-icon-button
+                    *ngIf="service.dbData.actions&&service.dbData.actions.includes('update')"
+                    matTooltip="Patch Service" class="_edit-icon" (click)="patchService(service)">
+                </button>
+                <button mat-icon-button
+                    *ngIf="service.dbData.actions&&service.dbData.actions.includes('update')"
+                    matTooltip="Replace Service" class="_redeploy-icon"
+                    (click)="replaceService(service)">
+                </button>
+            </div>
+        </div>
+    </ng-container>
+    <!-- <div *ngIf="!unsyncedServicesData.length" class="_w-100 _text-center">No data available</div> -->
+</div>

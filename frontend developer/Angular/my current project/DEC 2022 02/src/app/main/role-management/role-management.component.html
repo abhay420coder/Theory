@@ -1,0 +1,28 @@
+<div class="container _h-100 _p-10 _overflow-hidden">
+    <div class="_flex-box _jc-sb">
+        <h2>Roles</h2>
+    </div>
+    <search-box (onChange)="handleSearch($event)"></search-box>
+    <div>
+        <div class="_flex-box _sub-heading _padding-general">
+            <div class="_mr-10">Role Name</div>
+        </div>
+    </div>
+    <div class="card-container role-list">
+        <mat-accordion displayMode='flat' multi='false'>
+            <mat-expansion-panel 
+                *ngFor="let role of roleList" 
+                class="expansion-list _jc-sb role-item">
+                <mat-expansion-panel-header class="_flex-box panel-header">
+                    <div class="_mr-10">{{role.roleName}}</div>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <div class="_pt-15 _pr-10 _pb-15 _pl-10">
+                        <mat-chip-list>
+                            <mat-chip *ngFor="let permission of role.permissionList">{{permission.permissionName}}</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                </ng-template>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>

@@ -1,0 +1,29 @@
+<div class="custom-header">
+    <div class="_heading_1">
+        {{this.data?.name+" - "+"Modify Labels"}}
+    </div>
+</div>
+<mat-dialog-content class="_pb-5">
+    <div class="_pt-10 _pb-10 _pl-10 _pr-10">
+        <div class="_flex-box" *ngFor="let label of labels; let i=index">
+            <ng-container *ngIf="label.value!==null&&!label.key.includes('kubernetes')">
+                <mat-form-field appearance="outline" class="_w-100">
+                    <mat-label>Key</mat-label>
+                    <input matInput [(ngModel)]="labels[i].key" [disabled]="label.disabled">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="_w-100 _ml-10">
+                    <mat-label>Value</mat-label>
+                    <input matInput [(ngModel)]="labels[i].value">
+                </mat-form-field>
+                <button mat-icon-button class="_delete-icon" *ngIf="!label.key.includes('kubernetes')" (click)="removeLabel(label)"></button>
+            </ng-container>
+        </div>
+        <div class="_flex-box _jc-c">
+            <button mat-stroked-button (click)="addLabel()">+ Add</button>
+        </div>
+    </div>
+</mat-dialog-content>
+<div class="custom-footer">
+    <button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
+    <button mat-button (click)="save()">Save</button>
+</div>

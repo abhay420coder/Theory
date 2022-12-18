@@ -1,0 +1,52 @@
+<div class="_flex-column _h-100">
+    <div class="custom-header">
+        <div class="_heading_1">{{data&&data.serviceName?data.serviceName:""}}</div>
+    </div>
+    <div class="_pl-10 _pr-10 _pb-5 _flex-1 _overflow-y-auto">
+        <mat-tab-group dynamicHeight>
+            <mat-tab label="Spec">
+                <div class="_mb-10 _mt-10">Attached spec templates</div>
+                <div class="_flex-box" *ngIf="attachedSpecLoading">
+                    <ngx-skeleton-loader count="3" [theme]="{ 
+                        'border-radius': '5px',
+                        'width': '150px',
+                        'height': '50px',
+                        'margin-bottom': '0px',
+                        'margin-right': '10px',
+                        'border': '1px solid white'
+                      }"></ngx-skeleton-loader>
+                </div>
+                <div class="_flex-box _flex-wrap custom-chip-list _overflow-y-auto" *ngIf="!attachedSpecLoading">
+                    <div *ngIf="!attachedSpecList.length" class="_status-text _gray-text _m-10">No template attached</div>
+                    <div *ngIf="attachedSpecList.length">
+                        <div *ngFor="let spec of attachedSpecList" class="custom-chip _flex-column _mr-10 _mb-10">
+                            <h4 class="_mb-5">{{spec.k8sSpecTempName}}</h4>
+                            <span class="_status-text _gray-text _text-ellipsis">{{spec.k8sSpecTempDescription}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="_mb-10 _mt-10">Aditional spec</div>
+                <div *ngIf="specEditorLoading" class="_m-10 _status-text _gray-text">Loading Editor ...</div>
+                <ngx-monaco-editor 
+                    class="_w-100 editor" 
+                    [options]="specEditorOptions" 
+                    [(ngModel)]="data.additionalSpec" 
+                    (onInit)="onSpecEditorInit($event)"></ngx-monaco-editor>
+            </mat-tab>
+            <mat-tab label="Config">
+                <ng-template matTabContent>
+                    <div *ngIf="configEditorLoading" class="_m-10 _status-text _gray-text">Loading Editor ...</div>
+                    <ngx-monaco-editor 
+                        class="_w-100 config-editor" 
+                        [options]="configEditorOptions" 
+                        [(ngModel)]="data.customConfigMap?data.customConfigMap:data.configMap"  
+                        (onInit)="onConfigEditorInit($event)"></ngx-monaco-editor>
+                </ng-template>
+                
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <div class="custom-footer">
+        <button mat-button mat-dialog-close cdkFocusInitial>Close</button>
+    </div>
+</div>

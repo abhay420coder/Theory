@@ -1,0 +1,145 @@
+<div class="main-container item-attacher-container _p-10">
+    <div class="tabular-container _p-5" *ngIf="!inputData['isDialog']">
+        <div class="column">
+            {{inputData['title']}}
+        </div>
+        <div class="column" style="width: 50px;">
+            <button mat-icon-button (click)="refreshList()">
+                <span class="refresh-icon"></span>
+            </button>
+        </div>
+        <div class="column" style="width: 50px;">
+            <button mat-raised-button class="mat-btn-success" (click)="attachItems()">
+                <span>{{sharedVar.save}}</span>
+            </button>
+        </div>
+    </div>
+    <div class="tabular-container" style="height: calc(100% - 57px);">
+        <div class="column border-box">
+            <div class="tabular-container hr-seperator _p-10">
+                <div class="column center-align">
+                    Available
+                </div>
+            </div>
+            <div class="tabular-container hr-seperator _pl-10 _pr-10">
+                <div class="_search-box-card">
+                    <div class="inner-card">
+                        <span class="search-icon"></span>
+                        <mat-form-field class="_border-less-mat-input _inline-label search-input" appearance="outline">
+                            <input type="search" placeholder="Search" #avlSearch matInput
+                                (keyup)="itemSearchObs.next(avlSearch.value)" class="_custom-mat-search-input"
+                                (search)="itemSearchObs.next(avlSearch.value)" />
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="scrollable-box" #avlItems infinite-scroll [scrollWindow]="false"  [infiniteScrollThrottle]="50"
+                (scrolled)="inputData['isPagination']? this.inputData['avlItemFunc'](avlSearch.value) :'' ">
+                <div style="margin: '0 5px';">
+                    <ngx-skeleton-loader 
+                        *ngIf="avlItemListLoading" 
+                        count="5" 
+                        [theme]="{ 
+                            'border-radius': '5px',
+                            height: '30px',
+                            'margin': '5px 0 0 0',
+                            border: '1px solid white'
+                        }"></ngx-skeleton-loader>
+                </div>
+                
+                <ng-container *ngIf="!avlItemListLoading">
+                    <div *ngIf="!filteredAvlItemList.length" class="tabular-container _text-center _p-10">No items to show</div>
+                    <div class="tabular-container hr-seperator" *ngFor="let leftItem of filteredAvlItemList">
+                        <div class="column _mr-10 _p-5" style="width: 30px;" *ngIf="inputData['hasIcon']">
+                            <img #iconImg src="/assets/icons/services/{{leftItem[inputData['displayField']]}}.svg" alt="" srcset="" (error)="iconImg.src='/assets/icons/services/unknown-default.svg'">
+                        </div>
+                        <div class="column _p-5">
+                            {{leftItem[inputData['displayField']]}}
+                            <div class="secondary-text" *ngIf="inputData['secondaryDisplayField']&&inputData['secondaryDisplayField'].length > 1">
+                                <i>{{leftItem | seconderytext:inputData['secondaryDisplayField']:inputData['seconderyString']}}</i>
+                            </div>
+                            <div class="secondary-text" *ngIf="inputData['secondaryDisplayField']&&inputData['secondaryDisplayField'].length === 1">
+                                <i>{{leftItem[inputData['secondaryDisplayField']]}}</i>
+                            </div>
+                        </div>
+                        <div class="column center-align" style="width: 50px">
+                            <button mat-icon-button (click)="pushItem(leftItem)">
+                                <span class="material-icons">add</span>
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
+                <!-- <div *ngIf="avlItemListLoading">
+                    <list-loader [loaderItems]="loaderItems" class="_w-100"></list-loader>
+                </div> -->
+            </div>
+        </div>
+        <div class="column center-align" style="width:20%;">
+            <button type="button" class="custom-mat-input _black-btn-o _p-0 _mr-5 _ml-5" mat-button disabled>
+                <span class="material-icons">swap_horiz</span>
+            </button>
+        </div>
+        <div class="column border-box">
+            <div class="tabular-container hr-seperator">
+                <div class="column center-align _p-10">
+                    Selected
+                </div>
+            </div>
+            <div class="tabular-container hr-seperator _pl-10 _pr-10">
+                <div class="_search-box-card">
+                    <div class="inner-card">
+                        <span class="search-icon"></span>
+                        <mat-form-field class="_border-less-mat-input _inline-label search-input" appearance="outline">
+                            <input type="search" placeholder="Search" matInput #selectSearch
+                                (keyup)="attachedItemSearchObs.next(selectSearch.value)"
+                                class="_custom-mat-search-input"
+                                (search)="attachedItemSearchObs.next(selectSearch.value)" />
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="scrollable-box" 
+                #attachedItems 
+                infinite-scroll 
+                [scrollWindow]="false" 
+                [infiniteScrollThrottle]="50"
+
+                (scrolled)="inputData['isPagination']&&!this.inputData['attachedLastPage']? this.inputData['attachedItemFunc'](selectSearch.value) :'' ">
+                <div style="margin: '0 5px';">
+                    <ngx-skeleton-loader 
+                        *ngIf="attachedItemListLoading" 
+                        count="5" 
+                        [theme]="{ 
+                            'border-radius': '5px',
+                            height: '30px',
+                            'margin': '5px 0 0 0',
+                            border: '1px solid white'
+                        }"></ngx-skeleton-loader>
+                </div>
+                <!-- <ng-container *ngIf="!attachedItemListLoading"> -->
+                <ng-container *ngIf="!avlItemListLoading">
+                    <div *ngIf="!filteredAttachedItemList.length" class="tabular-container _text-center _p-10">No items to show</div>
+                    <div class="tabular-container hr-seperator" *ngFor="let rightItem of filteredAttachedItemList;">
+                        <div class="column _mr-10 _p-5" style="width: 30px;" *ngIf="inputData['hasIcon']">
+                            <img #iconImg src="/assets/icons/services/{{rightItem[inputData['displayField']]}}.svg" alt="" srcset="" (error)="iconImg.src='/assets/icons/services/unknown-default.svg'">
+                        </div>
+                        <div class="column _p-5">
+                            {{rightItem[inputData['displayField']]}}
+                            <div class="secondary-text" *ngIf="inputData['secondaryDisplayField']&&inputData['secondaryDisplayField'].length > 1">
+                                <i>{{rightItem | seconderytext:inputData['secondaryDisplayField']:inputData['seconderyString']}}</i>
+                            </div>
+                            <div class="secondary-text" *ngIf="inputData['secondaryDisplayField']&&inputData['secondaryDisplayField'].length === 1">
+                                <i>{{rightItem[inputData['secondaryDisplayField']]}}</i>
+                            </div>
+                        </div>
+                        <div class="column center-align" style="width: 50px">
+                            <button mat-icon-button (click)="removeItem(rightItem)">
+                                <span class="material-icons">close</span>
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

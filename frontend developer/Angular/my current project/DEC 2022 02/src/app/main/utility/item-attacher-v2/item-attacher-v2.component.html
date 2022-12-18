@@ -1,0 +1,324 @@
+<div class="main-container item-attacher-container _p-10">
+    <div class="tabular-container _p-5" *ngIf="!inputData['isDialog']">
+        <div class="column">
+            {{inputData['title']}} test
+        </div>
+        <div class="column" style="width: 50px;">
+            <button mat-icon-button (click)="reset()">
+                <span class="refresh-icon"></span>
+            </button>
+        </div>
+        <div class="column" style="width: 50px;">
+            <button mat-raised-button class="mat-btn-success" (click)="attachItems()">
+                <span>{{sharedVar.save}}</span>
+            </button>
+        </div>
+    </div>
+    <div class="tabular-container" style="height: calc(100% - 57px);">
+        <div class="column border-box">
+            <div class="tabular-container hr-seperator _p-10">
+                <div class="column center-align">
+                    Available
+                </div>
+            </div>
+            <div class="tabular-container hr-seperator _pl-10 _pr-10">
+                <div class="_search-box-card">
+                    <div class="inner-card">
+                        <span class="search-icon"></span>
+                        <mat-form-field class="_border-less-mat-input _inline-label search-input _w-100" appearance="outline">
+                            <input type="search" placeholder="Search" #avlSearch matInput
+                                (keyup)="searchAvl(avlSearch.value)" class="_custom-mat-search-input" [(ngModel)]="searchKey.avl"/>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+            <div class="scrollable-box" 
+                #avlItems 
+                infinite-scroll 
+                [scrollWindow]="false"  
+                [infiniteScrollDistance]="1"
+                [infiniteScrollThrottle]="50"
+                [infiniteScrollDisabled]="avlPaginationLoading||avlLastPage||!inputData['isPagination']"
+                (scrolled)="avlScrolled()">
+                <!-- skeleton loader template start -->
+                <ng-container *ngIf="avlItemListLoading&&!avlPaginationLoading">
+                    <div class="tabular-container hr-seperator" *ngFor="let item of skeletonCount">
+                        <div class="column _p-5" *ngIf="inputData['hasIcon']">
+                            <ngx-skeleton-loader
+                            count="1" 
+                            [theme]="{ 
+                                'border-radius': '5px',
+                                'height': '25px',
+                                'width': '25px',
+                                'margin': '0 0 0 0',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                        <div class="column _p-5">
+                            <ngx-skeleton-loader
+                            count="1" 
+                            [theme]="{ 
+                                'border-radius': '5px',
+                                'height': '12px',
+                                'width': '100px',
+                                'margin': '0 0 0 0',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                            <ngx-skeleton-loader
+                            count="1" 
+                            [theme]="{ 
+                                'border-radius': '5px',
+                                'height': '12px',
+                                'width': '150px',
+                                'margin': '5px 0 0 0',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                        <div class="column center-align" style="width: 50px">
+                            <ngx-skeleton-loader
+                            count="1" 
+                            [theme]="{ 
+                                'border-radius': '50%',
+                                'height': '30px',
+                                'width': '30px',
+                                'margin': '5px 0 0 0',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                    </div>
+                </ng-container>
+                <!-- skeleton loader template ends -->
+                
+                <ng-container *ngIf="!avlItemListLoading||avlPaginationLoading">
+                    <div class="tabular-container hr-seperator _p-10 _text-center">
+                        <span *ngIf="avlListDisplay.length===0&&searchKey.avl===''">No items to show</span>
+                        <span *ngIf="avlListDisplay.length===0&&searchKey.avl!==''">No result found</span>
+                    </div>
+                    <div class="tabular-container hr-seperator" *ngFor="let avlItem of avlListDisplay">
+                        <div class="column _mr-10 _p-5" style="width: 30px;" *ngIf="inputData['hasIcon']">
+                            <img #iconImg src="/assets/icons/services/{{avlItem[inputData['displayField']]}}.svg" alt="" srcset="" (error)="iconImg.src='/assets/icons/services/unknown-default.svg'">
+                        </div>
+                        <div class="column _p-5">
+                            {{avlItem[inputData['displayField']]}}
+                            <div class="secondary-text" *ngIf="inputData['secondaryDisplayField']&&inputData['secondaryDisplayField'].length > 1">
+                                <i>{{avlItem | seconderytext:inputData['secondaryDisplayField']:inputData['seconderyString']}}</i>
+                            </div>
+                            <div class="secondary-text" *ngIf="inputData['secondaryDisplayField']&&inputData['secondaryDisplayField'].length === 1">
+                                <i>{{avlItem[inputData['secondaryDisplayField']]}}</i>
+                            </div>
+                        </div>
+                        <div class="column center-align" style="width: 50px">
+                            <button mat-icon-button (click)="pushItem(avlItem)" *ngIf="!inputData['readOnly']">
+                                <span class="material-icons">add</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- pagination loading skeleton tempalate -->
+                    <div class="tabular-container hr-seperator" *ngIf="avlPaginationLoading">
+                        <div class="column _p-5" *ngIf="inputData['hasIcon']">
+                            <ngx-skeleton-loader
+                            count="1" 
+                            [theme]="{ 
+                                'border-radius': '5px',
+                                'height': '25px',
+                                'width': '25px',
+                                'margin': '0 0 0 0',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                        <div class="column _p-5">
+                            <ngx-skeleton-loader
+                            count="1" 
+                            [theme]="{ 
+                                'border-radius': '5px',
+                                'height': '12px',
+                                'width': '100px',
+                                'margin': '0 0 0 0',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                            <ngx-skeleton-loader
+                            count="1" 
+                            [theme]="{ 
+                                'border-radius': '5px',
+                                'height': '12px',
+                                'width': '150px',
+                                'margin': '5px 0 0 0',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                        <div class="column center-align" style="width: 50px">
+                            <ngx-skeleton-loader
+                            count="1" 
+                            [theme]="{ 
+                                'border-radius': '50%',
+                                'height': '30px',
+                                'width': '30px',
+                                'margin': '5px 0 0 0',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                    </div>
+                    <!-- pagination loading skeleton tempalate ends -->
+                </ng-container>
+                <!-- <div *ngIf="avlItemListLoading">
+                    <list-loader [loaderItems]="loaderItems" class="_w-100"></list-loader>
+                </div> -->
+            </div>
+        </div>
+        <div class="column center-align" style="width:20%;">
+            <button type="button" class="custom-mat-input _black-btn-o _p-0 _mr-5 _ml-5" mat-button disabled>
+                <span class="material-icons">swap_horiz</span>
+            </button>
+        </div>
+        <div class="column border-box">
+            <div class="tabular-container hr-seperator">
+                <div class="column center-align _p-10">
+                    Selected
+                </div>
+            </div>
+            <div class="tabular-container hr-seperator _pl-10 _pr-10">
+                <div class="_search-box-card">
+                    <div class="inner-card">
+                        <span class="search-icon"></span>
+                        <mat-form-field class="_border-less-mat-input _inline-label search-input _w-100" appearance="outline">
+                            <input type="search" placeholder="Search" matInput #selectSearch
+                                (keyup)="searchAttached(selectSearch.value)"
+                                class="_custom-mat-search-input" [(ngModel)]="searchKey.attached"/>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="scrollable-box" 
+                #attachedItems 
+                infinite-scroll 
+                [scrollWindow]="false" 
+                [infiniteScrollDistance]="1"
+                [infiniteScrollThrottle]="50"
+                [infiniteScrollDisabled]="attachedPaginationLoading||attachedLastPage||!inputData['isPagination']"
+                (scrolled)="attachedScrolled()">
+                <!-- skeleton loader template start -->
+                <ng-container *ngIf="attachedItemListLoading&&!attachedPaginationLoading">
+                    <div class="tabular-container hr-seperator" *ngFor="let item of skeletonCount">
+                        <div class="column _p-5" *ngIf="inputData['hasIcon']">
+                            <ngx-skeleton-loader
+                            count="1" 
+                            [theme]="{ 
+                                'border-radius': '5px',
+                                'height': '25px',
+                                'width': '25px',
+                                'margin': '0 0 0 0',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                        <div class="column _p-5">
+                            <ngx-skeleton-loader
+                            count="1" 
+                            [theme]="{ 
+                                'border-radius': '5px',
+                                'height': '12px',
+                                'width': '100px',
+                                'margin': '0 0 0 0',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                            <ngx-skeleton-loader
+                            count="1" 
+                            [theme]="{ 
+                                'border-radius': '5px',
+                                'height': '12px',
+                                'width': '150px',
+                                'margin': '5px 0 0 0',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                        <div class="column center-align" style="width: 50px">
+                            <ngx-skeleton-loader
+                            count="1" 
+                            [theme]="{ 
+                                'border-radius': '50%',
+                                'height': '30px',
+                                'width': '30px',
+                                'margin': '5px 0 0 0',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                    </div>
+                </ng-container>
+                <!-- skeleton loader template ends -->
+                
+                <ng-container *ngIf="!attachedItemListLoading||attachedPaginationLoading">
+                    <div class="tabular-container hr-seperator _p-10 _text-center">
+                        <span *ngIf="attachedListDisplay.length===0&&searchKey.attached===''">No items to show</span>
+                        <span *ngIf="attachedListDisplay.length===0&&searchKey.attached!==''">No result found</span>
+                    </div>
+
+                    <div class="tabular-container hr-seperator" *ngFor="let attachedItem of attachedListDisplay;">
+                        <div class="column _mr-10 _p-5" style="width: 30px;" *ngIf="inputData['hasIcon']">
+                            <img #iconImg src="/assets/icons/services/{{attachedItem[inputData['displayField']]}}.svg" alt="" srcset="" (error)="iconImg.src='/assets/icons/services/unknown-default.svg'">
+                        </div>
+                        <div class="column _p-5">
+                            {{attachedItem[inputData['displayField']]}}
+                            <div class="secondary-text" *ngIf="inputData['secondaryDisplayField']&&inputData['secondaryDisplayField'].length > 1">
+                                <i>{{attachedItem | seconderytext:inputData['secondaryDisplayField']:inputData['seconderyString']}}</i>
+                            </div>
+                            <div class="secondary-text" *ngIf="inputData['secondaryDisplayField']&&inputData['secondaryDisplayField'].length === 1">
+                                <i>{{attachedItem[inputData['secondaryDisplayField']]}}</i>
+                            </div>
+                        </div>
+                        <div class="column center-align" style="width: 50px">
+                            <button mat-icon-button (click)="removeItem(attachedItem)" *ngIf="!inputData['readOnly']">
+                                <span class="material-icons">close</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- pagination loading skeleton tempalate -->
+                    <div class="tabular-container hr-seperator" *ngIf="attachedPaginationLoading">
+                        <div class="column _p-5" *ngIf="inputData['hasIcon']">
+                            <ngx-skeleton-loader
+                            count="1" 
+                            [theme]="{ 
+                                'border-radius': '5px',
+                                'height': '25px',
+                                'width': '25px',
+                                'margin': '0 0 0 0',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                        <div class="column _p-5">
+                            <ngx-skeleton-loader
+                            count="1" 
+                            [theme]="{ 
+                                'border-radius': '5px',
+                                'height': '12px',
+                                'width': '100px',
+                                'margin': '0 0 0 0',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                            <ngx-skeleton-loader
+                            count="1" 
+                            [theme]="{ 
+                                'border-radius': '5px',
+                                'height': '12px',
+                                'width': '150px',
+                                'margin': '5px 0 0 0',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                        <div class="column center-align" style="width: 50px">
+                            <ngx-skeleton-loader
+                            count="1" 
+                            [theme]="{ 
+                                'border-radius': '50%',
+                                'height': '30px',
+                                'width': '30px',
+                                'margin': '5px 0 0 0',
+                                'border': '1px solid white'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                    </div>
+                    <!-- pagination loading skeleton tempalate ends -->
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

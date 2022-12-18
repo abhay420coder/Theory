@@ -1,0 +1,32 @@
+    <div class="_flex-box popUpLockDetails _ai-stretch">
+
+        <div class="secureFilesImage _w-60 _h-100 _ml-10"></div>
+    
+        <div class="_w-40 _mt-10">
+    
+            <div class="_flex-box _jc-sb _mt-10">
+                <div class="_heading_1 ">{{rtData.deploymentNamespace}} - Lock Status </div>
+                <div class="material-icons _mr-10  _cursor-pointer"mat-dialog-close>close</div>
+            </div>
+    
+            <div class="_mt-20 _error-text"> The Deployment is locked for this Namespace. </div>
+    
+            <div class="_mt-20"> 
+                <div class="_sub-heading _font-14">Locked by   </div> 
+                <div class="secondary-text">
+                    <span *ngIf="lockedBy"> {{lockedBy}}</span>
+                    <span *ngIf="!lockedBy"> Not Available </span>
+                </div>
+            </div>
+    
+            <div class="_mt-20"> 
+                <div class="_sub-heading _font-14" >Lock Description   </div> 
+                <div class="secondary-text">
+                    <span *ngIf="rtData.lockUnlockDescription"> {{rtData.lockUnlockDescription}}</span>
+                    <span *ngIf="!rtData.lockUnlockDescription"> No Message Found </span>
+                </div>
+            </div>
+    
+        </div>
+    
+    </div>

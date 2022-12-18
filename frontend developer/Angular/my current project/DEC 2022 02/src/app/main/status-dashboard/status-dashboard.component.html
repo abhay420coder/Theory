@@ -1,0 +1,113 @@
+<iframe
+    src="https://devops.pushcord.com:8666/d/SlZhHRs7k/vca-metric-by-all-job?orgId=1&var-instance=192.168.1.37:8999&var-job=All&var-jvm_memory_pool_heap=All&var-jvm_memory_pool_nonheap=All"
+    width="100%" height="100%" frameborder="0"></iframe>
+<!-- 
+    Metric by all job: all servicesselected
+        * https://devops.pushcord.com:8666/d/SlZhHRs7k/vca-metric-by-all-job?orgId=1&var-instance=192.168.1.37:8999&var-job=All&var-jvm_memory_pool_heap=All&var-jvm_memory_pool_nonheap=All    
+    ALl Mertic by APP
+        * https://devops.pushcord.com:8666/d/NsWInWY7k/vca-dev-by-app?orgId=1&refresh=30s
+-->
+
+<!-- <div class="hexagon-row" *ngIf="type==='cluster'">
+    <div class="hexagon-wrapper">
+        <div class="hexagon" *ngFor="let item of hexagons; let i = index">
+            <div>Node {{i}}</div>
+        </div>
+    </div>
+</div>
+
+<div class="_flex-box _pt-10 _flex-wrap" *ngIf="type==='cluster'">
+    <div class="_flex-column">
+        <h5 class="legend _mb-0 _ml-5">Kubernetes Cluster</h5>
+        <div class="_flex-box">
+            <div class="status-card data-card">
+                <div class="header">Controller</div>
+                <div class="body _green-text">Active</div>
+            </div>
+            <div class="status-card data-card">
+                <div class="header">ETCD</div>
+                <div class="body _green-text">Online</div>
+            </div>
+            <div class="status-card data-card">
+                <div class="header">Scheduler</div>
+                <div class="body _blue-text">True</div>
+            </div>
+            <div class="status-card data-card">
+                <div class="header">Nodes</div>
+                <div class="body _red-text">17/20</div>
+            </div>
+            <div class="status-card data-card">
+                <div class="header">Namespace</div>
+                <div class="body _red-text">19/20</div>
+            </div>
+            <div class="status-card data-card">
+                <div class="header">Event Error</div>
+                <div class="body _green-text">0</div>
+            </div>
+            <div class="status-card data-card">
+                <div class="header">Host</div>
+                <div class="body _green-text">7/7</div>
+            </div>
+            <div class="status-card data-card">
+                <div class="header">Docker Container</div>
+                <div class="body _blue-text">133</div>
+            </div>
+            <div class="status-card data-card">
+                <div class="header">Docker Container</div>
+                <div class="body _blue-text">133</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="_flex-column _mt-10">
+    <h5 class="legend _mb-0 _ml-5">Kubernetes Workloads</h5>
+    <div class="_flex-box _flex-wrap">
+        <div class="status-card data-card">
+            <div class="header">Daemon Sets</div>
+            <div class="body _red-text">0/13</div>
+        </div>
+        <div class="status-card data-card">
+            <div class="header">Deployments</div>
+            <div class="body _red-text">40/42</div>
+        </div>
+        <div class="status-card data-card">
+            <div class="header">Replica Sets</div>
+            <div class="body _red-text">47/49</div>
+        </div>
+        <div class="status-card data-card">
+            <div class="header">Stateful Sets</div>
+            <div class="body _green-text">6/6</div>
+        </div>
+        <div class="status-card data-card">
+            <div class="header">Pods</div>
+            <div class="body _red-text">125/127</div>
+        </div>
+        <div class="status-card data-card">
+            <div class="header">NexClipper Agent</div>
+            <div class="body _green-text">7/7</div>
+        </div>
+    </div>
+    <div class="_flex-box">
+        <div class="status-card graph-card" *ngFor="let chart of chartData">
+            <div class="header">{{chart.title}} Utilization</div>
+            <div class="body">
+                <div class="_flex-column">
+                    <div class="chart-wrapper">
+                        <canvas baseChart 
+                            [data]="[chart.metrics.used, chart.metrics.total-chart.metrics.used]" 
+                            [chartType]="chart.type"
+                            [options]="doughnutOptions"
+                            [colors]="chart.colorScheme">
+                        </canvas>
+                    </div>   
+                    <div class="overlay">
+                        <h6>{{chart.title}}(%)</h6>
+                        <span>{{chart.metrics.percent}}</span>
+                    </div> 
+                    <div class="status">{{chart.metrics.used}}{{chart.metrics.unit}}/{{chart.metrics.total}}{{chart.metrics.unit}}</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div> -->

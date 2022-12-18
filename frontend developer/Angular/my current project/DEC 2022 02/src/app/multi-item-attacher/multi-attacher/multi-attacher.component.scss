@@ -1,0 +1,144 @@
+$border-color: #e1e1e1;
+$primary-color: #0091E5;
+$status-green: #28a745;
+$status-border-green: #c3e6cb;
+
+::ng-deep .mat-icon-button{
+    width: 22px;
+    height: 22px;
+    line-height: 1;
+}
+
+::ng-deep .mat-chip{
+    background-color: $border-color;
+}
+
+._flex-box {
+    display: flex !important;
+    align-items: center;
+}
+
+._jc-sb {
+    justify-content: space-between !important;
+}
+
+._ai-start{
+    align-items: flex-start;
+}
+
+._mt-5 {
+    margin-top: 5px !important;
+}
+
+._mt-10 {
+    margin-top: 10px !important;
+}
+
+._mb-5 {
+    margin-bottom: 5px !important;
+}
+
+._mb-10 {
+    margin-bottom: 10px !important;
+}
+
+._ml-10{
+    margin-left: 10px !important;
+} 
+
+._ml-30{
+    margin-left: 30px !important;
+}
+
+._mr-10{
+    margin-right: 10px !important;
+}
+
+._p-10 {
+    padding: 10px !important;
+}
+
+._status-text{
+    font-size: 11px;
+}
+
+._gray-text {
+    color: #6c757d;
+}
+
+._cursor-pointer{
+    cursor: pointer;
+}
+
+._overflow-hidden{
+    overflow: hidden;
+}
+
+._overflow-y-auto{
+    overflow-y: auto;
+}
+
+._text-ellipsis{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.list-column{
+    padding: 5px 15px 0 15px;
+    width: 45%;
+    border: 1px solid $border-color;
+    border-radius: 5px;
+    h4{
+        text-align: center;
+        font-weight: 600;
+    }
+    .action-row{
+        font-size: 12px;
+        font-weight: 600;
+        color: $primary-color;
+    }
+
+    .spec-list{
+        max-height: calc(100vh - 400px);
+        overflow-y: auto;
+
+        .spec-item{
+            border-radius: 5px;
+            border: 1px solid $border-color;
+            &:hover{
+                border-color: $status-green;
+            }
+        }
+
+        .spec-item-active{
+            background-color: $status-border-green;
+        }
+    }
+
+    .services-list{
+        max-height: calc(100vh - 400px);
+        overflow-y: auto;
+        
+        .service-item{
+            border-radius: 5px;
+            border: 1px solid $border-color;
+            &:hover{
+                border-color: $status-green;
+            }
+            .release-note{
+                margin-left: 30px;
+            }
+            .specs{
+                max-height: 55px;
+            }
+        }
+        .service-item-active{
+            background-color: $status-border-green;
+        }
+        .mat-chip{
+            min-height: 18px;
+            font-size: 9px;
+        }
+    }
+}

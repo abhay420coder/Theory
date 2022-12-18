@@ -1,0 +1,56 @@
+<div class="_flex-column _h-100">
+    <div class="custom-header _jc-sb">
+        <div class="_heading_1">{{serviceObjDirty.serviceName}} Deployment</div>
+        <span class="material-icons _ml-10 _cursor-pointer" mat-dialog-close>close</span>
+    </div>
+    <div class="_flex-1 _overflow-y-auto">
+        <mat-stepper #stepper class="custom-stepper" (selectionChange)="stepperChange($event)">
+            <mat-step [label]="stepperProp.label1">
+                <div class="_pl-10 _pr-10 _pb-15 _flex-1">
+                    <div class="_info-box _mt-10"><strong class="_mr-5">Note:</strong>
+                        Maximum number of replicas is 99.
+                    </div>
+                    <div class="_flex-wrap _flex-box attached-services">
+                        <div class="ser-release-card card _mb-10 _mr-10 _flex-column">
+                            <div class="_flex-box _jc-sb">
+                                <div class="_flex-box">
+                                    <div class="_mr-10 _flex-box" style="width: 20px;">
+                                        <img #iconImg src="/assets/icons/services/{{serviceObjDirty.serviceName}}.svg" alt="" srcset="" (error)="iconImg.src='/assets/icons/services/unknown-default.svg'">
+                                    </div>
+                                    <div>{{serviceObjDirty.serviceName}}</div>
+                                </div>
+                                <div class="_flex-box">
+                                    <input type="number" min="1" max="99"
+                                        onKeyPress="if(this.value.length==2) return false;" [(ngModel)]="serviceObjDirty.replicaCount">
+                                </div>
+                            </div>
+                            <div class="_w-100 _text-ellipsis release-note" [matTooltip]="serviceObjDirty.releaseNote&&serviceObjDirty.releaseNote.length>60?serviceObjDirty.releaseNote.length:''">{{serviceObjDirty.releaseNote?serviceObjDirty.releaseNote:"No notes"}}</div>
+                        </div>
+                    </div>
+                </div>
+            </mat-step>
+            <mat-step [label]="stepperProp.label2">
+                <multi-attacher [multiAttacherProps]="multiAttacherProp" (onAttach)="handleAttachment($event)"></multi-attacher>
+            </mat-step>
+            <mat-step [label]="stepperProp.label3">
+                <div *ngIf="configEditorLoading" class="_m-10 _status-text _gray-text">Loading Editor ...</div>
+                <ngx-monaco-editor class="_w-100 config-editor" [options]="configEditorOptions" [(ngModel)]="serviceObjDirty.customConfigMap" (onInit)="onInit($event)"></ngx-monaco-editor>
+            </mat-step>
+            <mat-step [label]="stepperProp.label4">
+                <div *ngIf="k8sEditorLoading" class="_m-10 _status-text _gray-text">Loading Editor ...</div>
+                <ngx-monaco-editor class="_w-100 config-editor" [options]="k8sServiceEditorOptions" [(ngModel)]="serviceObjDirty.k8sService" (onInit)="onK8sEditorInit($event)"></ngx-monaco-editor>
+            </mat-step>
+        </mat-stepper>
+    </div>
+    <div class="custom-footer" [ngClass]="{'_jc-sb': monacoError.status}">
+        <span class="_error-text" *ngIf="monacoError.status">{{monacoError.message}}</span>
+        <div>
+            <button mat-button *ngIf="stepperProp.selectedIndex!==0" (click)="stepper.previous()">Prev</button>
+            <button mat-button *ngIf="stepperProp.selectedIndex!==3" (click)="stepper.next()">Next</button>
+            <button *ngIf="stepperProp.selectedIndex===3" mat-button (click)="save()" [disabled]="monacoError.status">
+                <mat-spinner diameter='20' *ngIf="isSaving"></mat-spinner>
+                <span *ngIf="!isSaving">Deploy</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,96 @@
+@import '../../../assets/css/variables';
+
+.component{
+    position: relative;
+    font-weight: 500;
+}
+
+.status{
+    font-size: 12px;
+    font-weight: 400;
+    position: relative;
+    margin-left: 30px;
+    &::before{
+        content: "";
+        position: absolute;
+        left: -12px;
+        top: 5px;
+        border: 4px solid;
+        border-radius: 10px;
+    }
+}
+
+.online{
+    color: rgba($color: $status-green, $alpha: 1.0);
+    &::before{
+        border-color: rgba($status-green, 0.9);
+    }
+}
+
+.offline{
+    color: rgba($color: $status-gray, $alpha: 1.0);
+    &::before{
+        border-color: rgba($status-gray, 0.4);
+    }
+}
+
+.unknown{
+    color: rgba($color: $status-red, $alpha: 1.0);
+    &::before{
+        border-color: rgba($status-red, 0.9);
+    }
+}
+
+.card{
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px 1px rgba($box-shadow-color, 0.07);
+    .header{
+        font-size: 14px;
+        font-weight: 550;
+    }
+    .body{
+        font-size: 12px;
+        .component{
+            font-size: 14px;
+        }
+        b{
+            font-weight: 500;
+        }
+    }
+}
+
+.mat-chip{
+    font-size: 12px;
+    min-height: 22px;
+}
+
+.small-card{
+    width: 200px;
+    height: 105px;
+    .title{
+        font-size: 11px;
+    }
+    .data{
+        text-align: center;
+        margin-top: 20px;
+        .value{
+            font-size: 28px;
+            font-weight: 200;
+            line-height: 28px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .unit{
+            font-size: 11px;
+        }
+    }
+    
+}
+
+.editor{
+    width: 100%;
+    height: 480px;
+}

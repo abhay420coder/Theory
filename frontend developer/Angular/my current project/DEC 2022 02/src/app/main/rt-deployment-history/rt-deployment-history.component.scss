@@ -1,0 +1,18 @@
+@import 'src/assets/css/_variables';
+.job-list{
+    max-height: 80vh;
+}
+
+::ng-deep .mat-content{
+    align-items: center;
+}
+
+.serRelBox {
+    width: 45%;
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    // height: 40px;
+    background-color: #0091e530;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}

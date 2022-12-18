@@ -1,0 +1,194 @@
+<div class="container _h-100 _p-10">
+    <div class="_flex-box _va-top">
+        <div class="_w-70">
+            <div class="_flex-box _jc-sb _mb-10">
+                <div class="_flex-box">
+                    <button mat-icon-button (click)="navigateBack()" class="_back-icon">
+                    </button>
+                    <div *ngIf="loading.podProps">
+                        <ngx-skeleton-loader count="1" [theme]="{ 
+                            'border-radius': '5px',
+                            height: '25px',
+                            'width': '500px',
+                            'margin-left': '10px',
+                            'margin-bottom': '0px',
+                            border: '1px solid white'
+                        }"></ngx-skeleton-loader>
+                    </div>
+
+                    <h4 *ngIf="!loading.podProps" class="_mb-0 _ml-10">Log:
+                        {{selectedPod&&selectedPod.name?selectedPod.name:""}}</h4>
+                </div>
+                <button mat-icon-button (click)="refreshLog()" class="_refresh-icon">
+                </button>
+            </div>
+            <div #fullScreen class="editorContainer">
+                <ngx-monaco-editor class="editor" [options]="editorOptions" [(ngModel)]="logData"
+                    (onInit)="onInit($event)"></ngx-monaco-editor>
+                <div class="_flex-box logsActionBar _jc-sb">
+                    <button mat-icon-button (click)="showFullScreen()" matTooltip="Toggle fullscreen"
+                        class="_fullscreen-icon">
+                    </button>
+                    <div *ngIf="loading.logData"><b>Loading log data ...</b></div>
+                </div>
+            </div>
+        </div>
+        <div class="_w-30 _pl-10 properties">
+            <div class="segment" *ngIf="loading.serviceData&&loading.deploymentData">
+                <ngx-skeleton-loader count="1" [theme]="{ 
+                    'border-radius': '5px',
+                    height: '35px',
+                    'margin-bottom': '0px',
+                    border: '1px solid white'
+                  }"></ngx-skeleton-loader>
+                <ngx-skeleton-loader count="2" [theme]="{ 
+                    'border-radius': '5px',
+                    height: '15px',
+                    'margin-bottom': '0px',
+                    border: '1px solid white'
+                  }"></ngx-skeleton-loader>
+            </div>
+            <div class="_w-100 _pb-10" *ngIf="!loading.serviceData&&!loading.deploymentData">
+                <div class="_flex-box _jc-sb _w-100">
+                    <div class="_flex-box _jc-sb">
+                        <h2 class="title _mr-10 _mb-0">
+                            {{serviceData&&serviceData.serviceName?serviceData.serviceName:"Unnamed"}}</h2>
+                        <status-tag [type]="serviceData&&serviceData.deploymentStatus==='SUCCESS'?'success':'error'"
+                            [size]="'icon-only'"
+                            matTooltip="Deployment Status: {{serviceData&&serviceData.deploymentStatus}}"></status-tag>
+                    </div>
+                    <!-- <button mat-icon-button>
+                        <mat-icon>refresh</mat-icon>
+                    </button> -->
+                </div>
+                <div class="content-row">
+                    <div class="key">Rt-name:</div>
+                    <div class="value">{{deploymentData.releaseTrainName}}</div>
+                </div>
+                <div class="content-row">
+                    <div class="key">K8s Namespace:</div>
+                    <div class="value">{{deploymentData.deploymentNamespace}}</div>
+                </div>
+            </div>
+            <div class="segment" *ngIf="loading.podData">
+                <ngx-skeleton-loader count="1" [theme]="{ 
+                    'border-radius': '5px',
+                    height: '50px',
+                    'margin-bottom': '0px',
+                    border: '1px solid white'
+                  }"></ngx-skeleton-loader>
+            </div>
+            <div class="segment" *ngIf="!loading.podData">
+                <div>
+                    <div>
+                        <mat-form-field appearance="outline" class="pod-list">
+                            <mat-label>Pod Select</mat-label>
+                            <mat-select [value]="selectedPod.name" (selectionChange)="switchPod($event)">
+                                <mat-option *ngFor="let item of podData" [value]="item.name">{{item.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline" class="pod-list">
+                            <mat-label>Max Log size</mat-label>
+                            <mat-select [(ngModel)]="selectedLogSize" name="logSize"
+                                (selectionChange)="updateLogConfig()">
+                                <mat-option *ngFor="let item of logSizeOptions" [value]="item.value">{{item.label}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline" class="pod-list">
+                            <mat-label>Fetch logs Since</mat-label>
+                            <mat-select [(ngModel)]="selectedLogSinceTime" name="logSince"
+                                (selectionChange)="updateLogConfig()">
+                                <mat-option *ngFor="let item of sinceOptions" [value]="item.value">{{item.label}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+            <div class="segment" *ngIf="loading.podProps">
+                <ngx-skeleton-loader count="4" [theme]="{ 
+                    'border-radius': '5px',
+                    height: '15px',
+                    'margin-bottom': '0px',
+                    border: '1px solid white'
+                  }"></ngx-skeleton-loader>
+                <ngx-skeleton-loader count="3" [theme]="{ 
+                    'border-radius': '5px',
+                    'height': '25px',
+                    'width': '95px',
+                    'display': 'inline-block',
+                    'margin': '0 5px',
+                    'margin-bottom': '0px',
+                    'border': '1px solid white'
+                  }"></ngx-skeleton-loader>
+            </div>
+            <div class="segment" *ngIf="!loading.podProps">
+                <div class="content-row">
+                    <div class="key">IP:</div>
+                    <div class="value" *ngIf="selectedPod&&selectedPod.status">{{selectedPod.status.hostIP}}</div>
+                </div>
+                <div class="content-row">
+                    <div class="key">Image:</div>
+                    <div class="value" style="text-transform: none" *ngIf="selectedPod&&selectedPod.status">
+                        {{selectedPod.status.containerStatuses[0].image | containerimagename}}</div>
+                </div>
+                <div class="content-row">
+                    <div class="key">Created:</div>
+                    <div class="value" *ngIf="selectedPod&&selectedPod.status">{{selectedPod.status.startTime |
+                        formatteddate:"MMM D, YYYY h:mm:ss A":true}}</div>
+                </div>
+                <div class="content-row">
+                    <div class="key">Age:</div>
+                    <div class="value" *ngIf="selectedPod&&selectedPod.status">{{selectedPod.status.startTime |
+                        fromnow}}</div>
+                </div>
+                <div class="content-row">
+                    <div class="key">Initiated By:</div>
+                    <div class="value">{{getEmployeeName(serviceData.deploymentLastModifiedBy)}}</div>
+                </div>
+                <div class="content-row">
+                    <div class="key">Pod Status:</div>
+                    <div class="value"></div>
+                </div>
+                <div class="tags-row">
+                    <status-tag *ngFor="let item of selectedPod.status.conditions" [size]="'full'"
+                        [type]="item.status==='True'?'success':'error'" [data]="item.type"></status-tag>
+                </div>
+            </div>
+            <ng-template #name [ngIf]="!item.ready&&!loading.podProps"
+                *ngFor="let item of selectedPod.status?selectedPod.status.containerStatuses:[]">
+                <div class="content-row" *ngFor="let it of item.state | keyvalue">
+                    <div class="key">Reason:</div>
+                    <div class="value _red-text">{{it.value.reason?it.value.reason:""}}</div>
+                </div>
+            </ng-template>
+            <div class="_pb-10">
+                <!-- spacer -->
+            </div>
+            <div class="segment" *ngIf="selectedPod&&selectedPod.status">
+                <div class="content-row">
+                    <div class="key">Volumes:</div>
+                    <div class="value">
+                        <a *ngIf="serviceData" href="javascript:void(0);"
+                            (click)="showPopUp(selectedPod.status.hostIP, serviceData.volumePaths)">
+                            Go to volumes page
+                        </a>
+                    </div>
+                </div>
+                <button mat-stroked-button class="_w-100 _mt-10" (click)="showPodDescription(selectedPod)">k8s Pod
+                    Description</button>
+            </div>
+            <!-- <status-tag [type]="'success'" [data]="'Ready'"></status-tag>
+            <status-tag [type]="'warning'" [data]="'Exception'"></status-tag>
+            <status-tag [type]="'info'" [data]="'Staring'"></status-tag>
+            <status-tag [type]="'error'" [data]="'Failed'"></status-tag>
+            <status-tag [type]="'inactive'" [data]="'Offline'"></status-tag> -->
+        </div>
+    </div>
+</div>

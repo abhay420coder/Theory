@@ -1,0 +1,43 @@
+<div class="custom-header">
+    <div class="_heading_1">{{injectedData.action==="patch"?"Patch":
+        injectedData.action==="replace"?"Replace":
+        injectedData.action==="retry"?"Retry":"Create"}} Role-Binding - {{injectedData.name}}</div>
+</div>
+<mat-dialog-content class="_pb-5">
+    <!-- <div class="_pt-10 _pb-5">
+        <mat-form-field appearance="outline" class="_w-100">
+            <mat-label>Namespace ID</mat-label>
+            <input matInput [(ngModel)]="injectedData.id" disabled>
+        </mat-form-field>
+    </div> -->
+    <div class="_pt-10 _pb-5">
+        <mat-form-field appearance="outline" class="_w-100">
+            <mat-label>Role-binding Name</mat-label>
+            <input matInput [(ngModel)]="roleBindingName" required>
+        </mat-form-field>
+    </div>
+    <div class="_mt-10 _flex-box _jc-sb">
+        <span>Role Binding config:</span>
+    </div>
+    <div class="_flex-box _mt-10">
+        <mat-form-field appearance="outline" class="_flex-1 _mr-10">
+            <mat-label>Select from template</mat-label>
+            <mat-select (valueChange)="selectTemplate($event)">
+                <mat-option *ngFor="let item of templateList" [value]="item">{{item.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-stroked-button class="_h-100" (click)="createTemplate()">Save as template</button>
+    </div>
+    <div class="">
+        <div *ngIf="editorLoading">Loading editor</div>
+        <ngx-monaco-editor class="_w-100 _overflow-hidden editor" [options]="editorOptions" [(ngModel)]="roleBindingConfig" (onInit)="onInit($event)">
+        </ngx-monaco-editor>
+    </div>
+</mat-dialog-content>
+<div class="custom-footer">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button (click)="save()" cdkFocusInitial>
+        <mat-spinner diameter='20' *ngIf="isSaving"></mat-spinner>
+        <span *ngIf="!isSaving">Save</span>
+    </button>
+</div>

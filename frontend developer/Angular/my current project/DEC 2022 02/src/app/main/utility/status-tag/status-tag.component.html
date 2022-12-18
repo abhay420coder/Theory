@@ -1,0 +1,18 @@
+<div *ngIf="size==='full'" class="status-tag" [ngClass]="getClass(type, size)">
+    <div class="icon">
+        <span *ngIf="type==='success'" class="status-icon _success-raw"></span>
+        <span *ngIf="type==='warning'" class="status-icon _warning-raw{"></span>
+        <span *ngIf="type==='error'" class="status-icon _error-raw"></span>
+        <mat-icon *ngIf="type==='info'" class="status-icon ">info</mat-icon>
+        <mat-icon *ngIf="type==='inactive'" class="status-icon ">help_outline</mat-icon>
+    </div>
+    <div class="data">{{data}}</div>
+</div>
+
+<div *ngIf="size==='icon-only'" class="icon" [ngClass]="getClass(type, size)">
+    <span *ngIf="type==='success'" class="status-icon _success-raw"></span>
+    <span *ngIf="type==='warning'" class="status-icon _warning-raw{"></span>
+    <span *ngIf="type==='error'" class="status-icon _error-raw"></span>
+    <mat-icon *ngIf="type==='info'" class="status-icon ">info</mat-icon>
+    <mat-icon *ngIf="type==='inactive'" class="status-icon ">help_outline</mat-icon>
+</div>

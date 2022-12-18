@@ -1,0 +1,70 @@
+<div class="container _h-100 _p-10 _overflow-hidden">
+    <div class="_flex-box _jc-sb">
+        <h2>Kubernetes Namespaces</h2>
+        <button mat-stroked-button *ngIf="canAdd()" (click)="createUpdateNamespace()">Add a Namespace</button>
+        <!-- <button mat-stroked-button (click)="checkConn()">check</button> -->
+    </div>
+    <search-box (onChange)="handleSearch($event)"></search-box>
+    <div *ngIf="loading">
+        <ngx-skeleton-loader count="10" [theme]="{ 
+            'border-radius': '5px',
+            height: '50px',
+            'margin-bottom': '0px',
+            border: '1px solid white'
+          }"></ngx-skeleton-loader>
+    </div>
+    <ng-container *ngIf="!loading">
+        <div *ngIf="!nsList.length && !loading else list" class="_flex-box _jc-c _mt-10">No Namespaces yet.</div>
+        <ng-template #list>
+            <div class="_flex-box _sub-heading _padding-general">
+                <div class="_first-head-col">Name</div>
+                <div style="width: 300px;">Description</div>
+                <div>Deployment</div>
+            </div>
+            <div class="card-container _overflow-hidden namespace-list"
+                infiniteScroll
+                infiniteScroll
+                [infiniteScrollDistance]="1"
+                [infiniteScrollThrottle]="10"
+                [infiniteScrollContainer]="'.namespace-list'"
+                [fromRoot]="true"
+                [scrollWindow]="false"
+                (scrolled)="onScroll()">
+                <div *ngFor="let ns of nsList" class="list _cursor-pointer" [routerLink]="[ns.id]">
+                    <div class="_first-head-col _flex-box">
+                        <span>{{ns.name}}</span>
+                    </div>
+                    <div class="_status-text" style="width: 300px;">{{ns.description?ns.description:"No description"}}</div>
+                    <div class="_flex-box" (click)="$event.stopPropagation()">
+                        <mat-chip-list *ngIf="ns.deploymentId">
+                            <mat-basic-chip class="deployment-chip">Active</mat-basic-chip>
+                        </mat-chip-list>
+                    </div>
+                    <div class="actions" (click)="$event.stopPropagation()">
+                        <button mat-icon-button *ngIf="canManageRoles()" matTooltip="Manage Roles" class="_roles-icon" (click)="manageRole(ns)"></button>
+                        <button mat-icon-button 
+                            *ngIf="canManageRoles()"
+                            matTooltip="Add"
+                            [matMenuTriggerFor]="createMenu"
+                            class="_add-icon"
+                            >
+                        </button>
+                        <mat-menu #createMenu="matMenu">
+                            <button mat-menu-item (click)="addEndpoint(ns)">k8s Endpoint</button>
+                            <button mat-menu-item (click)="addService(ns)">k8s Service</button>
+                            <button mat-menu-item (click)="addRoleBinding(ns)">k8s Role-binding</button>
+                        </mat-menu>
+                        <button mat-icon-button 
+                            *ngIf="ns.actions.includes('update')"
+                            matTooltip="Add"
+                            class="_edit-icon"
+                            (click)="createUpdateNamespace(ns)"
+                            >
+                        </button>
+                    </div>
+                </div>
+                <div *ngIf="lastPage" class="_list-end-message _jc-c">That's all!</div>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>

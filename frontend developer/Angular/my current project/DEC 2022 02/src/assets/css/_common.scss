@@ -1,0 +1,509 @@
+@use '@angular/material' as mat;
+@import "./variables";
+@import "./icons";
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import "@angular/material/theming";
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$pushcord-devops-primary: mat.define-palette(mat.$indigo-palette);
+$pushcord-devops-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$pushcord-devops-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$pushcord-devops-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $pushcord-devops-primary,
+      accent: $pushcord-devops-accent,
+      warn: $pushcord-devops-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($pushcord-devops-theme);
+
+/* You can add global styles to this file, and also import other style files */
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  outline: none;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+._flex-box {
+  display: flex !important;
+  align-items: center;
+}
+._flex-1 {
+  flex: 1;
+}
+._flex-50 {
+  flex: 0.5;
+}
+._flex-25 {
+  flex: 0.25;
+}
+._jc-sb {
+  justify-content: space-between !important;
+}
+._jc-c {
+  justify-content: center;
+}
+._jc-r{
+  justify-content: right;
+}
+._va-top{
+  align-items: flex-start;
+}
+._ai-c{
+  align-items: center;
+}
+._p-10 {
+  padding: 10px !important;
+}
+._p-0{
+  padding: 0 !important;
+}
+._pt-0{
+  padding-top: 0 !important;
+}
+._pt-5{
+  padding-top: 5px !important;
+}
+._pt-10 {
+  padding-top: 10px;
+}
+._pt-15 {
+  padding-top: 15px;
+}
+._pr-10 {
+  padding-right: 10px;
+}
+._pr-20{
+  padding-right: 20px;
+}
+._pl-10 {
+  padding-left: 10px;
+}
+._pl-20{
+  padding-left: 20px !important;
+}
+._p-5 {
+  padding: 5px;
+}
+._p-0 {
+  padding: 0px;
+}
+._pb-0{
+  padding-bottom: 0 !important;
+}
+._pb-5 {
+  padding-bottom: 5px;
+}
+._pb-10 {
+  padding-bottom: 10px;
+}
+._pb-15{
+  padding-bottom: 15px;
+}
+._m-10{
+  margin: 10px;
+}
+._m-0{
+  margin: 0px;
+}
+._mr-20 {
+  margin-right: 20px !important;
+}
+._mr-15 {
+  margin-right: 15px !important;
+}
+._mr-10 {
+  margin-right: 10px !important;
+}
+._mr-5{
+  margin-right: 5px !important;
+}
+._mr-0{
+  margin-right: 0 !important;
+}
+._ml-0{
+  margin-left: 0 !important;
+}
+._ml-5{
+  margin-left: 5px !important;
+}
+._ml-10 {
+  margin-left: 10px !important;
+}
+._ml-15{
+  margin-left: 15px !important;
+}
+._ml-20{
+  margin-left: 20px;
+}
+._ml-25{
+  margin-left: 25px;
+}
+._ml-30{
+  margin-left: 30px;
+}
+
+._ml-35{
+  margin-left: 35px;
+}
+._ml-40{
+  margin-left: 40px;
+}
+._ml-45{
+  margin-left: 45px;
+}
+._ml-65{
+  margin-left: 65px;
+}
+._mt-10 {
+  margin-top: 10px !important;
+}
+._mt-5 {
+  margin-top: 5px !important;
+}
+._mt-15{
+  margin-top: 15px !important;
+}
+._mt-20{
+  margin-top: 20px !important;
+}
+._mb-20 {
+  margin-bottom: 20px !important;
+}
+._mb-10 {
+  margin-bottom: 10px !important;
+}
+._mb-5 {
+  margin-bottom: 5px !important;
+}
+._mb-15{
+  margin-bottom: 15px !important;
+}
+
+._mb-0{
+  margin-bottom: 0 !important;
+}
+
+._heading_1 {
+  font-weight: 500;
+  font-size: 18px;
+}
+._sub-heading {
+  font-weight: 500;
+  font-size: 11px;
+}
+.secondary-text {
+  font-size: 11px;
+}
+.create-btn {
+  background: $highlight-color;
+  color: $primary-color;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  height: 32px;
+  line-height: 32px;
+  text-transform: capitalize;
+  margin-left: 10px !important;
+}
+.custom-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 48px;
+  padding: 5px 16px;
+  border-bottom: 1px solid $border-color;
+}
+.custom-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 48px;
+  padding: 5px 11px;
+  border-top: 1px solid $border-color;
+  button {
+    margin: 0 5px;
+  }
+}
+.mat-dialog-container {
+  padding: 0px !important;
+  border-radius: 12px !important;
+}
+.mat-dialog-content {
+  margin: 0 0 !important;
+}
+.success-btn {
+  background-color: $green-color;
+  color: $white-color !important;
+}
+
+.success-btn:disabled {
+  background-color: $gray-color !important;
+}
+.list {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 46px;
+  padding: 0 16px;
+  border-bottom: 1px solid $border-color;
+  background-color: white;
+  &:hover {
+    background-color: $highlight-color;
+    .actions {
+      opacity: 1;
+      transition-duration: 300ms;
+      right: 5px;
+    }
+  }
+  .actions {
+    opacity: 0;
+    position: absolute;
+  }
+}
+.expansion-list {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  &:hover {
+    .actions {
+      opacity: 1;
+      transition-duration: 300ms;
+      // top: 5px;
+      right: 25px;
+    }
+  }
+  .actions {
+    opacity: 0;
+    position: absolute;
+  }
+}
+._overflow-auto {
+  overflow: auto;
+}
+._overflow-hidden {
+  overflow: hidden;
+}
+._overflow-y-auto{
+  overflow-y: auto;
+}
+._cursor-pointer {
+  cursor: pointer;
+}
+
+// Scrollbar CSS :: Start
+::-webkit-scrollbar {
+  background: transparent;
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #e5e5e5;
+  border-radius: 12px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(37, 37, 37, 0.45);
+}
+
+._h-100 {
+  height: 100% !important;
+}
+._h-30{
+  height: 30px !important;
+}
+
+._w-100 {
+  width: 100%;
+}
+._w-90 {
+  width: 90%;
+}
+._w-80 {
+  width: 80%;
+}
+._w-70 {
+  width: 70%;
+}
+._w-60 {
+  width: 60%;
+}
+._w-50 {
+  width: 50%;
+}
+._w-40{
+  width: 40%;
+}
+._w-30{
+  width: 30%;
+}
+._w-25{
+  width: 25%;
+}
+._w-10{
+  width: 10%;
+}
+.card-container {
+  border: 1px solid $border-color;
+  border-radius: 12px;
+}
+._first-head-col {
+  flex: 0.4;
+}
+._pl-general {
+  padding-left: 16px;
+}
+._ml-general {
+  margin-left: 16px;
+}
+._ml-auto {
+  margin-left: auto;
+}
+._padding-general {
+  padding: 0 16px !important;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid $border-color;
+}
+._active-link {
+  // background-color: $highlight-color;
+  color: #3f51b5;
+}
+// .mat-expansion-panel-header {
+//   padding: 0 16px !important;
+// }
+.mat-tooltip {
+  font-size: 11px;
+  padding: 2px 3px !important;
+}
+._flex-wrap {
+  flex-wrap: wrap;
+}
+
+._info-box {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  padding: 15px;
+  // margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+._green-text {
+  color: $status-text-green;
+}
+
+._red-text{
+  color: $status-text-red;
+}
+
+._blue-text{
+  color: $status-text-blue;
+}
+
+._gray-text{
+  color: $status-text-gray;
+}
+
+._status-text{
+  font-size: 11px;
+}
+
+._flex-column{
+  display: flex;
+  flex-direction: column;
+}
+
+._fw-500{
+  font-weight: 500 !important;
+}
+
+._error-text{
+  color: red;
+  font-size: 11px;
+}
+
+._bgc-white{
+  background-color: white !important;
+}
+
+._list-end-message{
+  font-size: 12px;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  height: 46px;
+  padding: 0 16px;
+  background-color: white;
+}
+
+._ai-start{
+  align-items: flex-start;
+}
+
+._ai-stretch{
+  align-items: stretch;
+}
+
+._error-status-text{
+  font-size: 11px;
+  color: $status-text-red;
+}
+._font-14{
+  font-size: 14px;
+}
+
+._text-ellipsis{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+._text-center{
+  text-align: center;
+}
+
+._d-block{
+  display: block !important;
+}
+
+.debug{
+  border: 1px solid red;
+}

@@ -1,0 +1,50 @@
+<div class="container _h-100 _p-10  _overflow-hidden">
+    <div class="_flex-box _jc-sb _mb-10">
+        <div class="_flex-box">
+            <button mat-icon-button (click)="navigateBack()" class="_back-icon">
+            </button>
+            <h2 class="_mb-0 _ml-10">{{rtObj?.rtName?rtObj.rtName+ "'s": ''}} Templates</h2>
+        </div>
+        
+        <button mat-stroked-button [routerLink]="['/main/release-train/rt-template-create-update', rtId,'new']">Add a Template</button>
+    </div>
+    <search-box (onChange)="handleSearch($event)"></search-box>
+    <div *ngIf="loading">
+        <ngx-skeleton-loader count="10" [theme]="{ 
+            'border-radius': '5px',
+            height: '50px',
+            'margin-bottom': '0px',
+            border: '1px solid white'
+          }"></ngx-skeleton-loader>
+    </div>
+    <ng-container *ngIf="!loading">
+        <div *ngIf="!templateList.length && !loading else list" class="_flex-box _jc-c _mt-10">No Templates yet.</div>
+        <ng-template #list>
+            <div class="_flex-box _sub-heading _padding-general">
+                <div class="_first-head-col">Name</div>
+            </div>
+            <div class="card-container template-list"
+                infiniteScroll
+                infiniteScroll
+                [infiniteScrollDistance]="1"
+                [infiniteScrollThrottle]="10"
+                [infiniteScrollContainer]="'.template-list'"
+                [fromRoot]="true"
+                [scrollWindow]="false"
+                (scrolled)="onScroll()">
+                <div *ngFor="let template of templateList" class="list _jc-sb">
+                    <div class="_first-head-col">{{template.name}}</div>
+                    <div class="actions">
+                        <button mat-icon-button *ngIf="template.actions.includes('update')"
+                        [routerLink]="['/main/release-train/rt-template-create-update', rtId,template.id]" matTooltip="Edit" class="_edit-icon">
+                        </button>
+                        <button mat-icon-button *ngIf="template.actions.includes('delete')"
+                            (click)="deleteService(template)" matTooltip="Delete" class="_delete-icon">
+                        </button>
+                    </div>
+                </div>
+                <div *ngIf="lastPage" class="_list-end-message _jc-c">That's all!</div>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>

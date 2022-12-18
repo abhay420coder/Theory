@@ -1,0 +1,82 @@
+<div *ngIf="loading">
+    <ngx-skeleton-loader count="10" [theme]="{ 
+        'border-radius': '5px',
+        height: '50px',
+        'margin-bottom': '0px',
+        border: '1px solid white'
+      }"></ngx-skeleton-loader>
+</div>
+<div *ngIf="!loading"  class="container _flex-column _h-100 _p-10 _overflow-hidden">
+    <div class="_flex-box _jc-sb _ai-stretch">
+        <h2>Current Running Queries (DEV)</h2>
+    </div>
+    <div class="_mb-15" *ngIf="filterList.length">
+        <h4>Filters:</h4>
+        <mat-chip-list>
+            <mat-basic-chip *ngFor="let filter of filterList" class="filter _flex-box _ai-c _mr-10"
+                (removed)="removeFilter(filter)">
+                <span class="key">{{filter.key}}</span>
+                <span class="val">{{filter.value.join(",")}}</span>
+                <button matChipRemove class="remove">
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-basic-chip>
+            <mat-basic-chip>
+                <span class="remove-all _cursor-pointer" (click)="clearFilters()">Clear All</span>
+            </mat-basic-chip>
+        </mat-chip-list>
+    </div>
+    <ng-container *ngIf="showFilterInput&&!timeColumns.includes(filterKey)">
+        <mat-form-field appearance="outline" class="_w-100 _mr-10">
+            <mat-label>Filter {{filterKey}}</mat-label>
+            <input matInput [(ngModel)]="filterValue" inputDebounce
+                (callBack)="onFilterChange(filterKey, $event)" (focusout)="showFilterInput=false">
+            <mat-hint>Values seperated by comma (Ex. value_1,value_2, ...)</mat-hint>
+        </mat-form-field>
+    </ng-container>
+    <ng-container *ngIf="showFilterInput&&timeColumns.includes(filterKey)">
+        <div class="_flex-box">
+            <mat-form-field appearance="outline" class="_mr-10 date-time-picker">
+                <mat-label>{{filterKey}} From</mat-label>
+                <input matInput [ngxMatDatetimePicker]="fromPicker" placeholder="Choose a date"
+                    (dateChange)="onSelectFromDate($event)" [(ngModel)]="fromFilterVal" readonly>
+                <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+                <ngx-mat-datetime-picker #fromPicker [showSeconds]="true" [enableMeridian]="true">
+                </ngx-mat-datetime-picker>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="_mr-10 date-time-picker">
+                <mat-label>{{filterKey}} To</mat-label>
+                <input matInput [ngxMatDatetimePicker]="toPicker" placeholder="Choose a date"
+                    (dateChange)="onSelectToDate($event)" [(ngModel)]="toFilterVal" readonly>
+                <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+                <ngx-mat-datetime-picker #toPicker [showSeconds]="true" [enableMeridian]="true">
+                </ngx-mat-datetime-picker>
+            </mat-form-field>
+        </div>
+    </ng-container>
+    <div class="_w-100 _overflow-auto">
+        <table mat-table [dataSource]="monitoringData" class="data-table">
+            <ng-container matColumnDef={{column}} *ngFor="let column of columns">
+                <th mat-header-cell *matHeaderCellDef class="_padding-general">
+                    <div class="_flex-box border-table-cell">
+                        <span>{{column}}</span>
+                        <span class="info _info-icon-raw _ml-10 _cursor-pointer"
+                            [matTooltip]="monitoringDataDescription[column]"></span>
+                        <span class="info _filter-icon-raw _ml-5 _cursor-pointer" [matTooltip]="'Filter'"
+                            (click)="openFilterInput(column)"></span>
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let element" class="_padding-general">{{element |
+                    dbmonitoringdata:column:timeColumns:durationColumns:dataColumns}}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columns"></tr>
+            <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+        </table>
+    </div>
+    <div class="_flex-box _jc-c" *ngIf="!loading&&!monitoringData.length">
+        No queries currently running
+    </div>
+    <div class="_flex-box _jc-c" *ngIf="loading">
+        Loading running queries
+    </div>
+</div>

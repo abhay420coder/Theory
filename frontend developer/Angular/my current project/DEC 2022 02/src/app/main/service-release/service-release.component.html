@@ -1,0 +1,96 @@
+<div class="container _h-100 _p-10 _overflow-hidden">
+    <div class="_flex-box _jc-sb">
+        <h2>Service Release</h2>
+        <div class="_flex-box">
+            <button mat-stroked-button [routerLink]="'../service-release-tree-view'" class="_mr-10">Tree View</button>
+            <button mat-stroked-button *ngIf="canAdd()" (click)="createUpdateServiceRelease()">
+                <div class="_flex-box">
+                    <div class="_add-service-release-icon"></div>
+                    <div>Add a service Release</div>
+                </div>
+            </button>
+        </div>
+        
+    </div>
+    <search-box (onChange)="handleSearch($event)"></search-box>
+    <div *ngIf="loading">
+        <ngx-skeleton-loader count="10" [theme]="{ 
+            'border-radius': '5px',
+            height: '50px',
+            'margin-bottom': '0px',
+            border: '1px solid white'
+          }"></ngx-skeleton-loader>
+    </div>
+    <ng-container *ngIf="!loading">
+        <div *ngIf="!serviceReleaseList.length && !loading else list" class="_flex-box _jc-c _mt-10">No service release
+            yet.</div>
+        <ng-template #list>
+            <div class="_flex-box _sub-heading _padding-general">
+                <div class="_mr-10 _pl-10" style="width: 20px;">#</div>
+                <div class="_first-head-col _mr-10">Name</div>
+                <div class="_mr-10" style="width: 250px;">Release Note</div>
+                <div class="_mr-10" style="width: 100px;">Branch</div>
+                <!-- <div class="_mr-10" style="width: 100px;">Version</div> -->
+                <div class="_mr-10" style="width: 80px;">Port</div>
+                <div class="_mr-10" style="width: 150px;">Last Modified</div>
+                <div class="_flex-1">Status</div>
+            </div>
+            <div class="card-container service-release-list"
+                infiniteScroll
+                infiniteScroll
+                [infiniteScrollDistance]="1"
+                [infiniteScrollThrottle]="10"
+                [infiniteScrollContainer]="'.service-release-list'"
+                [fromRoot]="true"
+                [scrollWindow]="false"
+                (scrolled)="onScroll()">
+                <div *ngFor="let serviceRelease of serviceReleaseList" class="list _jc-sb">
+                    <div class="_mr-10 _flex-box _dynamic-icon" [dynamicBgIcon]="'/assets/icons/services/' + serviceRelease.serviceName + '.svg'">
+                    </div>
+                    <div class="_first-head-col _mr-10">{{serviceRelease.serviceName}}</div>
+                    <div class="_mr-10 secondary-text" style="width: 250px;color: #0000008A;;">{{serviceRelease.releaseNote}}</div>
+                    <div class="_mr-10 _flex-column" style="width: 100px;">
+                        <span class="stacked-text-primary">{{serviceRelease.srBranch}}</span> 
+                        <span class="stacked-text-secondery">{{serviceRelease.srVersion}}</span>
+                    </div>
+                    <!-- <div class="_mr-10" style="width: 100px;">{{serviceRelease.srVersion}}</div> -->
+                    <div class="_mr-10" style="width: 80px;">{{serviceRelease.portNumber}}</div>
+                    <div class="_mr-10 _flex-column" style="width: 150px;">
+                        <span class="stacked-text-primary _text-ellipsis">{{getUserName(serviceRelease.lastModifiedBy)}}</span>
+                        <span class="stacked-text-secondery">{{serviceRelease.lastModified | formatteddate:'MMM D YYYY, h:mm A':true}}</span>
+                    </div>
+                    <div class="_flex-1">
+                        <mat-chip-list>
+                            <mat-basic-chip 
+                                class="chip" 
+                                [ngClass]="getColorScheme('depSerCount')"
+                                matTooltip="{{serviceRelease.dependentServiceCount}} dependent services"
+                                disabled>
+                                {{serviceRelease.dependentServiceCount}}
+                            </mat-basic-chip>
+                            <mat-basic-chip 
+                                class="chip" 
+                                [ngClass]="getColorScheme(serviceRelease.configMap&&serviceRelease.configMap!==''?'configPresent':'configAbsent')"
+                                [matTooltip]="serviceRelease.configMap&&serviceRelease.configMap!==''?'Config Exists':'Config Doesn\'t Exist'"
+                                disabled>
+                                    Config
+                            </mat-basic-chip>
+                        </mat-chip-list>
+                        
+                    </div>
+                    <div class="actions">
+                        <button mat-icon-button *ngIf="canManageRoles()" matTooltip="Manage Roles" class="_roles-icon" (click)="manageRole(serviceRelease)"></button>
+                        <button mat-icon-button (click)="openK8sService(serviceRelease)" matTooltip="K8S Service" class="_k8s-service-icon"></button>
+                        <button mat-icon-button (click)="openConfigMap(serviceRelease)" matTooltip="Configs" class="_config-icon"></button>
+                        <button mat-icon-button *ngIf="serviceRelease.actions.includes('update')" (click)="mapDependency(serviceRelease)" matTooltip="Map Dependencies" class="_map-dependencies-icon"></button>
+                        <button mat-icon-button
+                            (click)="createUpdateServiceRelease(serviceRelease)" matTooltip="Edit" class="_edit-icon"></button>
+                        <button mat-icon-button *ngIf="serviceRelease.actions.includes('delete')"
+                            (click)="deleteServiceRel(serviceRelease)" matTooltip="Delete" class="_delete-icon"></button>
+                    </div>
+                </div>
+                <div *ngIf="lastPage" class="_list-end-message _jc-c">That's all!</div>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>
