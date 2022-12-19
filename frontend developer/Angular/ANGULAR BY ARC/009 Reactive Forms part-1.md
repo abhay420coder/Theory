@@ -1184,12 +1184,12 @@ this.formGroupName = new FormGroup({
 #### Setting the form values using `setValue`
 
 ```ts
-const loanObj = {
+const SetObj = {
                     FormControlName1 : 'Value Here',
                     FormControlName2: 'Value Here',
                     FormControlName3: 'Value Here'
                 }
-this.formGroupName.setValue(loanObj);
+this.formGroupName.setValue(SetObj);
 ```
 Subscribe and Ask your do
 ### syntax

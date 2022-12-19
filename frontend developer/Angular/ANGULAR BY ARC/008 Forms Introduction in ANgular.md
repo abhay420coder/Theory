@@ -1391,6 +1391,8 @@ export class AddCustomerComponent implements OnInit {
     <!-- <button type="submit">Add customers</button> -->
 
    <button  (click)="resetForm(FormName)">Reset Form</button>
+
+   <button  (click)="setForm(FormName)">Set Form</button>
 </form>
 ```
 
@@ -1431,10 +1433,10 @@ export class formComponent implements OnInit {
   }
 
   setForm(formsValue: NgForm) {
-    let userDetails = {
+    let SetObj = {
       inputName: value,
     }
-    formsValue.setValue(userDetails);
+    formsValue.setValue(SetObj);
   }
 
 }
