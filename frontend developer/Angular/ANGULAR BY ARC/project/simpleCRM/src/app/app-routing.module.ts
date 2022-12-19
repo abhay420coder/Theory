@@ -35,6 +35,10 @@ const routes: Routes = [
     component:ProductComponent
   } ,
   { 
+    path:'loan/types' , 
+    component:LoanTypesComponent
+  } ,
+  { 
     path:'product/:productId/photos/:photoId' , 
     component:ProductComponent
   } ,

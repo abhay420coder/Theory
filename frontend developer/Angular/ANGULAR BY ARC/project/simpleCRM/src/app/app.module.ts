@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';  //  importing routing 
 import { AppComponent } from './app.component';
 import { HighlightDirective } from './highlight.directive';
 import { UsersComponent } from './users/users.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoansComponent } from './loans/loans.component';
 import { LoanTypesComponent } from './loan-types/loan-types.component';
 import { AddLoansComponent } from './add-loans/add-loans.component'  
@@ -88,7 +88,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule, // routing module add in  imports array
     FormsModule,
     BrowserAnimationsModule,
-    
+    ReactiveFormsModule,
         // all angular material module imported started
         MatAutocompleteModule,MatBadgeModule,MatBottomSheetModule,MatButtonModule,MatButtonToggleModule,
         MatCardModule,MatCheckboxModule,MatChipsModule,MatCommonModule,MatDatepickerModule,MatDialogModule,
