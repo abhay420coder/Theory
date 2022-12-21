@@ -1376,24 +1376,83 @@ export class AddCustomerComponent implements OnInit {
 * Set the form using
   * `Form.setValue()`
 
+### remind points :- ngForm & ngModel & ngModelGroup
+
+> **ngForm**
+> Creates a top-level `FormGroup` instance and binds it to a `<form>` element to track aggregated form value and validation status.
+> As soon as you import `FormsModule`, this directive becomes active by default on all `<form>` tags.
+> You don't need to add a special selector.
+>
+> * NgForm is used to create a top-level form group Instance, and it binds the form to the given form value.
+>
+> * Approach:-
+>   * Create the Angular app to be used
+>   * In app.module.ts import FormsModule.
+>   * In app.component.html make a form and store its value in ngForm variable and show its value in a JSON form.
+>   * Serve the angular app using ng serve to see the output.
+
+> **ngModel**
+>
+> * Reconciles value changes in the attached form element with changes in the data model, allowing you to respond to user input with input validation and error handling.
+> * The ngModel directive is a directive **that is used to bind the values of the HTML controls** (input, select, and textarea) or any custom form controls, and stores the required user value in a variable and we can use that variable whenever we require that value.
+> * It also is used during form validations.
+
+> **ngModelGroup**
+>
+> * Creates and binds a FormGroup instance to a DOM element
+> * The NgModelGroup is used to create a top-level form group Instance, and it binds the form to the given form value.
+
 ### syntax :- 
 
 **in html file**
 
 ```html
 <form #FormName="ngForm" (submit)="submitFormFunctionName(FormName)">
+        <div ngModelGroup="ngModel_Group_Name">
+          <input type="text"  name="inputName1_With_ngModelGroup" ngModel>
+          <!-- name = "key"  [(ngModel)]="value"/ngModel         is manadatory for every input,select&option,textarea,etc-->
+          <input type="text"  name="inputName2_With_ngModelGroup" [(ngModel)]="inputValue2_With_ngModelGroup">
+          <input type="text"  name="inputName3_With_ngModelGroup" ngModel>
+          <input type="text"  name="inputName4_With_ngModelGroup" [(ngModel)]="inputValue4_With_ngModelGroup">
+    </div>
     <div>
-        <input type="text" name="inputName" [(ngModel)]="inputValue" required minlength="10" maxlength="20"> <br>  
-        <!-- name = "key"  [(ngModel)]="value"          is manadatory for every input,select&option,textarea,etc-->
+        <input type="text" name="inputName1_Without_ngModelGroup" [(ngModel)]="inputValue1_Without_ngModelGroup" required minlength="10" maxlength="20"> <br>  
+        <input type="text" name="inputName2_Without_ngModelGroup"  ngModel required minlength="10" maxlength="20"> <br>  
+        <input type="text" name="inputName3_Without_ngModelGroup" [(ngModel)]="inputValue3_Without_ngModelGroup" required minlength="10" maxlength="20"> <br>  
+        <input type="text" name="inputName4_Without_ngModelGroup"  ngModel required minlength="10" maxlength="20"> <br>  
+        <!-- name = "key"  [(ngModel)]="value"/ngModel         is manadatory for every input,select&option,textarea,etc-->
     </div>
 
+    <!-- if  (submit)="submitFormFunctionName(FormName)" will use in form tag then use below-->
     <input type="submit" name="SUBMIT" value="Submit Button Value" [disabled]="!FormName.valid"><br>
-    <!-- <button type="submit">Add customers</button> -->
+    <!-- <button type="submit">Submit Button Value</button> -->
+
+    <!-- if  (submit)="submitFormFunctionName(FormName)" will not use in form tag then use below-->
+    <!-- <input type="submit" name="SUBMIT" value="Submit Button Value" (click)="formSubmitButton(formName)" [disabled]="!FormName.valid"><br> -->
+    <!-- <button type="submit" (click)="formSubmitButton(formName)">Submit Button Value</button> -->
+
 
    <button  (click)="resetForm(FormName)">Reset Form</button>
 
    <button  (click)="setForm(FormName)">Set Form</button>
 </form>
+
+<!-- 
+  FormName.value :-   {{FormName.value|json}} :- 
+  FormName.value :-   {
+                          "ngModel_Group_Name":{
+                              "inputName1_With_ngModelGroup":"fsfsf",
+                              "inputName2_With_ngModelGroup":"sfsfs",
+                              "inputName3_With_ngModelGroup":"sfsfsfs",
+                              "inputName4_With_ngModelGroup":"sfsfsgsfs"
+                          },
+                          "inputName1_Without_ngModelGroup":"gsgsgsgsgsg",
+                          "inputName2_Without_ngModelGroup":"sgsgg",
+                          "inputName3_Without_ngModelGroup":"gsgsg",
+                          "inputName4_Without_ngModelGroup":"sgsg"
+                      }
+ -->
+
 ```
 
 **in ts file**
@@ -1409,7 +1468,10 @@ import { NgForm } from '@angular/forms';
 })
 export class formComponent implements OnInit {
 
-  inputValue:any;
+  inputValue2_With_ngModelGroup:any;
+  inputValue4_With_ngModelGroup:any;
+  inputValue1_Without_ngModelGroup:any;
+  inputValue3_Without_ngModelGroup:any;
 
   constructor() { }
 
@@ -1433,10 +1495,20 @@ export class formComponent implements OnInit {
   }
 
   setForm(formsValue: NgForm) {
-    let SetObj = {
-      inputName: value,
-    }
-    formsValue.setValue(SetObj);
+    let setObj={
+      ngModel_Group_Name : {
+        'inputName1_With_ngModelGroup':'Value_Here',
+        'inputName2_With_ngModelGroup':'Value_Here',
+        'inputName3_With_ngModelGroup':'Value_Here',
+        'inputName4_With_ngModelGroup':'Value_Here',
+      },
+      'inputName1_Without_ngModelGroup':'Value_Here',
+      'inputName2_Without_ngModelGroup':'Value_Here',
+      'inputName3_Without_ngModelGroup':'Value_Here',
+      'inputName4_Without_ngModelGroup':'Value_Here'
+    };
+
+    formsValue.setValue(setObj);
   }
 
 }
@@ -1661,3 +1733,42 @@ export class AddCustomerComponent implements OnInit {
 ```
 
 ## Angular Set Form Value Tutorial by  Angular.io
+
+
+
+
+## another method
+
+```html
+    <!-- <form #formName="ngForm"> -->
+    <form #formName="ngForm" (ngSubmit)="formSubmitButton(formName)">
+    <!-- <form #formName="ngForm"> -->
+  
+        <div ngModelGroup="use_Of_With_UserModel">
+          <input type="text"  name="inputName1_With_ngModelGroup_And_With_UserModel" [(ngModel)]="userModel.name1">
+          <input type="text"  name="inputName2_With_ngModelGroup_And_With_UserModel" [(ngModel)]="userModel.name2">
+          <input type="text"  name="inputName3_With_ngModelGroup_And_With_UserModel" [(ngModel)]="userModel.name3">
+          <input type="text"  name="inputName4_With_ngModelGroup_And_With_UserModel" [(ngModel)]="userModel.name4">
+        </div>
+        <div ngModelGroup="use_Of_Without_UserModel">
+          <input type="text"  name="inputName1_With_ngModelGroup_And_Without_UserModel" ngModel>
+          <input type="text"  name="inputName2_With_ngModelGroup_And_Without_UserModel" ngModel>
+          <input type="text"  name="inputName3_With_ngModelGroup_And_Without_UserModel" ngModel>
+          <input type="text"  name="inputName4_With_ngModelGroup_And_Without_UserModel" ngModel>
+        </div>
+        <div>
+          <input type="text"  name="inputName1_Without_ngModelGroup" ngModel>
+          <input type="text"  name="inputName2_Without_ngModelGroup" ngModel>
+          <input type="text"  name="inputName3_Without_ngModelGroup" ngModel>
+          <input type="text"  name="inputName4_Without_ngModelGroup" ngModel>
+        </div>
+          <input type="text"  name="inputName5_Without_ngModelGroup" ngModel>
+          <input type="text"  name="inputName6_Without_ngModelGroup" ngModel>
+          <input type="text"  name="inputName7_Without_ngModelGroup" ngModel>
+          <input type="text"  name="inputName8_Without_ngModelGroup" ngModel>
+      
+      <button class="btn btn-primary" type="submit"> Submit Form  Without ngModelGroup</button>
+      <!-- <button class="btn btn-primary" type="submit" (click)="formSubmitButton(formName)"> Submit Form  Without ngModelGroup</button> -->
+  
+    </form>
+```

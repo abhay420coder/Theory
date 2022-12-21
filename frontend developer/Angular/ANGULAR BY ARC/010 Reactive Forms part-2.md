@@ -1470,7 +1470,15 @@ Form fields were touched
 **in html file**
 
 ```html
+  <!-- with  (ngSubmit)="formSubmitButton() -->
+<form #form="ngForm" [formGroup]="formGroupName" (ngSubmit)="formGroupSubmitButton()">
+  <!-- with  (ngSubmit)="formSubmitButton(formGroupName) -->
+<form #form="ngForm" [formGroup]="formGroupName" (ngSubmit)="formGroupSubmitButton(formGroupName)">
+  <!-- without  (ngSubmit)="formSubmitButton() or (ngSubmit)="formSubmitButton(formGroupName) -->
 <form [formGroup]="formGroupName">
+
+
+
     <div><input type="text" formControlName="FormControlName1"></div>
     <!--Reactive form valiadation - required, minlength, maxlength -->
     <div *ngIf="formGroupName.get('FormControlName1')?.hasError('required')"> firstFormControlName is required </div>
@@ -1496,16 +1504,31 @@ Form fields were touched
     <!--  formControlName = "key"   is manadatory for every   input,select&option,textarea,etc -->
     <!-- basically we are writing  formControlName instead of name attribute -->
 
-    <div><button (click)="formGroupSubmitButton()">Submit Button Name</button></div>
 
+
+
+  <!-- without  (ngSubmit)="formSubmitButton() or (ngSubmit)="formSubmitButton(formGroupName) -->
+    <div><button (click)="formGroupSubmitButton()">Submit Button Name</button></div>
     <div><button (click)="formGroupSubmitButton()" [disabled]="!formGroupName.valid">
         Submit Button Name with disable feature according to validators</button>
-    <!--    
-        if formGroupName.valid return true then form is valid  
-        if formGroupName.valid return false then form is invalid 
-    -->
+    <!--    if formGroupName.valid return true then form is valid   if formGroupName.valid return false then form is invalid  -->
     </div>
 
+
+  <!-- with  (ngSubmit)="formSubmitButton() or (ngSubmit)="formSubmitButton(formGroupName) -->
+    <div><button type="submit">Submit Button Name</button></div>
+    <div><button type="submit" [disabled]="!formGroupName.valid">
+        Submit Button Name with disable feature according to validators</button></div>
+<!-- or     :-  you can add 'type="submit"'   or        you can't add 'type="submit"'-->
+
+  <!-- with  (ngSubmit)="formSubmitButton() or (ngSubmit)="formSubmitButton(formGroupName) -->
+    <div><button >Submit Button Name</button></div>
+    <div><button  [disabled]="!formGroupName.valid">
+        Submit Button Name with disable feature according to validators</button></div>
+
+
+
+<!-- set form button -->
     <div><button (click)="setForm()">Set Form</button></div>
 
 </form>
@@ -1633,7 +1656,15 @@ setForm() {
 
 
 
+// submit button of form
 
+
+  // with  (ngSubmit)="formSubmitButton(formGroupName)"  in html file
+  formGroupSubmitButton(formGroupName: { value: any; }){
+    console.log("formGroupName.value  :-  ",formGroupName.value)
+
+  // with  (ngSubmit)="formSubmitButton()"  in html file      or
+  // without  (ngSubmit)="formSubmitButton()"  or (ngSubmit)="formSubmitButton(formGroupName)"    in html file   
   formGroupSubmitButton(){
 
     // Get Value of Entire Form
@@ -1697,7 +1728,6 @@ setForm() {
   }
 
 }
-
 ```
 
 ### Example :-
@@ -1708,20 +1738,24 @@ setForm() {
 ```html
 <p>loan-types works!</p>
 
+<!-- 
+   with  (ngSubmit)="formSubmitButton(FormBulder)
+ -->
+
 <div class="ByFormBulder">
     <h1> create the form with the help of FormBuilder For Set Purpous With The Help Of SetValue</h1>
+    <h1>    with """'(ngSubmit)="formSubmitButtonWithNgSubmit(formGroupName)"'"" </h1>
 
-    <form [formGroup]="formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue">
+    <!-- <form #form="ngForm" [formGroup]="FormBulder" (ngSubmit)="formSubmitButtonWithNgSubmit()"> -->
+    <form #form="ngForm" [formGroup]="FormBulder" (ngSubmit)="formSubmitButtonWithNgSubmit(FormBulder)">
         <div><input type="text" formControlName="firstFormControlName"></div>
-        <div *ngIf="formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName')?.hasError('required')" >
+        <div *ngIf="FormBulder.get('firstFormControlName')?.hasError('required')" >
             firstFormControlName is required</div>
-        <div *ngIf="formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName')?.hasError('minlength')" >
+        <div *ngIf="FormBulder.get('firstFormControlName')?.hasError('minlength')" >
             firstFormControlName is minlength</div>
-        <div *ngIf="formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName')?.hasError('maxlength')" >
+        <div *ngIf="FormBulder.get('firstFormControlName')?.hasError('maxlength')" >
             firstFormControlName is maxlength</div>
-        <div 
-            *ngIf="formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName')?.hasError('required') && formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName')?.touched" >
-            firstFormControlName is required && touched</div>
+        <div *ngIf="FormBulder.get('firstFormControlName')?.hasError('required') && FormBulder.get('firstFormControlName')?.touched" >firstFormControlName is required && touched</div>
         <!--  formControlName = "key"   is manadatory for every   input,select&option,textarea,etc -->
         <div><textarea formControlName="secondFormControlName" ></textarea></div>
         <div><input type="checkbox" formControlName="thirdFormControlName"  > Accept all terms and condition</div>
@@ -1775,20 +1809,31 @@ setForm() {
         <mat-slide-toggle formControlName="ninethFormControlName" >Slide me!</mat-slide-toggle>
       </div>
     
-        <div><button (click)="formGroupSubmitButtonForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue()">
+
+    <!--    without       <form [formGroup]="form" (ngSubmit)="onSignln(form)"> ... </form>     -->
+        <!-- <div><button (click)="formSubmitButtonWithoutNgSubmit()">
             Submit Button Name For Set Purpous With The Help Of SetValue </button></div>
-        <div><button (click)="formGroupSubmitButtonForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue()" [disabled]="!formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.valid">
+        <div><button (click)="formSubmitButtonWithoutNgSubmit()" [disabled]="!FormBulder.valid">
+            Submit Button Name For Set Purpous With The Help Of SetValue with disable feature </button></div> -->
+
+    <!--    with       <form [formGroup]="form" (ngSubmit)="onSignln(form)"> ... </form>     -->
+        <div><button type="submit">
+            Submit Button Name For Set Purpous With The Help Of SetValue </button></div>
+        <div><button type="submit" [disabled]="!FormBulder.valid">
             Submit Button Name For Set Purpous With The Help Of SetValue with disable feature </button></div>
-        <div><button (click)="SetValueForFormBulderOnly()">set Button Name</button></div>
+
+
+        <div><button (click)="SetValueButton()">set Button Name</button></div>
     </form>
 </div>
+
 ```
 
 **add-customer.component.ts**
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 
 
 interface Food {
@@ -1803,8 +1848,8 @@ interface Food {
   styleUrls: ['./loan-types.component.scss']
 })
 export class LoanTypesComponent implements OnInit {
-
-  formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue : FormGroup = this.fb.group({
+  
+  FormBulder : FormGroup = this.fb.group({
     'firstFormControlName': new FormControl('', [  Validators.minLength(4),   Validators.required , Validators.maxLength(8)] ),
     'secondFormControlName': new FormControl('',  Validators.compose([Validators.minLength(4),   Validators.required , Validators.maxLength(8)]) ),
     'thirdFormControlName': new FormControl(),
@@ -1851,43 +1896,43 @@ export class LoanTypesComponent implements OnInit {
   }
 
 
-
-  formGroupSubmitButtonForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue(){
-
+  // formSubmitButtonWithNgSubmit(){
+  formSubmitButtonWithNgSubmit(FormBulder: { value: any; }){
+    console.log("FormBulder.form.value  :-  ",FormBulder.value)
     // to check form is valid or not
-    console.log("this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.valid   :-  ",this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.valid)
+    console.log("this.FormBulder.valid   :-  ",this.FormBulder.valid)
     // if this.formGroupName.valid return true then form is valid
     // if this.formGroupName.valid return false then form is invalid
 
-    console.log('formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.value :-  ',this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.value)
-    console.log('formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue :-  ',this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue)
-    console.log('formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.root.value :-  ',this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.root.value)
+    console.log('FormBulder  :-    this.FormBulder.value :-  ',this.FormBulder.value)
+    console.log('FormBulder  :-    this.FormBulder :-  ',this.FormBulder)
+    console.log('FormBulder  :-    this.FormBulder.root.value :-  ',this.FormBulder.root.value)
 
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  only  get('FormControlName')  :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName') :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName'))
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  firstFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName')?.value)
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  secondFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('secondFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('secondFormControlName')?.value)
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  thirdFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('thirdFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('thirdFormControlName')?.value)
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  fourthFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('fourthFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('fourthFormControlName')?.value)
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  fifthFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('fifthFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('fifthFormControlName')?.value)
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  sixthFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('sixthFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('sixthFormControlName')?.value)
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  seventhFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('seventhFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('seventhFormControlName')?.value)
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  eightthFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('eightthFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('eightthFormControlName')?.value)
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  ninethFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('ninethFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('ninethFormControlName')?.value)
+    console.log("FormBulder  only  get('FormControlName')  :-    this.FormBulder.get('firstFormControlName') :-  ", this.FormBulder.get('firstFormControlName'))
+    console.log("FormBulder  firstFormControlName :-    this.FormBulder.get('firstFormControlName')?.value :-  ", this.FormBulder.get('firstFormControlName')?.value)
+    console.log("FormBulder  secondFormControlName :-    this.FormBulder.get('secondFormControlName')?.value :-  ", this.FormBulder.get('secondFormControlName')?.value)
+    console.log("FormBulder  thirdFormControlName :-    this.FormBulder.get('thirdFormControlName')?.value :-  ", this.FormBulder.get('thirdFormControlName')?.value)
+    console.log("FormBulder  fourthFormControlName :-    this.FormBulder.get('fourthFormControlName')?.value :-  ", this.FormBulder.get('fourthFormControlName')?.value)
+    console.log("FormBulder  fifthFormControlName :-    this.FormBulder.get('fifthFormControlName')?.value :-  ", this.FormBulder.get('fifthFormControlName')?.value)
+    console.log("FormBulder  sixthFormControlName :-    this.FormBulder.get('sixthFormControlName')?.value :-  ", this.FormBulder.get('sixthFormControlName')?.value)
+    console.log("FormBulder  seventhFormControlName :-    this.FormBulder.get('seventhFormControlName')?.value :-  ", this.FormBulder.get('seventhFormControlName')?.value)
+    console.log("FormBulder  eightthFormControlName :-    this.FormBulder.get('eightthFormControlName')?.value :-  ", this.FormBulder.get('eightthFormControlName')?.value)
+    console.log("FormBulder  ninethFormControlName :-    this.FormBulder.get('ninethFormControlName')?.value :-  ", this.FormBulder.get('ninethFormControlName')?.value)
     
 
 
     // all below will be return boolean , you can validate with the help of  'valid, invalid, pending, pristine, dirty, touched, untouched' in if-condition
-    console.log("this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.valid   :-  ",this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.valid)
-    console.log("this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.invalid   :-  ",this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.invalid)
-    console.log("this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.pending   :-  ",this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.pending)
-    console.log("this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.pristine   :-  ",this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.pristine)
-    console.log("this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.dirty   :-  ",this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.dirty)
-    console.log("this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.touched   :-  ",this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.touched)
-    console.log("this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.untouched   :-  ",this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.untouched)
+    console.log("this.FormBulder.valid   :-  ",this.FormBulder.valid)
+    console.log("this.FormBulder.invalid   :-  ",this.FormBulder.invalid)
+    console.log("this.FormBulder.pending   :-  ",this.FormBulder.pending)
+    console.log("this.FormBulder.pristine   :-  ",this.FormBulder.pristine)
+    console.log("this.FormBulder.dirty   :-  ",this.FormBulder.dirty)
+    console.log("this.FormBulder.touched   :-  ",this.FormBulder.touched)
+    console.log("this.FormBulder.untouched   :-  ",this.FormBulder.untouched)
 
   
   }
-  SetValueForFormBulderOnly(){
+  SetValueButton(){
 
     let settObj : any =   {
       'firstFormControlName'  : 'vs',
@@ -1901,13 +1946,33 @@ export class LoanTypesComponent implements OnInit {
       'ninethFormControlName' : true,
     };
 
-    // this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.setValue(settObj);
-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.patchValue(settObj);
+    // this.FormBulder.setValue(settObj);
+    this.FormBulder.patchValue(settObj);
    
   }
 
 }
+
 ```
+
+### Reactive Form — Example
+
+```html
+
+<form [formGroup]="form" (ngSubmit)="onSignln(form)">
+  <div class="form-group">
+    <input type="text" class="form-control" id="email" placeholder="Enter email" formControlName="email">
+    <span class="text-muted" *nglf="form.getCemail').hasErrorCrequired') && form.getCemail').touched">Email is required</span>
+  </div>
+  <div class="form-group">
+    <input tvpe="password" class="form-control" id="password" placeholder="Password"
+    formControlName="password">
+    <span class="text-muted" *nglf="form.get('password').hasError('required') && form.get('password').touched">Password is required</span>
+    </div><button btn-primary btn-block" [disabled]="!form.valid">Sign ln</button></div>
+  </div>
+</form>
+```
+
 
 ## Reactive Forms State and Validations by  Angular.io
 
@@ -2107,12 +2172,27 @@ Form was not been modified by the user
 ##### Form fields were `touched`
 Form fields were touched
 
+### Reactive Form — `Reset()`
+
+* Reset Form — `reset()`
+* We can Reset the entire form using `reset()` method
+* Syntax:
+  * `this.formGroupName.reset()`
+
 ### syntax
 
 **in html file**
 
 ```html
+  <!-- with  (ngSubmit)="formSubmitButton() -->
+<form #form="ngForm" [formGroup]="formGroupName" (ngSubmit)="formGroupSubmitButton()">
+  <!-- with  (ngSubmit)="formSubmitButton(formGroupName) -->
+<form #form="ngForm" [formGroup]="formGroupName" (ngSubmit)="formGroupSubmitButton(formGroupName)">
+  <!-- without  (ngSubmit)="formSubmitButton() or (ngSubmit)="formSubmitButton(formGroupName) -->
 <form [formGroup]="formGroupName">
+
+
+
     <div><input type="text" formControlName="FormControlName1"></div>
     <!--Reactive form valiadation - required, minlength, maxlength -->
     <div *ngIf="formGroupName.get('FormControlName1')?.hasError('required')"> firstFormControlName is required </div>
@@ -2138,17 +2218,38 @@ Form fields were touched
     <!--  formControlName = "key"   is manadatory for every   input,select&option,textarea,etc -->
     <!-- basically we are writing  formControlName instead of name attribute -->
 
+
+
+
+  <!-- without  (ngSubmit)="formSubmitButton() or (ngSubmit)="formSubmitButton(formGroupName) -->
     <div><button (click)="formGroupSubmitButton()">Submit Button Name</button></div>
 
     <div><button (click)="formGroupSubmitButton()" [disabled]="!formGroupName.valid">
         Submit Button Name with disable feature according to validators</button>
-    <!--    
-        if formGroupName.valid return true then form is valid  
-        if formGroupName.valid return false then form is invalid 
-    -->
+    <!--    if formGroupName.valid return true then form is valid   if formGroupName.valid return false then form is invalid  -->
     </div>
 
+
+  <!-- with  (ngSubmit)="formSubmitButton() or (ngSubmit)="formSubmitButton(formGroupName) -->
+    <div><button type="submit">Submit Button Name</button></div>
+    <div><button type="submit" [disabled]="!formGroupName.valid">
+        Submit Button Name with disable feature according to validators</button></div>
+<!-- or     :-  you can add 'type="submit"'   or        you can't add 'type="submit"'-->
+
+  <!-- with  (ngSubmit)="formSubmitButton() or (ngSubmit)="formSubmitButton(formGroupName) -->
+    <div><button >Submit Button Name</button></div>
+    <div><button  [disabled]="!formGroupName.valid">
+        Submit Button Name with disable feature according to validators</button></div>
+
+
+
+<!-- set form button -->
     <div><button (click)="setForm()">Set Form</button></div>
+
+
+<!-- Reset form button -->
+        <div><button (click)="formGroupName.reset()">Reset Button Name</button></div>
+        <div><button (click)="resetForm()">Reset Button Name by function</button></div>
 
 </form>
 ```
@@ -2275,7 +2376,15 @@ setForm() {
 
 
 
+// submit button of form
 
+
+  // with  (ngSubmit)="formSubmitButton(formGroupName)"  in html file
+  formGroupSubmitButton(formGroupName: { value: any; }){
+    console.log("formGroupName.value  :-  ",formGroupName.value)
+
+  // with  (ngSubmit)="formSubmitButton()"  in html file      or
+  // without  (ngSubmit)="formSubmitButton()"  or (ngSubmit)="formSubmitButton(formGroupName)"    in html file   
   formGroupSubmitButton(){
 
     // Get Value of Entire Form
@@ -2335,7 +2444,16 @@ setForm() {
     console.log("this.formGroupName.dirty   :-  ",this.formGroupName.dirty)
     console.log("this.formGroupName.touched   :-  ",this.formGroupName.touched)
     console.log("this.formGroupName.untouched   :-  ",this.formGroupName.untouched)
+
+    // after submitting form then resetted form  :- if you want you can use
+    this.formGroupName.reset()
  
+  }
+
+
+  // Reset form  by function
+  resetForm(){
+    this.formGroupName.reset();
   }
 
 }
@@ -2350,20 +2468,24 @@ setForm() {
 ```html
 <p>loan-types works!</p>
 
+<!-- 
+   with  (ngSubmit)="formSubmitButton(FormBulder)
+ -->
+
 <div class="ByFormBulder">
     <h1> create the form with the help of FormBuilder For Set Purpous With The Help Of SetValue</h1>
+    <h1>    with """'(ngSubmit)="formSubmitButtonWithNgSubmit(formGroupName)"'"" </h1>
 
-    <form [formGroup]="formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue">
+    <!-- <form #form="ngForm" [formGroup]="FormBulder" (ngSubmit)="formSubmitButtonWithNgSubmit()"> -->
+    <form #form="ngForm" [formGroup]="FormBulder" (ngSubmit)="formSubmitButtonWithNgSubmit(FormBulder)">
         <div><input type="text" formControlName="firstFormControlName"></div>
-        <div *ngIf="formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName')?.hasError('required')" >
+        <div *ngIf="FormBulder.get('firstFormControlName')?.hasError('required')" >
             firstFormControlName is required</div>
-        <div *ngIf="formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName')?.hasError('minlength')" >
+        <div *ngIf="FormBulder.get('firstFormControlName')?.hasError('minlength')" >
             firstFormControlName is minlength</div>
-        <div *ngIf="formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName')?.hasError('maxlength')" >
+        <div *ngIf="FormBulder.get('firstFormControlName')?.hasError('maxlength')" >
             firstFormControlName is maxlength</div>
-        <div 
-            *ngIf="formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName')?.hasError('required') && formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName')?.touched" >
-            firstFormControlName is required && touched</div>
+        <div *ngIf="FormBulder.get('firstFormControlName')?.hasError('required') && FormBulder.get('firstFormControlName')?.touched" >firstFormControlName is required && touched</div>
         <!--  formControlName = "key"   is manadatory for every   input,select&option,textarea,etc -->
         <div><textarea formControlName="secondFormControlName" ></textarea></div>
         <div><input type="checkbox" formControlName="thirdFormControlName"  > Accept all terms and condition</div>
@@ -2417,20 +2539,34 @@ setForm() {
         <mat-slide-toggle formControlName="ninethFormControlName" >Slide me!</mat-slide-toggle>
       </div>
     
-        <div><button (click)="formGroupSubmitButtonForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue()">
+
+    <!--    without       <form [formGroup]="form" (ngSubmit)="onSignln(form)"> ... </form>     -->
+        <!-- <div><button (click)="formSubmitButtonWithoutNgSubmit()">
             Submit Button Name For Set Purpous With The Help Of SetValue </button></div>
-        <div><button (click)="formGroupSubmitButtonForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue()" [disabled]="!formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.valid">
+        <div><button (click)="formSubmitButtonWithoutNgSubmit()" [disabled]="!FormBulder.valid">
+            Submit Button Name For Set Purpous With The Help Of SetValue with disable feature </button></div> -->
+
+    <!--    with       <form [formGroup]="form" (ngSubmit)="onSignln(form)"> ... </form>     -->
+        <div><button type="submit">
+            Submit Button Name For Set Purpous With The Help Of SetValue </button></div>
+        <div><button type="submit" [disabled]="!FormBulder.valid">
             Submit Button Name For Set Purpous With The Help Of SetValue with disable feature </button></div>
-        <div><button (click)="SetValueForFormBulderOnly()">set Button Name</button></div>
+
+
+        <div><button (click)="SetValueButton()">set Button Name</button></div>
+
+        <div><button (click)="FormBulder.reset()">Reset Button Name</button></div>
+        <div><button (click)="resetForm()">Reset Button Name by function</button></div>
     </form>
 </div>
+
 ```
 
 **add-customer.component.ts**
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 
 
 interface Food {
@@ -2445,8 +2581,8 @@ interface Food {
   styleUrls: ['./loan-types.component.scss']
 })
 export class LoanTypesComponent implements OnInit {
-
-  formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue : FormGroup = this.fb.group({
+  
+  FormBulder : FormGroup = this.fb.group({
     'firstFormControlName': new FormControl('', [  Validators.minLength(4),   Validators.required , Validators.maxLength(8)] ),
     'secondFormControlName': new FormControl('',  Validators.compose([Validators.minLength(4),   Validators.required , Validators.maxLength(8)]) ),
     'thirdFormControlName': new FormControl(),
@@ -2493,43 +2629,46 @@ export class LoanTypesComponent implements OnInit {
   }
 
 
-
-  formGroupSubmitButtonForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue(){
-
+  // formSubmitButtonWithNgSubmit(){
+  formSubmitButtonWithNgSubmit(FormBulder: { value: any; }){
+    console.log("FormBulder.form.value  :-  ",FormBulder.value)
     // to check form is valid or not
-    console.log("this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.valid   :-  ",this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.valid)
+    console.log("this.FormBulder.valid   :-  ",this.FormBulder.valid)
     // if this.formGroupName.valid return true then form is valid
     // if this.formGroupName.valid return false then form is invalid
 
-    console.log('formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.value :-  ',this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.value)
-    console.log('formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue :-  ',this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue)
-    console.log('formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.root.value :-  ',this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.root.value)
+    console.log('FormBulder  :-    this.FormBulder.value :-  ',this.FormBulder.value)
+    console.log('FormBulder  :-    this.FormBulder :-  ',this.FormBulder)
+    console.log('FormBulder  :-    this.FormBulder.root.value :-  ',this.FormBulder.root.value)
 
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  only  get('FormControlName')  :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName') :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName'))
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  firstFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('firstFormControlName')?.value)
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  secondFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('secondFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('secondFormControlName')?.value)
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  thirdFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('thirdFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('thirdFormControlName')?.value)
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  fourthFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('fourthFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('fourthFormControlName')?.value)
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  fifthFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('fifthFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('fifthFormControlName')?.value)
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  sixthFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('sixthFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('sixthFormControlName')?.value)
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  seventhFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('seventhFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('seventhFormControlName')?.value)
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  eightthFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('eightthFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('eightthFormControlName')?.value)
-    console.log("formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  ninethFormControlName :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('ninethFormControlName')?.value :-  ", this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.get('ninethFormControlName')?.value)
+    console.log("FormBulder  only  get('FormControlName')  :-    this.FormBulder.get('firstFormControlName') :-  ", this.FormBulder.get('firstFormControlName'))
+    console.log("FormBulder  firstFormControlName :-    this.FormBulder.get('firstFormControlName')?.value :-  ", this.FormBulder.get('firstFormControlName')?.value)
+    console.log("FormBulder  secondFormControlName :-    this.FormBulder.get('secondFormControlName')?.value :-  ", this.FormBulder.get('secondFormControlName')?.value)
+    console.log("FormBulder  thirdFormControlName :-    this.FormBulder.get('thirdFormControlName')?.value :-  ", this.FormBulder.get('thirdFormControlName')?.value)
+    console.log("FormBulder  fourthFormControlName :-    this.FormBulder.get('fourthFormControlName')?.value :-  ", this.FormBulder.get('fourthFormControlName')?.value)
+    console.log("FormBulder  fifthFormControlName :-    this.FormBulder.get('fifthFormControlName')?.value :-  ", this.FormBulder.get('fifthFormControlName')?.value)
+    console.log("FormBulder  sixthFormControlName :-    this.FormBulder.get('sixthFormControlName')?.value :-  ", this.FormBulder.get('sixthFormControlName')?.value)
+    console.log("FormBulder  seventhFormControlName :-    this.FormBulder.get('seventhFormControlName')?.value :-  ", this.FormBulder.get('seventhFormControlName')?.value)
+    console.log("FormBulder  eightthFormControlName :-    this.FormBulder.get('eightthFormControlName')?.value :-  ", this.FormBulder.get('eightthFormControlName')?.value)
+    console.log("FormBulder  ninethFormControlName :-    this.FormBulder.get('ninethFormControlName')?.value :-  ", this.FormBulder.get('ninethFormControlName')?.value)
     
 
 
     // all below will be return boolean , you can validate with the help of  'valid, invalid, pending, pristine, dirty, touched, untouched' in if-condition
-    console.log("this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.valid   :-  ",this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.valid)
-    console.log("this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.invalid   :-  ",this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.invalid)
-    console.log("this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.pending   :-  ",this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.pending)
-    console.log("this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.pristine   :-  ",this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.pristine)
-    console.log("this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.dirty   :-  ",this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.dirty)
-    console.log("this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.touched   :-  ",this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.touched)
-    console.log("this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.untouched   :-  ",this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.untouched)
+    console.log("this.FormBulder.valid   :-  ",this.FormBulder.valid)
+    console.log("this.FormBulder.invalid   :-  ",this.FormBulder.invalid)
+    console.log("this.FormBulder.pending   :-  ",this.FormBulder.pending)
+    console.log("this.FormBulder.pristine   :-  ",this.FormBulder.pristine)
+    console.log("this.FormBulder.dirty   :-  ",this.FormBulder.dirty)
+    console.log("this.FormBulder.touched   :-  ",this.FormBulder.touched)
+    console.log("this.FormBulder.untouched   :-  ",this.FormBulder.untouched)
+
+    // after submitting then resetted form
+    this.FormBulder.reset()
 
   
   }
-  SetValueForFormBulderOnly(){
+  SetValueButton(){
 
     let settObj : any =   {
       'firstFormControlName'  : 'vs',
@@ -2543,29 +2682,26 @@ export class LoanTypesComponent implements OnInit {
       'ninethFormControlName' : true,
     };
 
-    // this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.setValue(settObj);
-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.patchValue(settObj);
+    // this.FormBulder.setValue(settObj);
+    this.FormBulder.patchValue(settObj);
    
   }
 
+  resetForm(){
+    this.FormBulder.reset();
+  }
+
+
 }
+
 ```
+
+
 
 ## Reactive Forms Reset Example by  Angular.io
 
-Reactive Form — Example
-```html
 
-<form [formGroup]="form" (ngSubmit)="onSignln(form)">
-  <div class="form-group">
-    <input type="text" class="form-control" id="email" placeholder="Enter email" formControlName="email">
-    <span class="text-muted" *nglf="form.getCemail').hasErrorCrequired') && form.getCemail').touched">Email is required</span>
-  </div>
-  <div class="form-group">
-    <input tvpe="password" class="form-control" id="password" placeholder="Password"
-    formControlName="password">
-    <span class="text-muted" *nglf="form.get('password').hasError('required') && form.get('password').touched">Password is required</span>
-    </div><button btn-primary btn-block" [disabled]="!form.valid">Sign ln</button></div>
-  </div>
-</form>
-````
+
+
+
+

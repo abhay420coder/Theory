@@ -277,4 +277,224 @@ setForm() {
 ## Angular Material Design Layout Tutorial by  Angular.io
 
 
+### example :- 
 
+**crate-update-deployment-lock.component.html**
+
+```html
+<div class="overlay _w-100 _h-100" [ngClass]="{'overlay-show': canShow}" (click)="close(false)"></div>
+<div class="sidebar _flex-column _pt-10 _pl-15 _pr-15" [ngClass]="{'sidebar-show': canShow}">
+    <div class="_flex-box _jc-sb _mt-10 _mb-10">
+        <div class="_mb-0 _heading_1">{{rtDeployment?.deploymentNamespace}} - {{rtDeployment?.isLocked?"Unlock":"Lock"}} Deployment</div>
+        <button mat-icon-button (click)="close(false)" class="_close-icon"></button>
+    </div>
+    <div class="_flex-1">
+        <form #form="ngForm" [formGroup]="lockForm" (ngSubmit)="onSubmit()" class="_h-100 _flex-column">
+            <div class="_flex-1 _mt-15">
+                <div class="_flex-box _jc-sb _mb-10">
+                    <mat-form-field appearance="outline" class="_w-45">
+                        <mat-label>Desired Action</mat-label>
+                        <mat-select 
+                            formControlName="action"
+                            required>
+                            <mat-option value="lock" [disabled]="rtDeployment?.isLocked&&lockForm.get('actionType').value==='indefinite'">Lock</mat-option>
+                            <mat-option value="unlock" [disabled]="!rtDeployment?.isLocked&&lockForm.get('actionType').value==='indefinite'">Unlock</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="lockForm.get('action').hasError('required')">This field is required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="_w-45">
+                        <mat-label>Action Type</mat-label>
+                        <mat-select 
+                            formControlName="actionType"
+                            (selectionChange)="onActionTypeSelect($event)"
+                            required>
+                            <mat-option value="indefinite">Indefinite</mat-option>
+                            <mat-option value="duration">Scheduled</mat-option>
+                            <mat-option value="cronJob" disabled>Cron Job</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="lockForm.get('actionType').hasError('required')">This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="_w-100" *ngIf="lockForm.get('actionType').value==='duration'">
+                    <h4 class="_mb-10">Time range</h4>
+                    <mat-form-field appearance="outline" class="_mr-10 _w-100">
+                        <mat-label>From</mat-label>
+                        <input 
+                            matInput 
+                            placeholder="Choose a date" 
+                            formControlName="fromDateTime"
+                            [ngxMatDatetimePicker]="fromPicker" 
+                            [min]="minDateTime"
+                            readonly>
+                        <mat-datepicker-toggle 
+                            matSuffix 
+                            [for]="fromPicker"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker 
+                            #fromPicker 
+                            [showSeconds]="true" 
+                            [enableMeridian]="true"></ngx-mat-datetime-picker>
+                        <mat-error *ngIf="lockForm.get('fromDateTime').hasError('required')">This field is required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="_mr-10 date-time-picker _w-100">
+                        <mat-label>To</mat-label>
+                        <input 
+                            matInput 
+                            placeholder="Choose a date" 
+                            formControlName="toDateTime"
+                            [ngxMatDatetimePicker]="toPicker" 
+                            [min]="minDateTime"
+                            readonly> 
+                        <mat-datepicker-toggle 
+                            matSuffix 
+                            [for]="toPicker"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker 
+                            #toPicker 
+                            [showSeconds]="true" 
+                            [enableMeridian]="true"></ngx-mat-datetime-picker>
+                        <mat-error *ngIf="lockForm.get('toDateTime').hasError('required')">This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="_w-100">
+                    <mat-form-field class="_w-100" appearance="outline">
+                        <mat-label>Action Description</mat-label>
+                        <textarea matInput 
+                            type="text"
+                            name="lockDescription" 
+                            class="textareaLockDescription" 
+                            placeholder="Action description" 
+                            formControlName="description"
+                            required
+                        ></textarea>
+                        <mat-error *ngIf="lockForm.get('description').hasError('required')">This field is required</mat-error>
+                        <mat-error *ngIf="lockForm.get('description').hasError('invalidContent')">Please put valid description</mat-error>
+                      </mat-form-field>
+                </div>
+            </div>
+            <div class="footer _flex-box _jc-r _pt-10 _pb-10">
+                <button mat-stroked-button 
+                    type="submit"
+                    class="_flex-box _jc-c"
+                    [disabled]="lockForm.invalid||isSaving" 
+                >
+                    <div *ngIf="isSaving" class="_pt-10 _pb-10">
+                        <mat-spinner diameter='20' ></mat-spinner>
+                    </div>
+                    <div *ngIf="!isSaving">Done</div>
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+```
+
+**crate-update-deployment-lock.component.ts**
+
+```ts
+import { Component, Input, OnInit, ChangeDetectorRef, Output, EventEmitter, ViewChild } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ApiService } from 'src/app/services/api.service';
+import { DateTimeService } from 'src/app/services/date-time.service';
+import { globalUrls } from '../../urls';
+
+@Component({
+  selector: 'crate-update-deployment-lock',
+  templateUrl: './crate-update-deployment-lock.component.html',
+  styleUrls: ['./crate-update-deployment-lock.component.scss']
+})
+export class CrateUpdateDeploymentLockComponent implements OnInit {
+
+  @Input() canShow: boolean = false;
+  @Input() rtDeployment: any;
+  @Output() onPanelClose: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @ViewChild("form") form;
+
+  lockForm = new FormGroup({
+    actionType: new FormControl("indefinite"),
+    action: new FormControl(""),
+    description: new FormControl("", [Validators.required, contentValidator]),
+    fromDateTime: new FormControl(),
+    toDateTime: new FormControl()
+  });
+
+  isSaving: boolean = false;
+  minDateTime;
+
+  constructor(
+    private cd: ChangeDetectorRef,
+    private api: ApiService,
+    private snackbar: MatSnackBar,
+    private dateTime: DateTimeService
+  ) { }
+
+  ngOnInit(): void {
+    this.minDateTime = new Date();
+  }
+
+  close(response: boolean){
+    this.onPanelClose.emit(response);
+    this.lockForm.reset();
+    this.form.resetForm();
+    this.lockForm.patchValue({
+      actionType: "indefinite"
+    });
+  }
+
+  onSubmit(){
+    if (this.lockForm.invalid) return;
+    this.isSaving=true;
+
+    let payload: any = {
+      "deploymentId": this.rtDeployment.deploymentId,
+      "desiredAction": this.lockForm.get("action").value,
+      "actionType": this.lockForm.get("actionType").value,
+      "actionDescription": this.lockForm.get("description").value,
+    }
+
+    if(this.lockForm.get('actionType').value==='duration'){
+      payload["actionStartTime"] = this.dateTime.getISOString(this.lockForm.get("fromDateTime").value);
+      payload["actionEndTime"] = this.dateTime.getISOString(this.lockForm.get("toDateTime").value);
+    }
+    
+    this.api.postData(globalUrls.rtDeploymentHasLockUnlockCreateUpdate, payload).subscribe((data: any) => {
+      this.snackbar.open("Operation Successful", "Close", {duration: 3000});
+      this.isSaving = false;
+      this.close(true)
+    }, err => {
+      this.isSaving = false;
+      this.snackbar.open('There was an error! Please try again', 'Close', { duration: 3000 })
+    });
+  }
+
+  onActionTypeSelect(event: any){
+    if(event?.value === "duration"){
+      // this.lockForm.patchValue({
+      //   action: "unlock"
+      // });
+      // this.lockForm.get("action").disable();
+      this.lockForm.get('fromDateTime').setValidators([Validators.required]);
+      this.lockForm.get('toDateTime').setValidators([Validators.required]);
+    } else {
+      // this.lockForm.patchValue({
+      //   action: ""
+      // });
+      // this.lockForm.get("action").enable();
+      this.lockForm.get('fromDateTime').clearValidators();
+      this.lockForm.get('toDateTime').clearValidators();
+    }
+    this.lockForm.get('fromDateTime').updateValueAndValidity();
+    this.lockForm.get('toDateTime').updateValueAndValidity();
+    this.cd.detectChanges();
+  }
+
+}
+
+export function contentValidator(control: AbstractControl) {
+  if(control?.value!==""&&control?.value?.trim()===""){
+    return {invalidContent: true};
+  }
+  return null;
+}
+```
