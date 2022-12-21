@@ -1198,11 +1198,14 @@ Subscribe and Ask your do
 
 ```html
 <form [formGroup]="formGroupName">
-    <div><input type="text" formControlName="FormControlName"></div>
+    <div><input type="text" formControlName="FormControlName1"></div>
+    <div><input type="number" formControlName="FormControlName2"></div>
+    <div><input type="date" formControlName="FormControlName3"></div>
     <!--  formControlName = "key"   is manadatory for every   input,select&option,textarea,etc -->
     <!-- basically we are writing  formControlName instead of name attribute -->
 
     <div><button (click)="formGroupSubmitButton()">Submit Button Name</button></div>
+    <div><button (click)="setForm()">Set Form</button></div>
 </form>
 ```
 
@@ -1219,17 +1222,53 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class LoanTypesComponent implements OnInit {
 
+
+// reactive form creation
 // method-1
 //  this FormGroup is created with the help of  FormGroup constructor
   formGroupName : FormGroup = new FormGroup({
-    'FormControlName': new FormControl(),
+    'FormControlName1': new FormControl(),
+    'FormControlName2': new FormControl(),
+    'FormControlName3': new FormControl(),
   }) ;
 
 // method-2
 //  this FormGroup is created with the help of  FormBuilder
   formGroupName : FormGroup = this.formBuilder.group({
-    'FormControlName': new FormControl(),
+    'FormControlName1': new FormControl(),
+    'FormControlName2': new FormControl(),
+    'FormControlName3': new FormControl(),
   }) ;
+
+
+
+
+
+// set value in reactive form
+// method-1 
+//  SetValue  in reactive Form by formControl Constructor- FormGroup constructor method
+formGroupName : FormGroup = new FormGroup({
+                                          'FormControlName1' : new FormControl('Value Here'),
+                                          'FormControlName2' : new FormControl('Value Here'),
+                                          'FormControlName3' : new FormControl('Value Here')
+                                    })
+// method-2 
+//  SetValue  in reactive Form by formControl Constructor- FormBuilder method
+formGroupName : FormGroup = this.formBuilder.group({
+                                          'FormControlName1' : new FormControl('Value Here'),
+                                          'FormControlName2' : new FormControl('Value Here'),
+                                          'FormControlName3' : new FormControl('Value Here')
+                                    })
+// method-3 
+// SetValue  in reactive Form by set method - FormBuilder method & FormGroup constructor method
+setForm() {
+    let SetObj :any = {
+      'FormControlName1' : 'Value Here',
+      'FormControlName2' : 'Value Here',
+      'FormControlName3' : 'Value Here'
+    }
+    this.formGroupName.setValue(SetObj);
+  }
 
 
 
@@ -1248,64 +1287,658 @@ export class LoanTypesComponent implements OnInit {
 
 ```
 
+### example :- 
+
+**loan-types.component.html**
+
+```html
+<p>loan-types works!</p>
+
+<div class="ByFormGroupOnly">
+    <h1>create the form with help of constructor FormGroup</h1>
+
+    <form [formGroup]="formGroupNameForFormGroupOnly">
+        <div><input type="text" formControlName="firstFormControlName"></div>
+        <!--  formControlName = "key"   is manadatory for every   input,select&option,textarea,etc -->
+        <div><textarea formControlName="secondFormControlName" ></textarea></div>
+        <div><input type="checkbox" formControlName="thirdFormControlName"  > Accept all terms and condition</div>
+        <div><input type="radio" formControlName="fourthFormControlName">   Radio</div>
+    
+        <div>
+            <select formControlName="fifthFormControlName" >
+                <option value="premium">Premium</option>
+                <option value="vip">VIP</option>
+                <option value="economic">Economic</option>
+            </select>
+        </div>
+    
+
+        <div>
+            <mat-form-field appearance="outline" class=" _w-50  _ml-10">
+                <mat-label>Status</mat-label>
+                <mat-select  [multiple]="false" formControlName="sixthFormControlName" >
+            
+                    <mat-option *ngFor="let groupFilter of status" [value]="groupFilter.value">
+                        {{groupFilter.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        
+      
+      <div>
+        <mat-form-field appearance="outline" class="  _w-50 _ml-10">
+            <mat-label>Pods</mat-label>
+            <mat-select [multiple]="true" formControlName="seventhFormControlName" >
+                <mat-option *ngFor="let groupFilter of pods" [value]="groupFilter.value">
+                    {{groupFilter.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+      
+      <div>
+            <mat-form-field appearance="outline">
+            <mat-label>Favorite food</mat-label>
+            <mat-select formControlName="eightthFormControlName"  >
+              <mat-option *ngFor="let food of foods" [value]="food.value" >
+                {{food.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div>
+      
+      <div>
+        <mat-slide-toggle formControlName="ninethFormControlName" >Slide me!</mat-slide-toggle>
+      </div>
+    
+        <div><button (click)="formGroupSubmitButtonForFormGroupOnly()">Submit Button Name</button></div>
+    </form>
+</div>
+
+
+
+
+<div class="ByFormGroupOnly FOR SET">
+    <h1>for set value with the help of constructor FormGroup</h1>
+    <form [formGroup]="formGroupNameForFormGroupOnlyForSetPurpous">
+        <div><input type="text" formControlName="firstFormControlName"></div>
+        <!--  formControlName = "key"   is manadatory for every   input,select&option,textarea,etc -->
+        <div><textarea formControlName="secondFormControlName" ></textarea></div>
+        <div><input type="checkbox" formControlName="thirdFormControlName"  > Accept all terms and condition</div>
+        <div><input type="radio" formControlName="fourthFormControlName">   Radio</div>
+    
+        <div>
+            <select formControlName="fifthFormControlName" >
+                <option value="premium">Premium</option>
+                <option value="vip">VIP</option>
+                <option value="economic">Economic</option>
+            </select>
+        </div>
+    
+        
+        <div>
+            <mat-form-field appearance="outline" class=" _w-50  _ml-10">
+                <mat-label>Status</mat-label>
+                <mat-select  [multiple]="false" formControlName="sixthFormControlName" >
+            
+                    <mat-option *ngFor="let groupFilter of status" [value]="groupFilter.value">
+                        {{groupFilter.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        
+      
+      <div>
+        <mat-form-field appearance="outline" class="  _w-50 _ml-10">
+            <mat-label>Pods</mat-label>
+            <mat-select [multiple]="true" formControlName="seventhFormControlName" >
+                <mat-option *ngFor="let groupFilter of pods" [value]="groupFilter.value">
+                    {{groupFilter.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+      
+      <div>
+            <mat-form-field appearance="outline">
+            <mat-label>Favorite food</mat-label>
+            <mat-select formControlName="eightthFormControlName"  >
+              <mat-option *ngFor="let food of foods" [value]="food.value" >
+                {{food.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div>
+      
+      <div>
+        <mat-slide-toggle formControlName="ninethFormControlName" >Slide me!</mat-slide-toggle>
+      </div>
+    
+        <div><button (click)="formGroupSubmitButtonForFormGroupOnlyForSetPurpous()">Submit Button Name</button></div>
+    </form>
+</div>
+
+
+
+
+<div class="ByFormGroupOnly FOR SET">
+    <h1> for set value with the help of setValue </h1>
+    <form [formGroup]="formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue">
+        <div><input type="text" formControlName="firstFormControlName"></div>
+        <!--  formControlName = "key"   is manadatory for every   input,select&option,textarea,etc -->
+        <div><textarea formControlName="secondFormControlName" ></textarea></div>
+        <div><input type="checkbox" formControlName="thirdFormControlName"  > Accept all terms and condition</div>
+        <div><input type="radio" formControlName="fourthFormControlName">   Radio</div>
+    
+        <div>
+            <select formControlName="fifthFormControlName" >
+                <option value="premium">Premium</option>
+                <option value="vip">VIP</option>
+                <option value="economic">Economic</option>
+            </select>
+        </div>
+    
+        
+        <div>
+            <mat-form-field appearance="outline" class=" _w-50  _ml-10">
+                <mat-label>Status</mat-label>
+                <mat-select  [multiple]="false" formControlName="sixthFormControlName" >
+            
+                    <mat-option *ngFor="let groupFilter of status" [value]="groupFilter.value">
+                        {{groupFilter.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        
+      <div>
+        <mat-form-field appearance="outline" class="  _w-50 _ml-10">
+            <mat-label>Pods</mat-label>
+            <mat-select [multiple]="true" formControlName="seventhFormControlName" >
+                <mat-option *ngFor="let groupFilter of pods" [value]="groupFilter.value">
+                    {{groupFilter.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+      
+      <div>
+            <mat-form-field appearance="outline">
+            <mat-label>Favorite food</mat-label>
+            <mat-select formControlName="eightthFormControlName"  >
+              <mat-option *ngFor="let food of foods" [value]="food.value" >
+                {{food.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div>
+      
+      <div>
+        <mat-slide-toggle formControlName="ninethFormControlName" >Slide me!</mat-slide-toggle>
+      </div>
+    
+        <div><button (click)="formGroupSubmitButtonForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue()">
+            Submit Button Name For FormGroup Only For Set Purpous With The Help Of SetValue
+        </button></div>
+
+        <div><button (click)="SetValueForFormGroupOnly()">set value Button Name</button></div>
+    </form>
+</div>
+
+
+
+<!-- formControlName = "key"           is manadatory for every     input,select&option,textarea,toggle,etc
+
+this.formGroupName.root.value :{eightthFormContr01Name : "tacos -2",fifth FormContr01Name : "vip",firstFormContr01Name: "vs",fourth FormContr01Name : undefined,ninethFormContr01Name: true,second FormContr01Name: "dadasa",seventhFormContr01Name : ['zeroReady',' partialReady ' ],sixth FormContr01Name : "FAILED",thirdFormContr01Name: true }
+
+this.formGroupName.value :{eightthFormContr01Name : "tacos -2",fifth FormContr01Name : "vip",firstFormContr01Name: "vs",fourth FormContr01Name : undefined,ninethFormContr01Name: true,second FormContr01Name: "dadasa",seventhFormContr01Name : ['zeroReady',' partialReady ' ],sixth FormContr01Name : "FAILED",thirdFormContr01Name: true }
+
+this.formGroupName.value :          {
+                                        eightthFormControlName : "tacos -2",
+                                        fifth FormControlName : "vip",
+                                        firstFormControlName: "vs",
+                                        fourth FormControlName : undefined,
+                                        ninethFormControlName: true,
+                                        second FormControlName: "dadasa",
+                                        seventhFormControlName : ['zeroReady',' partialReady ' ],
+                                        sixth FormControlName : "FAILED",
+                                        thirdFormControlName: true,
+                                        [[Prototype]] : Object,
+                                    }
+this.formGroupName.root.value :    {
+                                        eightthFormControlName : "tacos -2",
+                                        fifth FormControlName : "vip",
+                                        firstFormControlName: "vs",
+                                        fourth FormControlName : undefined,
+                                        ninethFormControlName: true,
+                                        second FormControlName: "dadasa",
+                                        seventhFormControlName : ['zeroReady',' partialReady ' ],
+                                        sixth FormControlName : "FAILED",
+                                        thirdFormControlName: true,
+                                        [[Prototype]] : Object,
+                                    }
+
+
+-->
+
+
+<div class="ByFormBulder">
+    <h1> create the form with the help of FormBuilder </h1>
+
+    <form [formGroup]="formGroupNameForFormBulderOnly">
+        <div><input type="text" formControlName="firstFormControlName"></div>
+        <!--  formControlName = "key"   is manadatory for every   input,select&option,textarea,etc -->
+        <div><textarea formControlName="secondFormControlName" ></textarea></div>
+        <div><input type="checkbox" formControlName="thirdFormControlName"  > Accept all terms and condition</div>
+        <div><input type="radio" formControlName="fourthFormControlName">   Radio</div>
+    
+        <div>
+            <select formControlName="fifthFormControlName" >
+                <option value="premium">Premium</option>
+                <option value="vip">VIP</option>
+                <option value="economic">Economic</option>
+            </select>
+        </div>
+    
+        
+        <div>
+            <mat-form-field appearance="outline" class=" _w-50  _ml-10">
+                <mat-label>Status</mat-label>
+                <mat-select  [multiple]="false" formControlName="sixthFormControlName" >
+            
+                    <mat-option *ngFor="let groupFilter of status" [value]="groupFilter.value">
+                        {{groupFilter.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        
+      
+      <div>
+        <mat-form-field appearance="outline" class="  _w-50 _ml-10">
+            <mat-label>Pods</mat-label>
+            <mat-select [multiple]="true" formControlName="seventhFormControlName" >
+                <mat-option *ngFor="let groupFilter of pods" [value]="groupFilter.value">
+                    {{groupFilter.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+      
+      <div>
+            <mat-form-field appearance="outline">
+            <mat-label>Favorite food</mat-label>
+            <mat-select formControlName="eightthFormControlName"  >
+              <mat-option *ngFor="let food of foods" [value]="food.value" >
+                {{food.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div>
+      
+      <div>
+        <mat-slide-toggle formControlName="ninethFormControlName" >Slide me!</mat-slide-toggle>
+      </div>
+    
+        <div><button (click)="formGroupSubmitButtonForFormBulderOnly()">Submit Button Name</button></div>
+    </form>
+</div>
+
+
+
+<div class="ByFormBulder">
+    <h1> create the form with the help of FormBuilder For Set Purpous </h1>
+
+    <form [formGroup]="formGroupNameForFormBulderOnlyForSetPurpous">
+        <div><input type="text" formControlName="firstFormControlName"></div>
+        <!--  formControlName = "key"   is manadatory for every   input,select&option,textarea,etc -->
+        <div><textarea formControlName="secondFormControlName" ></textarea></div>
+        <div><input type="checkbox" formControlName="thirdFormControlName"  > Accept all terms and condition</div>
+        <div><input type="radio" formControlName="fourthFormControlName">   Radio</div>
+    
+        <div>
+            <select formControlName="fifthFormControlName" >
+                <option value="premium">Premium</option>
+                <option value="vip">VIP</option>
+                <option value="economic">Economic</option>
+            </select>
+        </div>
+    
+        
+        <div>
+            <mat-form-field appearance="outline" class=" _w-50  _ml-10">
+                <mat-label>Status</mat-label>
+                <mat-select  [multiple]="false" formControlName="sixthFormControlName" >
+            
+                    <mat-option *ngFor="let groupFilter of status" [value]="groupFilter.value">
+                        {{groupFilter.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        
+      
+      <div>
+        <mat-form-field appearance="outline" class="  _w-50 _ml-10">
+            <mat-label>Pods</mat-label>
+            <mat-select [multiple]="true" formControlName="seventhFormControlName" >
+                <mat-option *ngFor="let groupFilter of pods" [value]="groupFilter.value">
+                    {{groupFilter.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+      
+      <div>
+            <mat-form-field appearance="outline">
+            <mat-label>Favorite food</mat-label>
+            <mat-select formControlName="eightthFormControlName"  >
+              <mat-option *ngFor="let food of foods" [value]="food.value" >
+                {{food.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div>
+      
+      <div>
+        <mat-slide-toggle formControlName="ninethFormControlName" >Slide me!</mat-slide-toggle>
+      </div>
+    
+        <div><button (click)="formGroupSubmitButtonForFormBulderOnlyForSetPurpous()">Submit Button Name For Set Purpous</button></div>
+    </form>
+</div>
+
+
+
+<div class="ByFormBulder">
+    <h1> create the form with the help of FormBuilder For Set Purpous With The Help Of SetValue</h1>
+
+    <form [formGroup]="formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue">
+        <div><input type="text" formControlName="firstFormControlName"></div>
+        <!--  formControlName = "key"   is manadatory for every   input,select&option,textarea,etc -->
+        <div><textarea formControlName="secondFormControlName" ></textarea></div>
+        <div><input type="checkbox" formControlName="thirdFormControlName"  > Accept all terms and condition</div>
+        <div><input type="radio" formControlName="fourthFormControlName">   Radio</div>
+    
+        <div>
+            <select formControlName="fifthFormControlName" >
+                <option value="premium">Premium</option>
+                <option value="vip">VIP</option>
+                <option value="economic">Economic</option>
+            </select>
+        </div>
+    
+        
+        <div>
+            <mat-form-field appearance="outline" class=" _w-50  _ml-10">
+                <mat-label>Status</mat-label>
+                <mat-select  [multiple]="false" formControlName="sixthFormControlName" >
+            
+                    <mat-option *ngFor="let groupFilter of status" [value]="groupFilter.value">
+                        {{groupFilter.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        
+      
+      <div>
+        <mat-form-field appearance="outline" class="  _w-50 _ml-10">
+            <mat-label>Pods</mat-label>
+            <mat-select [multiple]="true" formControlName="seventhFormControlName" >
+                <mat-option *ngFor="let groupFilter of pods" [value]="groupFilter.value">
+                    {{groupFilter.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+      
+      <div>
+            <mat-form-field appearance="outline">
+            <mat-label>Favorite food</mat-label>
+            <mat-select formControlName="eightthFormControlName"  >
+              <mat-option *ngFor="let food of foods" [value]="food.value" >
+                {{food.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div>
+      
+      <div>
+        <mat-slide-toggle formControlName="ninethFormControlName" >Slide me!</mat-slide-toggle>
+      </div>
+    
+        <div><button (click)="formGroupSubmitButtonForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue()">
+            Submit Button Name For Set Purpous With The Help Of SetValue </button></div>
+        <div><button (click)="SetValueForFormBulderOnly()">set Button Name</button></div>
+    </form>
+</div>
+
+```
+
+**loan-types.component.html**
+
+```TS
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+
+
+interface Food {
+  value: string;
+  viewValue: string;
+}
+
+
+@Component({
+  selector: 'app-loan-types',
+  templateUrl: './loan-types.component.html',
+  styleUrls: ['./loan-types.component.scss']
+})
+export class LoanTypesComponent implements OnInit {
+
+  formGroupNameForFormGroupOnly : FormGroup = new FormGroup({
+    'firstFormControlName': new FormControl(),
+    'secondFormControlName': new FormControl(),
+    'thirdFormControlName': new FormControl(),
+    'fourthFormControlName': new FormControl(),
+    'fifthFormControlName': new FormControl(),
+    'sixthFormControlName': new FormControl(),
+    'seventhFormControlName': new FormControl(),
+    'eightthFormControlName': new FormControl(),
+    'ninethFormControlName': new FormControl(),
+  }) ;
+  formGroupNameForFormGroupOnlyForSetPurpous : FormGroup = new FormGroup({
+    'firstFormControlName': new FormControl('vs'),
+    'secondFormControlName': new FormControl("dadasa"),
+    'thirdFormControlName': new FormControl(true),
+    'fourthFormControlName': new FormControl(undefined),
+    'fifthFormControlName': new FormControl("vip"),
+    'sixthFormControlName': new FormControl("FAILED"),
+    'seventhFormControlName': new FormControl(['zeroReady',' partialReady ' ]),
+    'eightthFormControlName': new FormControl("tacos -2"),
+    'ninethFormControlName': new FormControl(true),
+    /* 
+    eightthFormControlName : "tacos -2",
+                                        fifth FormControlName : "vip",
+                                        firstFormControlName: "vs",
+                                        fourth FormControlName : undefined,
+                                        ninethFormControlName: true,
+                                        second FormControlName: "dadasa",
+                                        seventhFormControlName : ['zeroReady',' partialReady ' ],
+                                        sixth FormControlName : "FAILED",
+                                        thirdFormControlName: true,
+                                        [[Prototype]] : Object,
+    */
+  }) ;
+
+  formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue : FormGroup = new FormGroup({
+    'firstFormControlName': new FormControl(),
+    'secondFormControlName': new FormControl(),
+    'thirdFormControlName': new FormControl(),
+    'fourthFormControlName': new FormControl(),
+    'fifthFormControlName': new FormControl(),
+    'sixthFormControlName': new FormControl(),
+    'seventhFormControlName': new FormControl(),
+    'eightthFormControlName': new FormControl(),
+    'ninethFormControlName': new FormControl(),
+  }) ;
+
+
+  formGroupNameForFormBulderOnly : FormGroup = this.fb.group({
+    'firstFormControlName': new FormControl(),
+    'secondFormControlName': new FormControl(),
+    'thirdFormControlName': new FormControl(),
+    'fourthFormControlName': new FormControl(),
+    'fifthFormControlName': new FormControl(),
+    'sixthFormControlName': new FormControl(),
+    'seventhFormControlName': new FormControl(),
+    'eightthFormControlName': new FormControl(),
+    'ninethFormControlName': new FormControl(),
+  }) ;
+  formGroupNameForFormBulderOnlyForSetPurpous : FormGroup = this.fb.group({
+    'firstFormControlName': new FormControl('vs'),
+    'secondFormControlName': new FormControl("dadasa"),
+    'thirdFormControlName': new FormControl(true),
+    'fourthFormControlName': new FormControl(undefined),
+    'fifthFormControlName': new FormControl("vip"),
+    'sixthFormControlName': new FormControl("FAILED"),
+    'seventhFormControlName': new FormControl(['zeroReady',' partialReady ' ]),
+    'eightthFormControlName': new FormControl("tacos -2"),
+    'ninethFormControlName': new FormControl(true),
+  }) ;
+  formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue : FormGroup = this.fb.group({
+    'firstFormControlName': new FormControl(),
+    'secondFormControlName': new FormControl(),
+    'thirdFormControlName': new FormControl(),
+    'fourthFormControlName': new FormControl(),
+    'fifthFormControlName': new FormControl(),
+    'sixthFormControlName': new FormControl(),
+    'seventhFormControlName': new FormControl(),
+    'eightthFormControlName': new FormControl(),
+    'ninethFormControlName': new FormControl(),
+  }) ;
+
+  status: any = [
+    { name: "Success", value: "SUCCESS" },
+    { name: "Error", value: "FAILED" },
+    { name: "Pending", value: "PENDING" },
+  ];
+  pods: any = [
+    { name: "All Ready", value: "allReady" },
+    { name: "Zero Ready", value: "zeroReady" },
+    { name: "Partial Ready", value: "partialReady" },
+  ];
+
+
+  /* 
+  interface Food {
+  value: string;
+  viewValue: string;
+}
+  foods: Food[] = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'},
+  ];
+  */
+  foods: Food[] = [
+    { value: 'steak-0', viewValue: 'Steak' },
+    { value: 'pizza-1', viewValue: 'Pizza' },
+    { value: 'tacos-2', viewValue: 'Tacos' },
+  ];
+  constructor(private fb:FormBuilder) { }
+
+  ngOnInit(): void {
+    
+  }
+
+  formGroupSubmitButtonForFormGroupOnly(){
+    console.log('formGroupSubmitButtonForFormGroupOnly  :-    this.formGroupNameForFormGroupOnly.value :-  ',this.formGroupNameForFormGroupOnly.value)
+    console.log('formGroupSubmitButtonForFormGroupOnly  :-    this.formGroupNameForFormGroupOnly :-  ',this.formGroupNameForFormGroupOnly)
+    console.log('formGroupSubmitButtonForFormGroupOnly  :-    this.formGroupNameForFormGroupOnly.root.value :-  ',this.formGroupNameForFormGroupOnly.root.value)
+  }
+  formGroupSubmitButtonForFormGroupOnlyForSetPurpous(){
+    console.log('formGroupNameForFormGroupOnlyForSetPurpous  :-    this.formGroupNameForFormGroupOnlyForSetPurpous.value :-  ',this.formGroupNameForFormGroupOnlyForSetPurpous.value)
+    console.log('formGroupNameForFormGroupOnlyForSetPurpous  :-    this.formGroupNameForFormGroupOnlyForSetPurpous :-  ',this.formGroupNameForFormGroupOnlyForSetPurpous)
+    console.log('formGroupNameForFormGroupOnlyForSetPurpous  :-    this.formGroupNameForFormGroupOnlyForSetPurpous.root.value :-  ',this.formGroupNameForFormGroupOnlyForSetPurpous.root.value)
+  }
+
+  formGroupSubmitButtonForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue(){
+    console.log('formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue.value :-  ',this.formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue.value)
+    console.log('formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue :-  ',this.formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue)
+    console.log('formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue.root.value :-  ',this.formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue.root.value)
+  }
+  SetValueForFormGroupOnly(){
+    let settObj : any =   {
+                    'firstFormControlName'  : 'vs',
+                    'secondFormControlName' : "dadasa",
+                    'thirdFormControlName'  : true,
+                    'fourthFormControlName' : true,
+                    'fifthFormControlName'  : "vip",
+                    'sixthFormControlName'  : "FAILED",
+                    'seventhFormControlName': ['zeroReady',' partialReady ' ],
+                    'eightthFormControlName': "tacos -2",
+                    'ninethFormControlName' : true,
+                  };
+                  
+    this.formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue.setValue(settObj);
+
+    console.log('formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue.value :-  ',this.formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue.value)
+    console.log('formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue :-  ',this.formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue)
+    console.log('formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue.root.value :-  ',this.formGroupNameForFormGroupOnlyForSetPurpousWithTheHelpOfSetValue.root.value)
+  }
+
+
+  formGroupSubmitButtonForFormBulderOnly(){
+    console.log('formGroupSubmitButtonForFormBulderOnly  :-    this.formGroupNameForFormGroupOnly.value :-  ',this.formGroupNameForFormGroupOnly.value)
+    console.log('formGroupSubmitButtonForFormBulderOnly  :-    this.formGroupNameForFormGroupOnly :-  ',this.formGroupNameForFormGroupOnly)
+    console.log('formGroupSubmitButtonForFormBulderOnly  :-    this.formGroupNameForFormGroupOnly.root.value :-  ',this.formGroupNameForFormGroupOnly.root.value)
+  }
+  formGroupSubmitButtonForFormBulderOnlyForSetPurpous(){
+    console.log('formGroupNameForFormBulderOnlyForSetPurpous  :-    this.formGroupNameForFormBulderOnlyForSetPurpous.value :-  ',this.formGroupNameForFormBulderOnlyForSetPurpous.value)
+    console.log('formGroupNameForFormBulderOnlyForSetPurpous  :-    this.formGroupNameForFormBulderOnlyForSetPurpous :-  ',this.formGroupNameForFormBulderOnlyForSetPurpous)
+    console.log('formGroupNameForFormBulderOnlyForSetPurpous  :-    this.formGroupNameForFormBulderOnlyForSetPurpous.root.value :-  ',this.formGroupNameForFormBulderOnlyForSetPurpous.root.value)
+  }
+
+
+  formGroupSubmitButtonForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue(){
+    console.log('formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.value :-  ',this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.value)
+    console.log('formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue :-  ',this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue)
+    console.log('formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.root.value :-  ',this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.root.value)
+  }
+  SetValueForFormBulderOnly(){
+
+    let settObj : any =   {
+      'firstFormControlName'  : 'vs',
+      'secondFormControlName' : "dadasa",
+      'thirdFormControlName'  : true,
+      'fourthFormControlName' : true,
+      'fifthFormControlName'  : "vip",
+      'sixthFormControlName'  : "FAILED",
+      'seventhFormControlName': ['zeroReady',' partialReady ' ],
+      'eightthFormControlName': "tacos -2",
+      'ninethFormControlName' : true,
+    };
+
+    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.setValue(settObj);
+
+    console.log('formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.value :-  ',this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.value)
+    console.log('formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue :-  ',this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue)
+    console.log('formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue  :-    this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.root.value :-  ',this.formGroupNameForFormBulderOnlyForSetPurpousWithTheHelpOfSetValue.root.value)
+  }
+
+}
+```
+![normal form by form group CONSTRUCTOR](2022-12-20-08-13-37.png)
+![for set value with the help of constructor FormGroup](2022-12-20-08-14-23.png)
+![for set value with the help of setValue - BEFORE CLICKING ON SET BUTTON](2022-12-20-08-15-02.png)
+![for set value with the help of setValue - AFTER CLICKING ON SET BUTTON](2022-12-20-08-15-59.png)
+![create the form with the help of FormBuilder](2022-12-20-08-18-10.png)
+![create the form with the help of FormBuilder For Set Purpous](2022-12-20-08-20-44.png)
+![create the form with the help of FormBuilder For Set Purpous With The Help Of SetValue  - BEFORE CLICKING ON SET BUTTON](2022-12-20-08-22-17.png)
+![create the form with the help of FormBuilder For Set Purpous With The Help Of SetValue  - After CLICKING ON SET BUTTON](2022-12-20-08-24-11.png)
 ## Reactive Forms. Set Form Values by  Angular.io
 
-# Reactive Forms. Read Form Values
 
-## Reactive Forms. Read Form Values by ARC
-
-## Reactive Forms. Read Form Values by  Angular.io
-
-# Reactive Forms Validations
-
-## Reactive Forms Validations by ARC
-
-## Reactive Forms Validations by  Angular.io
-
-# Reactive Forms State and Validations
-
-## Reactive Forms State and Validations by ARC
-
-## Reactive Forms State and Validations by  Angular.io
-
-# Reactive Forms Reset Example
-
-## Reactive Forms Reset Example by ARC
-
-## Reactive Forms Reset Example by  Angular.io
-
-# Reactive Forms Value Changes
-
-## Reactive Forms Value Changes by ARC
-
-## Reactive Forms Value Changes by  Angular.io
-
-# Reactive Forms State Changes
-
-## Reactive Forms State Changes by ARC
-
-## Reactive Forms State Changes by  Angular.io
-
-# Reactive Forms. FormArray
-
-## Reactive Forms. FormArray by ARC
-
-## Reactive Forms. FormArray by  Angular.io
-
-# Reactive Forms Add Remove FormControl
-
-## Reactive Forms Add Remove FormControl by ARC
-
-## Reactive Forms Add Remove FormControl by  Angular.io
-
-# Component Communication Tutorial
-
-## Component Communication Tutorial by ARC
-
-## Component Communication Tutorial by  Angular.io
-
-# Angular Material Design Layout Tutorial | Angular Layout Template Tutorial | Angular Starter Project
-
-## Angular Material Design Layout Tutorial by ARC
-
-## Angular Material Design Layout Tutorial by  Angular.io
