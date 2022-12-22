@@ -1,0 +1,33 @@
+<p>sign-in works!</p>
+<div>
+    <p class="_green-text">if you are already user , Please  Sign In</p>
+    <button  mat-stroked-button  [routerLink]="'/logIn'" >Back</button>
+</div>
+<div class="_heading_1">Welcome Back!</div>
+
+<div class="_flex-box">
+
+    <div class="_flex-box _w-30 ">
+      <form #signUpForm="ngForm" [formGroup]="userInfoSignIn" (ngSubmit)="onSignIn()" >
+        <div class="main_component  _flex-box _jc-sb">
+            <mat-form-field appearance="outline">
+                <mat-label>Mobile No.</mat-label>
+                <!-- <span matPrefix>+91 &nbsp;</span> -->
+                <input matInput type="number" formControlName="MobileNumber" >
+            </mat-form-field>
+        </div>
+    
+        <div class="password  _flex-box _jc-sb">
+            <mat-form-field appearance="outline" >
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="FirstPassword" >
+                <mat-icon matSuffix fontIcon="home"></mat-icon>
+            </mat-form-field>
+        </div>
+    
+        <button mat-stroked-button [disabled]="userInfoSignIn.invalid"> Sign In </button>
+      </form>
+    </div>
+</div>
+
+

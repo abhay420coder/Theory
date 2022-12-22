@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "axe/forms": [
+      "default",
+      {
+        "label": "off"
+      }
+    ],
+    "compat-api/css": [
+      "default",
+      {
+        "ignore": [
+          "mask-size",
+          "mask-position",
+          "mask-repeat",
+          "mask-image"
+        ]
+      }
+    ],
+    "css-prefix-order": "off"
+  }
+}

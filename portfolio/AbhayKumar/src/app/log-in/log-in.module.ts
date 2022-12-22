@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-
+import { CommonModule } from '@angular/common';
+import { LogInComponent } from './log-in/log-in.component';
+import { LogInRoutingModule } from './log-in-routing.module';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { SignUPComponent } from './sign-up/sign-up.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // all angular material API imported  started
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -43,37 +44,30 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 // all angular material API imported  ended
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    PageNotFoundComponent
+    LogInComponent,
+    SignInComponent,
+    SignUPComponent
   ],
   imports: [
-        // all angular material module imported started
-        MatAutocompleteModule,MatBadgeModule,MatBottomSheetModule,MatButtonModule,MatButtonToggleModule,
-        MatCardModule,MatCheckboxModule,MatChipsModule,MatCommonModule,MatDatepickerModule,MatDialogModule,
-        MatDividerModule,MatExpansionModule,MatFormFieldModule,MatGridListModule,MatIconModule,MatInputModule,
-        MatListModule,MatMenuModule,MatPaginatorModule,MatProgressBarModule,MatProgressSpinnerModule,
-        MatRadioModule,MatRippleModule,MatSelectModule,MatSidenavModule,MatSlideToggleModule,MatSliderModule,
-        MatSnackBarModule,MatSortModule,MatStepperModule,MatTableModule,MatTabsModule,MatToolbarModule,MatTooltipModule,
-        MatTreeModule,
-        // all angular material module imported started
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-
-
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    CommonModule,
+    LogInRoutingModule,
+    // all angular material module imported started
+    MatAutocompleteModule,MatBadgeModule,MatBottomSheetModule,MatButtonModule,MatButtonToggleModule,
+    MatCardModule,MatCheckboxModule,MatChipsModule,MatCommonModule,MatDatepickerModule,MatDialogModule,
+    MatDividerModule,MatExpansionModule,MatFormFieldModule,MatGridListModule,MatIconModule,MatInputModule,
+    MatListModule,MatMenuModule,MatPaginatorModule,MatProgressBarModule,MatProgressSpinnerModule,
+    MatRadioModule,MatRippleModule,MatSelectModule,MatSidenavModule,MatSlideToggleModule,MatSliderModule,
+    MatSnackBarModule,MatSortModule,MatStepperModule,MatTableModule,MatTabsModule,MatToolbarModule,MatTooltipModule,
+    MatTreeModule,
+    // all angular material module imported started
+    FormsModule,
+    ReactiveFormsModule,
+    // BrowserAnimationsModule,
+  ]
 })
-export class AppModule { }
+export class LogInModule { }

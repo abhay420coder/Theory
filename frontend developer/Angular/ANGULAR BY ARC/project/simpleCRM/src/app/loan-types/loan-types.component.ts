@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 
 
 interface Food {
@@ -109,6 +109,23 @@ export class LoanTypesComponent implements OnInit  {
     'eightthFormControlName': new FormControl(),
     'ninethFormControlName': new FormControl(),
   }) ;
+  FormBulder_for_formArray : FormGroup = this.fb.group({
+    'firstFormControlName': new FormControl('', [  Validators.minLength(4),   Validators.required , Validators.maxLength(8)] ),
+    'secondFormControlName': new FormControl('',  Validators.compose([Validators.minLength(4),   Validators.required , Validators.maxLength(8)]) ),
+    'thirdFormControlName': new FormControl(),
+    'fourthFormControlName': new FormControl(),
+    'fifthFormControlName': new FormControl(),
+    'sixthFormControlName': new FormControl(),
+    'seventhFormControlName': new FormControl(),
+    'eightthFormControlName': new FormControl(),
+    'ninethFormControlName': new FormControl(),
+    // formArray_2 is the array of FormControl - simple form Array
+    // formArray_2 is using in tempelate
+    formArray_2 : new FormArray([
+      new FormControl('formControl_1_of_formArray_2'),
+      new FormControl('formControl_2_of_formArray_2'),
+    ]),
+  }) ;
 
   status: any = [
     { name: "Success", value: "SUCCESS" },
@@ -141,16 +158,64 @@ export class LoanTypesComponent implements OnInit  {
   constructor(private fb:FormBuilder) { }
 
 
-  trackFormName(): void {
+  formValueChanges(): void {
     
     console.log("value changed")
-    this.FormBulder.valueChanges.subscribe(data=>{
-      console.log("this.FormBulder.valueChanges.subscribe     data " , data)
+    // it tracks  valueChanges in full form
+    // this.FormBulder.valueChanges.subscribe(data=>{
+    //   console.log("this.FormBulder.valueChanges.subscribe     data " , data)
+    // })
+
+    // it tracks  valueChanges in  particular form control
+    // this.FormBulder.get('firstFormControlName')?.valueChanges.subscribe((data: any)=>{
+    //   console.log("this.FormBulder.get('firstFormControlName')?.valueChanges.subscribe     data " , data)
+    // })
+
+    // it tracks  statusChanges in full form
+    this.FormBulder.statusChanges.subscribe(data=>{
+      console.log("this.FormBulder.statusChanges.subscribe     data " , data)
+    })
+
+    // it tracks  statusChanges in  particular form control
+    this.FormBulder.get('firstFormControlName')?.statusChanges.subscribe((data: any)=>{
+      console.log("this.FormBulder.get('firstFormControlName')?.statusChanges.subscribe     data " , data)
     })
   }
 
   ngOnInit(): void {
-    
+
+    // it tracks  valueChanges in full form
+    this.FormBulder.valueChanges.subscribe(data=>{
+      console.log("this.FormBulder.valueChanges.subscribe     data " , data)
+    })
+
+
+    // it tracks  valueChanges in  particular form control
+    this.FormBulder.get('firstFormControlName')?.valueChanges.subscribe((data: any)=>{
+      console.log("this.FormBulder.get('firstFormControlName')?.valueChanges.subscribe     data " , data)
+    })
+
+    // it tracks  statusChanges in full form
+    // this.FormBulder.statusChanges.subscribe(data=>{
+    //   console.log("this.FormBulder.statusChanges.subscribe     data " , data)
+    // })
+
+    // it tracks  statusChanges in  particular form control
+    // this.FormBulder.get('firstFormControlName')?.statusChanges.subscribe((data: any)=>{
+    //   console.log("this.FormBulder.get('firstFormControlName')?.statusChanges.subscribe      data " , data)
+    // })
+
+    // formArray_1 is the array of FormControl - simple form Array
+    // formArray_1 is not using in tempelate
+    let formArray_1 = new FormArray([
+      new FormControl('formControl_1_of_formArray_1'),
+      new FormControl('formControl_2_of_formArray_1'),
+    ]);
+
+    console.log('formArray_1    :-    ',formArray_1)
+    console.log('formArray_1.value    :-    ',formArray_1.value)
+
+
   }
 
   /* formGroupSubmitButtonForFormGroupOnly(){
@@ -423,7 +488,46 @@ export class LoanTypesComponent implements OnInit  {
     console.log("this.FormBulder.untouched   :-  ",this.FormBulder.untouched)
 
     // after submitting then resetted form
-    this.FormBulder.reset()
+    // this.FormBulder.reset()
+  
+  }
+
+
+  form_Submit_Button_With_NgSubmit_FormArray(FormBulder_for_formArray: { value: any; }){
+    console.log("FormBulder_for_formArray.form.value  :-  ",FormBulder_for_formArray.value)
+    // to check form is valid or not
+    console.log("this.FormBulder_for_formArray.valid   :-  ",this.FormBulder_for_formArray.valid)
+    // if this.formGroupName.valid return true then form is valid
+    // if this.formGroupName.valid return false then form is invalid
+
+    console.log('FormBulder_for_formArray  :-    this.FormBulder_for_formArray.value :-  ',this.FormBulder_for_formArray.value)
+    console.log('FormBulder_for_formArray  :-    this.FormBulder_for_formArray :-  ',this.FormBulder_for_formArray)
+    console.log('FormBulder_for_formArray  :-    this.FormBulder_for_formArray.root.value :-  ',this.FormBulder_for_formArray.root.value)
+
+    console.log("FormBulder_for_formArray  only  get('FormControlName')  :-    this.FormBulder_for_formArray.get('firstFormControlName') :-  ", this.FormBulder_for_formArray.get('firstFormControlName'))
+    console.log("FormBulder_for_formArray  firstFormControlName :-    this.FormBulder_for_formArray.get('firstFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('firstFormControlName')?.value)
+    console.log("FormBuFormBulder_for_formArraylder  secondFormControlName :-    this.FormBulder_for_formArray.get('secondFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('secondFormControlName')?.value)
+    console.log("FormBulder_for_formArray  thirdFormControlName :-    this.FormBulder_for_formArray.get('thirdFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('thirdFormControlName')?.value)
+    console.log("FormBulder_for_formArray  fourthFormControlName :-    this.FormBulder_for_formArray.get('fourthFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('fourthFormControlName')?.value)
+    console.log("FormBulder_for_formArray  fifthFormControlName :-    this.FormBulder_for_formArray.get('fifthFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('fifthFormControlName')?.value)
+    console.log("FormBulder_for_formArray  sixthFormControlName :-    this.FormBulder_for_formArray.get('sixthFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('sixthFormControlName')?.value)
+    console.log("FormBulder_for_formArray  seventhFormControlName :-    this.FormBulder_for_formArray.get('seventhFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('seventhFormControlName')?.value)
+    console.log("FormBulder_for_formArray  eightthFormControlName :-    this.FormBulder_for_formArray.get('eightthFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('eightthFormControlName')?.value)
+    console.log("FormBulder_for_formArray  ninethFormControlName :-    this.FormBulder_for_formArray.get('ninethFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('ninethFormControlName')?.value)
+    
+
+
+    // all below will be return boolean , you can validate with the help of  'valid, invalid, pending, pristine, dirty, touched, untouched' in if-condition
+    console.log("this.FormBulder_for_formArray.valid   :-  ",this.FormBulder_for_formArray.valid)
+    console.log("this.FormBulder_for_formArray.invalid   :-  ",this.FormBulder_for_formArray.invalid)
+    console.log("this.FormBulder_for_formArray.pending   :-  ",this.FormBulder_for_formArray.pending)
+    console.log("this.FormBulder_for_formArray.pristine   :-  ",this.FormBulder_for_formArray.pristine)
+    console.log("this.FormBulder_for_formArray.dirty   :-  ",this.FormBulder_for_formArray.dirty)
+    console.log("this.FormBulder_for_formArray.touched   :-  ",this.FormBulder_for_formArray.touched)
+    console.log("this.FormBulder_for_formArray.untouched   :-  ",this.FormBulder_for_formArray.untouched)
+
+    // after submitting then resetted form
+    // this.FormBulder_for_formArray.reset()
   
   }
 
