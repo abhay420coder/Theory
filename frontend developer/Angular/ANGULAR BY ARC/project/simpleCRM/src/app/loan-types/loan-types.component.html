@@ -762,7 +762,7 @@ this.formGroupName.root.value :    {
   <!-- <form #form="ngForm" [formGroup]="FormBulder" (ngSubmit)="formSubmitButtonWithNgSubmit()"> -->
   <form
     #form="ngForm"
-    [formGroup]="FormBulder_for_formArray"
+    [formGroup]="FormBulder_for_formGroup"
     (ngSubmit)="form_Submit_Button_With_NgSubmit_FormArray(FormBulder)"
   >
     <table>
@@ -875,9 +875,10 @@ this.formGroupName.root.value :    {
       <tr>
         <div formArrayName="formArray_2">
             <label> formArray_2 </label>
-            <div *ngFor="let control of FormBulder_for_formArray.controls.formArray_2['controls'];  let i=index">
-                <!-- FormBulder_for_formArray.controls.formArray_2['controls']
-                means :-  'FormBulder_for_formArray' has 'controls' which name is 'formArray_2' , that have 'controls' -->
+                            <!-- FormBulder_for_formArray.controls.formArray_2['controls']
+                means :-  'FormBulder_for_formArray' has 'controls' which name is 'formArray_2' , that also have 'controls' -->
+            <div *ngFor="let control of FormBulder_for_formGroup.controls['formArray_2']['controls'];  let i=index">
+
 
             </div>
 

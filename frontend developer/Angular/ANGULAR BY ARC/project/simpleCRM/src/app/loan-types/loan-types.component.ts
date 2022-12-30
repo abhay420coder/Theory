@@ -109,7 +109,10 @@ export class LoanTypesComponent implements OnInit  {
     'eightthFormControlName': new FormControl(),
     'ninethFormControlName': new FormControl(),
   }) ;
-  FormBulder_for_formArray : FormGroup = this.fb.group({
+
+
+
+  FormBulder_for_formGroup : FormGroup = this.fb.group({
     'firstFormControlName': new FormControl('', [  Validators.minLength(4),   Validators.required , Validators.maxLength(8)] ),
     'secondFormControlName': new FormControl('',  Validators.compose([Validators.minLength(4),   Validators.required , Validators.maxLength(8)]) ),
     'thirdFormControlName': new FormControl(),
@@ -122,7 +125,7 @@ export class LoanTypesComponent implements OnInit  {
     // formArray_2 is the array of FormControl - simple form Array
     // formArray_2 is using in tempelate
     formArray_2 : new FormArray([
-      new FormControl('formControl_1_of_formArray_2'),
+      new FormControl('formControl_1_of_formArray_2_of_FormBulder_for_formGroup'),
       new FormControl('formControl_2_of_formArray_2'),
     ]),
   }) ;
@@ -496,35 +499,35 @@ export class LoanTypesComponent implements OnInit  {
   form_Submit_Button_With_NgSubmit_FormArray(FormBulder_for_formArray: { value: any; }){
     console.log("FormBulder_for_formArray.form.value  :-  ",FormBulder_for_formArray.value)
     // to check form is valid or not
-    console.log("this.FormBulder_for_formArray.valid   :-  ",this.FormBulder_for_formArray.valid)
+    console.log("this.FormBulder_for_formArray.valid   :-  ",this.FormBulder_for_formGroup.valid)
     // if this.formGroupName.valid return true then form is valid
     // if this.formGroupName.valid return false then form is invalid
 
-    console.log('FormBulder_for_formArray  :-    this.FormBulder_for_formArray.value :-  ',this.FormBulder_for_formArray.value)
-    console.log('FormBulder_for_formArray  :-    this.FormBulder_for_formArray :-  ',this.FormBulder_for_formArray)
-    console.log('FormBulder_for_formArray  :-    this.FormBulder_for_formArray.root.value :-  ',this.FormBulder_for_formArray.root.value)
+    console.log('FormBulder_for_formArray  :-    this.FormBulder_for_formArray.value :-  ',this.FormBulder_for_formGroup.value)
+    console.log('FormBulder_for_formArray  :-    this.FormBulder_for_formArray :-  ',this.FormBulder_for_formGroup)
+    console.log('FormBulder_for_formArray  :-    this.FormBulder_for_formArray.root.value :-  ',this.FormBulder_for_formGroup.root.value)
 
-    console.log("FormBulder_for_formArray  only  get('FormControlName')  :-    this.FormBulder_for_formArray.get('firstFormControlName') :-  ", this.FormBulder_for_formArray.get('firstFormControlName'))
-    console.log("FormBulder_for_formArray  firstFormControlName :-    this.FormBulder_for_formArray.get('firstFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('firstFormControlName')?.value)
-    console.log("FormBuFormBulder_for_formArraylder  secondFormControlName :-    this.FormBulder_for_formArray.get('secondFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('secondFormControlName')?.value)
-    console.log("FormBulder_for_formArray  thirdFormControlName :-    this.FormBulder_for_formArray.get('thirdFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('thirdFormControlName')?.value)
-    console.log("FormBulder_for_formArray  fourthFormControlName :-    this.FormBulder_for_formArray.get('fourthFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('fourthFormControlName')?.value)
-    console.log("FormBulder_for_formArray  fifthFormControlName :-    this.FormBulder_for_formArray.get('fifthFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('fifthFormControlName')?.value)
-    console.log("FormBulder_for_formArray  sixthFormControlName :-    this.FormBulder_for_formArray.get('sixthFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('sixthFormControlName')?.value)
-    console.log("FormBulder_for_formArray  seventhFormControlName :-    this.FormBulder_for_formArray.get('seventhFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('seventhFormControlName')?.value)
-    console.log("FormBulder_for_formArray  eightthFormControlName :-    this.FormBulder_for_formArray.get('eightthFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('eightthFormControlName')?.value)
-    console.log("FormBulder_for_formArray  ninethFormControlName :-    this.FormBulder_for_formArray.get('ninethFormControlName')?.value :-  ", this.FormBulder_for_formArray.get('ninethFormControlName')?.value)
+    console.log("FormBulder_for_formArray  only  get('FormControlName')  :-    this.FormBulder_for_formArray.get('firstFormControlName') :-  ", this.FormBulder_for_formGroup.get('firstFormControlName'))
+    console.log("FormBulder_for_formArray  firstFormControlName :-    this.FormBulder_for_formArray.get('firstFormControlName')?.value :-  ", this.FormBulder_for_formGroup.get('firstFormControlName')?.value)
+    console.log("FormBuFormBulder_for_formArraylder  secondFormControlName :-    this.FormBulder_for_formArray.get('secondFormControlName')?.value :-  ", this.FormBulder_for_formGroup.get('secondFormControlName')?.value)
+    console.log("FormBulder_for_formArray  thirdFormControlName :-    this.FormBulder_for_formArray.get('thirdFormControlName')?.value :-  ", this.FormBulder_for_formGroup.get('thirdFormControlName')?.value)
+    console.log("FormBulder_for_formArray  fourthFormControlName :-    this.FormBulder_for_formArray.get('fourthFormControlName')?.value :-  ", this.FormBulder_for_formGroup.get('fourthFormControlName')?.value)
+    console.log("FormBulder_for_formArray  fifthFormControlName :-    this.FormBulder_for_formArray.get('fifthFormControlName')?.value :-  ", this.FormBulder_for_formGroup.get('fifthFormControlName')?.value)
+    console.log("FormBulder_for_formArray  sixthFormControlName :-    this.FormBulder_for_formArray.get('sixthFormControlName')?.value :-  ", this.FormBulder_for_formGroup.get('sixthFormControlName')?.value)
+    console.log("FormBulder_for_formArray  seventhFormControlName :-    this.FormBulder_for_formArray.get('seventhFormControlName')?.value :-  ", this.FormBulder_for_formGroup.get('seventhFormControlName')?.value)
+    console.log("FormBulder_for_formArray  eightthFormControlName :-    this.FormBulder_for_formArray.get('eightthFormControlName')?.value :-  ", this.FormBulder_for_formGroup.get('eightthFormControlName')?.value)
+    console.log("FormBulder_for_formArray  ninethFormControlName :-    this.FormBulder_for_formArray.get('ninethFormControlName')?.value :-  ", this.FormBulder_for_formGroup.get('ninethFormControlName')?.value)
     
 
 
     // all below will be return boolean , you can validate with the help of  'valid, invalid, pending, pristine, dirty, touched, untouched' in if-condition
-    console.log("this.FormBulder_for_formArray.valid   :-  ",this.FormBulder_for_formArray.valid)
-    console.log("this.FormBulder_for_formArray.invalid   :-  ",this.FormBulder_for_formArray.invalid)
-    console.log("this.FormBulder_for_formArray.pending   :-  ",this.FormBulder_for_formArray.pending)
-    console.log("this.FormBulder_for_formArray.pristine   :-  ",this.FormBulder_for_formArray.pristine)
-    console.log("this.FormBulder_for_formArray.dirty   :-  ",this.FormBulder_for_formArray.dirty)
-    console.log("this.FormBulder_for_formArray.touched   :-  ",this.FormBulder_for_formArray.touched)
-    console.log("this.FormBulder_for_formArray.untouched   :-  ",this.FormBulder_for_formArray.untouched)
+    console.log("this.FormBulder_for_formArray.valid   :-  ",this.FormBulder_for_formGroup.valid)
+    console.log("this.FormBulder_for_formArray.invalid   :-  ",this.FormBulder_for_formGroup.invalid)
+    console.log("this.FormBulder_for_formArray.pending   :-  ",this.FormBulder_for_formGroup.pending)
+    console.log("this.FormBulder_for_formArray.pristine   :-  ",this.FormBulder_for_formGroup.pristine)
+    console.log("this.FormBulder_for_formArray.dirty   :-  ",this.FormBulder_for_formGroup.dirty)
+    console.log("this.FormBulder_for_formArray.touched   :-  ",this.FormBulder_for_formGroup.touched)
+    console.log("this.FormBulder_for_formArray.untouched   :-  ",this.FormBulder_for_formGroup.untouched)
 
     // after submitting then resetted form
     // this.FormBulder_for_formArray.reset()

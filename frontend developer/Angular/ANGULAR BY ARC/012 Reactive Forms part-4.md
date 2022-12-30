@@ -454,6 +454,7 @@ if you want, you can keep otherwise you can remove -->
 
 <!-- Reset form button -->
         <div><button (click)="formGroupName.reset()">Reset Button Name</button></div>
+        <!-- or -->
         <div><button (click)="resetForm()">Reset Button Name by function</button></div>
 
 </form>
