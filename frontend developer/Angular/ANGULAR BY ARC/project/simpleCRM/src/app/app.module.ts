@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';  //  importing routing 
 import { AppComponent } from './app.component';
 import { HighlightDirective } from './highlight.directive';
 import { UsersComponent } from './users/users.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { LoansComponent } from './loans/loans.component';
 import { LoanTypesComponent } from './loan-types/loan-types.component';
 import { AddLoansComponent } from './add-loans/add-loans.component'  
@@ -22,7 +22,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AdminComponent } from './admin/admin.component'; // import routing strategy here
 
 
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // all angular material API imported  started
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatBadgeModule} from '@angular/material/badge';
@@ -86,9 +86,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     AppRoutingModule, // routing module add in  imports array
-    FormsModule,
+    
     BrowserAnimationsModule,
-    ReactiveFormsModule,
+        FormsModule,ReactiveFormsModule,
         // all angular material module imported started
         MatAutocompleteModule,MatBadgeModule,MatBottomSheetModule,MatButtonModule,MatButtonToggleModule,
         MatCardModule,MatCheckboxModule,MatChipsModule,MatCommonModule,MatDatepickerModule,MatDialogModule,
