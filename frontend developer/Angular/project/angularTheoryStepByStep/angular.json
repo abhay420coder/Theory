@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "AbhayKumar": {
+    "angularTheoryStepByStep": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/abhay-kumar",
+            "outputPath": "dist/angular-theory-step-by-step",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "AbhayKumar:build:production"
+              "browserTarget": "angularTheoryStepByStep:build:production"
             },
             "development": {
-              "browserTarget": "AbhayKumar:build:development"
+              "browserTarget": "angularTheoryStepByStep:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "AbhayKumar:build"
+            "browserTarget": "angularTheoryStepByStep:build"
           }
         },
         "test": {
@@ -102,6 +102,6 @@
     }
   },
   "cli": {
-    "analytics": "2b3a05be-5067-41a1-8580-8b40eab01ad1"
+    "analytics": "f5716223-a086-4c6f-957f-46ed2c27fa0a"
   }
 }
