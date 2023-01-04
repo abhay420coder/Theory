@@ -760,38 +760,27 @@ this.formGroupName.root.value :    {
   <h1>with """'(ngSubmit)="formSubmitButtonWithNgSubmit(formGroupName)"'""</h1>
 
   <!-- <form #form="ngForm" [formGroup]="FormBulder" (ngSubmit)="formSubmitButtonWithNgSubmit()"> -->
-  <form
-    #form="ngForm"
-    [formGroup]="FormBulder_for_formGroup"
-    (ngSubmit)="form_Submit_Button_With_NgSubmit_FormArray(FormBulder)"
-  >
+  <form #form="ngForm" [formGroup]="FormBulder_for_formGroup"
+    (ngSubmit)="form_Submit_Button_With_NgSubmit_FormArray(FormBulder)">
     <table>
       <tr>
         <!-- <div><input type="text" formControlName="firstFormControlName"  (blur)="formValueChanges()"></div> -->
         <!-- <div><input type="text" formControlName="firstFormControlName"  (keyup)="formValueChanges()"></div> -->
         <!-- <div><input type="text" formControlName="firstFormControlName"  (keypress)="formValueChanges()"></div> -->
         <div><input type="text" formControlName="firstFormControlName" /></div>
-        <div
-          *ngIf="FormBulder.get('firstFormControlName')?.hasError('required')"
-        >
+        <div *ngIf="FormBulder.get('firstFormControlName')?.hasError('required')">
           firstFormControlName is required
         </div>
-        <div
-          *ngIf="FormBulder.get('firstFormControlName')?.hasError('minlength')"
-        >
+        <div *ngIf="FormBulder.get('firstFormControlName')?.hasError('minlength')">
           firstFormControlName is minlength
         </div>
-        <div
-          *ngIf="FormBulder.get('firstFormControlName')?.hasError('maxlength')"
-        >
+        <div *ngIf="FormBulder.get('firstFormControlName')?.hasError('maxlength')">
           firstFormControlName is maxlength
         </div>
-        <div
-          *ngIf="
+        <div *ngIf="
             FormBulder.get('firstFormControlName')?.hasError('required') &&
             FormBulder.get('firstFormControlName')?.touched
-          "
-        >
+          ">
           firstFormControlName is required && touched
         </div>
         <!--  formControlName = "key"   is manadatory for every   input,select&option,textarea,etc -->
@@ -819,14 +808,8 @@ this.formGroupName.root.value :    {
         <div>
           <mat-form-field appearance="outline" class="_w-50 _ml-10">
             <mat-label>Status</mat-label>
-            <mat-select
-              [multiple]="false"
-              formControlName="sixthFormControlName"
-            >
-              <mat-option
-                *ngFor="let groupFilter of status"
-                [value]="groupFilter.value"
-              >
+            <mat-select [multiple]="false" formControlName="sixthFormControlName">
+              <mat-option *ngFor="let groupFilter of status" [value]="groupFilter.value">
                 {{ groupFilter.name }}
               </mat-option>
             </mat-select>
@@ -838,14 +821,8 @@ this.formGroupName.root.value :    {
         <div>
           <mat-form-field appearance="outline" class="_w-50 _ml-10">
             <mat-label>Pods</mat-label>
-            <mat-select
-              [multiple]="true"
-              formControlName="seventhFormControlName"
-            >
-              <mat-option
-                *ngFor="let groupFilter of pods"
-                [value]="groupFilter.value"
-              >
+            <mat-select [multiple]="true" formControlName="seventhFormControlName">
+              <mat-option *ngFor="let groupFilter of pods" [value]="groupFilter.value">
                 {{ groupFilter.name }}
               </mat-option>
             </mat-select>
@@ -867,17 +844,16 @@ this.formGroupName.root.value :    {
       </tr>
       <tr>
         <div>
-          <mat-slide-toggle formControlName="ninethFormControlName"
-            >Slide me!</mat-slide-toggle
-          >
+          <mat-slide-toggle formControlName="ninethFormControlName">Slide me!</mat-slide-toggle>
         </div>
       </tr>
       <tr>
         <div formArrayName="formArray_2">
-            <label> formArray_2 </label>
-                            <!-- FormBulder_for_formArray.controls.formArray_2['controls']
+          <label> formArray_2 </label>
+          <!-- FormBulder_for_formArray.controls.formArray_2['controls']
                 means :-  'FormBulder_for_formArray' has 'controls' which name is 'formArray_2' , that also have 'controls' -->
-            <!-- <div *ngFor="let control of FormBulder_for_formGroup.controls['formArray_2']['controls'];  let i=index">
+          <!-- <div *ngFor="let control of FormBulder_for_formGroup.controls['formArray_2'].controls;  let i=index;">
+            <input type="text" [formControlName]="i">
 
 
             </div> -->

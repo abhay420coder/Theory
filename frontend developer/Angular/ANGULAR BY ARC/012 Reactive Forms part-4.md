@@ -200,7 +200,7 @@ this.formGroupName.valid
   
 
 * `console.log(this.formGroupName.get('firstFormControlName'))` :- try it 
-* ![this.formGroupName.get('firstFormControlName')](2022-12-20-17-36-08.png)  
+* ![this.formGroupName.get('firstFormControlName')](./image%20-%20009-012%20Reactive%20Forms/2022-12-20-17-36-08.png)  
 
 
 
@@ -279,8 +279,8 @@ Form fields were touched
 
     ```
 
-![track value changes](2022-12-22-07-25-05.png)
-![track status changes](2022-12-22-07-21-11.png)
+![track value changes](./image%20-%20009-012%20Reactive%20Forms/2022-12-22-07-25-05.png)
+![track status changes](./image%20-%20009-012%20Reactive%20Forms/2022-12-22-07-21-11.png)
 
 ### Reactive Form — Form Array
 
@@ -424,7 +424,18 @@ if you want, you can keep otherwise you can remove -->
     <!-- basically we are writing  formControlName instead of name attribute -->
 
 
+     <ng-container formArrayName="FormArray1">
+                <ng-container *ngFor="let FormGroup1ForFormArray1 of FormArray1.controls; let index = index" >
+                    <!-- <ng-container *ngFor="let empDetails of employeeForm.controls.employeeDetails.controls; let index = index"> -->
+                    <div [formGroupName]="index">
+                      <div><input type="text" formControlName="FormControlName1ForFormArray1"></div>
+                      <div><input type="number" formControlName="FormControlName2ForFormArray1"></div>
+                      <div><input type="email" formControlName="FormControlName3ForFormArray1"></div>  
+                      <div><button  (click)="deleteControlFromFormArray1(index)">delete Control From Form Array1</button></div>
+                    </div>
+                </ng-container>
 
+            </ng-container>
 
   <!-- without  (ngSubmit)="formSubmitButton() or (ngSubmit)="formSubmitButton(formGroupName) -->
     <div><button (click)="formGroupSubmitButton()">Submit Button Name</button></div>
@@ -458,6 +469,7 @@ if you want, you can keep otherwise you can remove -->
         <div><button (click)="resetForm()">Reset Button Name by function</button></div>
 
 </form>
+<div><button  (click)="addFormControlIntoFormArray1()">add Form Control Into Form Array1</button></div>
 ```
 
 **in ts file**
@@ -567,6 +579,29 @@ setForm() {
                                                                         ]) 
                                         ),
     'FormControlName3': new FormControl(),
+  }) ;
+
+// method-1
+//  this FormArray is created underFormGroup
+  formGroupName : FormGroup = this.formBuilder.group({
+    'FormControlName1': new FormControl('Value Here',   [  
+                                                            Validators.minLength(4),   
+                                                            Validators.required , 
+                                                            Validators.maxLength(8)
+                                                        ] 
+                                        ),
+    // Validators.compose is used for re-use :- you can check on google
+    'FormControlName2': new FormControl('Value Here',  Validators.compose([
+                                                                            Validators.minLength(4),   
+                                                                            Validators.required , 
+                                                                            Validators.maxLength(8)
+                                                                        ]) 
+                                        ),
+    'FormControlName3': new FormControl(),
+
+    'FormArray1' : new FormArray([]),
+    'FormArray2' : new this.formBuilder.array([]),
+
   }) ;
 
 
@@ -707,12 +742,44 @@ setForm() {
     // after submitting form then resetted form  :- if you want you can use
     this.formGroupName.reset()
  
+    // 
   }
 
 
   // Reset form  by function
   resetForm(){
     this.formGroupName.reset();
+  }
+
+
+// Form Array
+    // getter for FormArray
+   get FormArray1() :FormArray{ // this is  to get formArray  from form Group
+    return this.formGroupName.controls["FormArray1"] as FormArray; // it works as an array , it means  we are getting an array 
+  }
+
+
+  // add  formContrls to  form Array
+  addFormControlIntoFormArray1(){
+    let formArr = this.formGroupName.get('FormArray1') as FormArray // or let empArr = this.FormArray1
+
+    let FormGroup1ForFormArray1 = this.fb.group({
+    'FormControlName1ForFormArray1': new FormControl('Value Here',   [  Validators.minLength(4),Validators.required ,Validators.maxLength(8) ] 
+                                        ),
+    // Validators.compose is used for re-use :- you can check on google
+    'FormControlName2ForFormArray1': new FormControl('Value Here',  Validators.compose([
+                                                                            Validators.minLength(4),   
+                                                                            Validators.required , 
+                                                                            Validators.maxLength(8)
+                                                                        ]) 
+                                        ),
+    'FormControlName3ForFormArray1': new FormControl(),
+    })
+    formArr.push(FormGroup1ForFormArray1);  // or this.employeeDetails.push(empDetails)
+  }
+  // remove  formContrls to  form Array
+  deleteControlFromFormArray1(Index: number) {
+    this.FormArray1.removeAt(Index);
   }
 
 }

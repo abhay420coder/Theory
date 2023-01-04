@@ -124,9 +124,9 @@ export class LoanTypesComponent implements OnInit  {
     'ninethFormControlName': new FormControl(),
     // formArray_2 is the array of FormControl - simple form Array
     // formArray_2 is using in tempelate
-    formArray_2 : new FormArray([
-      new FormControl('formControl_1_of_formArray_2_of_FormBulder_for_formGroup'),
-      new FormControl('formControl_2_of_formArray_2'),
+    formArray_2 : this.fb.array([
+      new FormControl('ARc'),
+      new FormControl('tutorial')
     ]),
   }) ;
 
@@ -421,7 +421,7 @@ export class LoanTypesComponent implements OnInit  {
 
   
   // }
-  formSubmitButtonWithoutNgSubmit(){
+ /*  formSubmitButtonWithoutNgSubmit(){
 
     // to check form is valid or not
     console.log("this.FormBulder.valid   :-  ",this.FormBulder.valid)
@@ -455,8 +455,10 @@ export class LoanTypesComponent implements OnInit  {
     console.log("this.FormBulder.untouched   :-  ",this.FormBulder.untouched)
 
   
-  }
-  // formSubmitButtonWithNgSubmit(){
+  } */
+
+
+  /* // formSubmitButtonWithNgSubmit(){
   formSubmitButtonWithNgSubmit(FormBulder: { value: any; }){
     console.log("FormBulder.form.value  :-  ",FormBulder.value)
     // to check form is valid or not
@@ -493,7 +495,7 @@ export class LoanTypesComponent implements OnInit  {
     // after submitting then resetted form
     // this.FormBulder.reset()
   
-  }
+  } */
 
 
   form_Submit_Button_With_NgSubmit_FormArray(FormBulder_for_formArray: { value: any; }){
