@@ -1452,7 +1452,7 @@ this.formGroupName.valid
   
 
 * `console.log(this.formGroupName.get('firstFormControlName'))` :- try it 
-* ![this.formGroupName.get('firstFormControlName')](2022-12-20-17-36-08.png)  
+* ![this.formGroupName.get('firstFormControlName')](./image%20-%20009-012%20Reactive%20Forms/2022-12-20-17-36-08.png)  
 
 
 
@@ -2159,7 +2159,7 @@ this.formGroupName.valid
   
 
 * `console.log(this.formGroupName.get('firstFormControlName'))` :- try it 
-* ![this.formGroupName.get('firstFormControlName')](2022-12-20-17-36-08.png)  
+* ![this.formGroupName.get('firstFormControlName')](./image%20-%20009-012%20Reactive%20Forms/2022-12-20-17-36-08.png)  
 
 
 

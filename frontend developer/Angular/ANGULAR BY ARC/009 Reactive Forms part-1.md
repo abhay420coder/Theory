@@ -669,8 +669,8 @@ export class AppModule { }
 
 ```
 
-![reactive form field](2022-12-19-12-05-43.png)
-![after filled data into form then get value in console](2022-12-19-12-06-02.png)
+![reactive form field](./image%20-%20009-012%20Reactive%20Forms/2022-12-19-12-05-43.png)
+![after filled data into form then get value in console](./image%20-%20009-012%20Reactive%20Forms/2022-12-19-12-06-02.png)
 
 ## Reactive Forms. FormGroup, FormControl For Beginners by  Angular.io
 
@@ -1931,14 +1931,14 @@ export class LoanTypesComponent implements OnInit {
 
 }
 ```
-![normal form by form group CONSTRUCTOR](2022-12-20-08-13-37.png)
-![for set value with the help of constructor FormGroup](2022-12-20-08-14-23.png)
-![for set value with the help of setValue - BEFORE CLICKING ON SET BUTTON](2022-12-20-08-15-02.png)
-![for set value with the help of setValue - AFTER CLICKING ON SET BUTTON](2022-12-20-08-15-59.png)
-![create the form with the help of FormBuilder](2022-12-20-08-18-10.png)
-![create the form with the help of FormBuilder For Set Purpous](2022-12-20-08-20-44.png)
-![create the form with the help of FormBuilder For Set Purpous With The Help Of SetValue  - BEFORE CLICKING ON SET BUTTON](2022-12-20-08-22-17.png)
-![create the form with the help of FormBuilder For Set Purpous With The Help Of SetValue  - After CLICKING ON SET BUTTON](2022-12-20-08-24-11.png)
+![normal form by form group CONSTRUCTOR](./image%20-%20009-012%20Reactive%20Forms/2022-12-20-08-13-37.png)
+![for set value with the help of constructor FormGroup](./image%20-%20009-012%20Reactive%20Forms/2022-12-20-08-14-23.png)
+![for set value with the help of setValue - BEFORE CLICKING ON SET BUTTON](./image%20-%20009-012%20Reactive%20Forms/2022-12-20-08-15-02.png)
+![for set value with the help of setValue - AFTER CLICKING ON SET BUTTON](./image%20-%20009-012%20Reactive%20Forms/2022-12-20-08-15-59.png)
+![create the form with the help of FormBuilder](./image%20-%20009-012%20Reactive%20Forms/2022-12-20-08-18-10.png)
+![create the form with the help of FormBuilder For Set Purpous](./image%20-%20009-012%20Reactive%20Forms/2022-12-20-08-20-44.png)
+![create the form with the help of FormBuilder For Set Purpous With The Help Of SetValue  - BEFORE CLICKING ON SET BUTTON](./image%20-%20009-012%20Reactive%20Forms/2022-12-20-08-22-17.png)
+![create the form with the help of FormBuilder For Set Purpous With The Help Of SetValue  - After CLICKING ON SET BUTTON](./image%20-%20009-012%20Reactive%20Forms/2022-12-20-08-24-11.png)
 ## Reactive Forms. Set Form Values by  Angular.io
 
 

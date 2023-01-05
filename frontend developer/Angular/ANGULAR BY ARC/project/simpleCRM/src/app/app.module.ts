@@ -61,6 +61,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RxJSLearningComponent } from './rx-js-learning/rx-js-learning.component';
 // all angular material API imported  ended
 
 
@@ -81,7 +82,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ProfileComponent,
     SearchComponent,
     PageNotFoundComponent,
-    AdminComponent
+    AdminComponent,
+    RxJSLearningComponent
   ],
   imports: [
     BrowserModule,

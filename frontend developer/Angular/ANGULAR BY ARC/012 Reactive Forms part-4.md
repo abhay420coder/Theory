@@ -890,6 +890,82 @@ setForm() {
         <div><button (click)="resetForm()">Reset Button Name by function</button></div>
     </form>
 </div>
+
+
+<div style="margin:5%;">
+    <div class="_flex-box">
+        <form #form="ngForm" [formGroup]="employeeForm" (ngSubmit)="onSubmitForm(employeeForm)">
+            <ng-container formArrayName="employeeDetails" class="_flex-box">
+                <ng-container *ngFor="let empDetails of employeeDetails.controls; let index = index" >
+                    <!-- <ng-container *ngFor="let empDetails of employeeForm.controls.employeeDetails.controls; let index = index"> -->
+                    <div [formGroupName]="index" style="margin-top:5%;">
+                        <div class="_flex-box">
+                            <input type="image" [src]="employeeForm.controls.employeeDetails.controls[index].get('userImage')?.value" [alt]="index +'   '+ 'userImage'" formControlNames="userImage"
+                                style="height:110px; width:150px; border:5px solid black ">
+                            <input type="file" accept="image/*" (change)="showPreview($event , index)" />
+                        </div>
+                        <div class="_flex-box">
+                            <mat-form-field appearance="outline">
+                                <mat-label>User Name</mat-label>
+                                <input matInput type="text" formControlName="userName">
+                                <mat-error
+                                    *ngIf="employeeForm.controls.employeeDetails.controls[index].get('userName')?.hasError('required')">
+                                    User Name is required</mat-error>
+                                <mat-error
+                                    *ngIf="employeeForm.controls.employeeDetails.controls[index].get('userName')?.hasError('invalidContent')">
+                                    write valid user name</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>User Position</mat-label>
+                                <input matInput type="text" formControlName="userPosition">
+                                <mat-error
+                                    *ngIf="employeeForm.controls.employeeDetails.controls[index].get('userPosition')?.hasError('required')">
+                                    User Position is required</mat-error>
+                                <mat-error
+                                    *ngIf="employeeForm.controls.employeeDetails.controls[index].get('userPosition')?.hasError('invalidContent')">
+                                    write valid user Position</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="_flex-box">
+                            <mat-form-field appearance="outline">
+                                <mat-label>User Age</mat-label>
+                                <input matInput type="text" formControlName="userAge">
+                                <mat-error
+                                    *ngIf="employeeForm.controls.employeeDetails.controls[index].get('userAge')?.hasError('required')">
+                                    User Age is required</mat-error>
+                                <mat-error
+                                    *ngIf="employeeForm.controls.employeeDetails.controls[index].get('userAge')?.hasError('invalidContent')">
+                                    Age Should be greater than 18</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>User Gender</mat-label>
+                                <mat-select formControlName="userGender">
+                                    <mat-option value="Male">Male</mat-option>
+                                    <mat-option value="Female">Female</mat-option>
+                                    <mat-option value="Other">Other</mat-option>
+                                </mat-select>
+                                <mat-error
+                                    *ngIf="employeeForm.controls.employeeDetails.controls[index].get('userGender')?.hasError('required')">
+                                    User Age is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="_flex-box" style="margin-top:5%;">
+                            <button mat-raised-button color="warn" (click)="deleteEmployee(index)">Delete
+                                Employee</button>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </ng-container>
+            <button mat-raised-button color="warn" [disabled]="employeeForm.invalid" style="margin-top:5%;">submit Form</button>
+        </form>
+    </div>
+    <div style="margin-top:5%;">
+        <button mat-mini-fab (click)="addEmployeeDetails()">
+            <mat-icon class="add-course-btn">add</mat-icon>
+        </button>
+    </div>
+</div>
 ```
 
 **add-customer.component.ts**
@@ -1061,6 +1137,57 @@ export class LoanTypesComponent implements OnInit {
 
   resetForm(){
     this.FormBulder.reset();
+  }
+
+
+
+  employeeForm = this.fb.group({
+    employeeDetails: this.fb.array([]),// Initially,  the FormArray instance is empty and contains no form controls, meaning that the editable table is initially empty.
+}); 
+
+deafultImageSource="../../assets/images/Sachin.jpg";
+fileToUpload: File | null = null;
+ get employeeDetails() :FormArray{ // this is  to get formArray  from form Group
+    return this.employeeForm.controls["employeeDetails"] as FormArray; // it works as an array , it means  we are getting an array 
+  }
+
+
+  addEmployeeDetails(){
+    let empArr = this.employeeForm.get('employeeDetails') as FormArray // or let empArr = this.employeeDetails
+
+    let empDetails = this.fb.group({
+      userImage : new FormControl(this.deafultImageSource),
+      userName : new FormControl("" , [Validators.required , contentValidatorText]),
+      userPosition : new FormControl("" , [Validators.required , contentValidatorText]),
+      userAge : new FormControl("" , [Validators.required, contentValidatorAge]),
+      userGender : new FormControl("" , [Validators.required]),
+    })
+    empArr.push(empDetails);  // or this.employeeDetails.push(empDetails)
+  }
+
+  deleteEmployee(lessonIndex: number) {
+    this.employeeDetails.removeAt(lessonIndex);
+  }
+
+  onSubmitForm(employeeForm:any){
+    console.log("employeeForm :-  ",employeeForm)
+    console.log("employeeForm.value :-  ",employeeForm.value)
+    console.log("employeeForm.value.employeeDetails[1].userImage.value :-  ",employeeForm.value.employeeDetails[0].userImage.value)
+  } 
+
+  showPreview(event: any , index:any){
+    console.log("event  :-  ",event);
+    console.log("event.target.files  :-  ",event.target.files);
+    let files = event.target.files
+    this.fileToUpload = files.item(0);
+    if(files){
+      let reader = new FileReader();  
+      reader.readAsDataURL(files[0]);
+      reader.onload=(event:any)=>{
+          let imgResult= event.target.result;
+          this.employeeForm.controls.employeeDetails.controls[index].patchValue({userImage:imgResult})
+      }
+    }
   }
 
 

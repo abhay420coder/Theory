@@ -200,7 +200,7 @@ this.formGroupName.valid
   
 
 * `console.log(this.formGroupName.get('firstFormControlName'))` :- try it 
-* ![this.formGroupName.get('firstFormControlName')](2022-12-20-17-36-08.png)  
+* ![this.formGroupName.get('firstFormControlName')](./image%20-%20009-012%20Reactive%20Forms/2022-12-20-17-36-08.png)  
 
 
 
@@ -1008,7 +1008,7 @@ this.formGroupName.valid
   
 
 * `console.log(this.formGroupName.get('firstFormControlName'))` :- try it 
-* ![this.formGroupName.get('firstFormControlName')](2022-12-20-17-36-08.png)  
+* ![this.formGroupName.get('firstFormControlName')](./image%20-%20009-012%20Reactive%20Forms/2022-12-20-17-36-08.png)  
 
 
 
@@ -1087,8 +1087,8 @@ Form fields were touched
 
     ```
 
-![track value changes](2022-12-22-07-25-05.png)
-![track status changes](2022-12-22-07-21-11.png)
+![track value changes](./image%20-%20009-012%20Reactive%20Forms/2022-12-22-07-25-05.png)
+![track status changes](./image%20-%20009-012%20Reactive%20Forms/2022-12-22-07-21-11.png)
 
 ### syntax
 
