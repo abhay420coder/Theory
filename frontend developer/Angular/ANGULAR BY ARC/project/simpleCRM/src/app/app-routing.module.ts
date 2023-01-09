@@ -22,6 +22,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { PreferencesCheckGuard } from './preferences-check.guard';
 import { ProductComponent } from './product/product.component';
 import { ResolverGuard } from './resolver.guard';
+import { RxJSLearningComponent } from './rx-js-learning/rx-js-learning.component';
 import { SearchComponent } from './search/search.component';
 import { SuperAdminGuard } from './super-admin.guard';
 import { UnsavedGuard } from './unsaved.guard';
@@ -41,6 +42,10 @@ const routes: Routes = [
   { 
     path:'loan' , 
     component:LoansComponent
+  } ,
+  { 
+    path:'rxjs-learning' , 
+    component:RxJSLearningComponent
   } ,
   { 
     path:'product/:productId/photos/:photoId' , 

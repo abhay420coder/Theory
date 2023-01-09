@@ -204,5 +204,275 @@ The essential concepts in RxJS which solve async event management are:
     ```
 
 * Angular using observable for the routing , forms , etc.
-* 
+
+Simple example for observable
+
+**rx-js-learning.component.html**
+
+```html
+
+
+<p>rx-js-learning works!</p>
+
+<p>agent Name = {{agentName}}</p>
+
+
+
+```
+
+**rx-js-learning.component.ts**
+
+```ts
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+
+@Component({
+  selector: 'app-rx-js-learning',
+  templateUrl: './rx-js-learning.component.html',
+  styleUrls: ['./rx-js-learning.component.scss']
+})
+export class RxJSLearningComponent implements OnInit {
+
+  agents : Observable<string> | undefined;
+  agentName: string | undefined;
+  constructor() { }
+
+  ngOnInit(): void {
+    this.agents = new Observable(
+      function(observer){
+        try{
+          // observer.next('Ram');
+          // observer.next('Mark');
+          // observer.next('Sita');
+
+          // you can see the observable returning all data
+
+          setInterval(()=>{
+            observer.next('Ram');
+          },3000);
+          
+          setInterval(()=>{
+            observer.next('Mark');
+          },6000);
+
+          setInterval(()=>{
+            observer.next('Sita');
+          },9000)
+
+          /*
+          wherever we have period of time , then we have emit 3 value.
+          */
+        }
+        catch(e){
+          // if there is something wrong here to get data then
+          observer.error(e);
+
+        }
+      }
+    )
+
+    // observable is useless , unless you subcribe to it
+    this.agents.subscribe(data => {
+      console.log(data);
+      this.agentName=data;
+    })
+  }
+
+}
+
+```
+
+![wherever we have period of time , then we have emit 3 value](2023-01-05-23-21-40.png)
+
+# Operators
+
+## Operators - Introduction
+
+* Operators are very important part of RxJS
+* RxJS library provides a lot of useful operators 
+  * which helps us 
+    * write clean code and 
+    * reduce lot of effort in writing custom logic — 
+      * which leads to many bugs actually!
+
+> * An operator is a pure function
+
+#### What is a pure function?
+
+* Afunction will also return same value when passed with same input value
+* Has no side effects
+  
+> * An operator
+>   * takes in Observable as Input and
+>   * Output will also be an Observable.
+
+* Most Operator (Not All operator) will be
+  * taken observable as an input and
+  * give an output as an Observable.
+
+### Types of Operators
+
+* There are a lot of operators to do various types of operations
+* We have operators for below functioning
+  * Creation
+  * Mathematical
+  * Join
+  * Transformation
+  * Filtering
+  * Utility
+  . Conditional
+  * Multicasting
+  * Error handling
+  
+### My advice to you
+
+* You DO NOT NEED to master all — with time you will learn as you work real time on projects
+* Start learning the basic 10-15 operators that should be very much handy for you
+
+# RxJS - `Of` Operator
+
+## Introduction - Of Operator
+
+* Make observable from 
+  * a **string** 
+  * or **array** 
+  * or an **object**
+  
+### Where to use it?
+
+* Whenever we want to pass a variable which has to be Observable instead of Array or String, we use Of Operator
+
+### Hands-On Examples
+
+* viewers:  `Observable<string[]> = of(['welcome', 'to', 'arc', 'tutorials']);`
+
+**rx-js-learning.component.ts**
+
+```ts
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+
+@Component({
+  selector: 'app-rx-js-learning',
+  templateUrl: './rx-js-learning.component.html',
+  styleUrls: ['./rx-js-learning.component.scss']
+})
+export class RxJSLearningComponent implements OnInit {
+
+  // studentsListObservable : Observable<String[]> = of(['MarK' , 'Ram' , 'Sita',  'Lisa']);
+  // or
+  students_List_For_Of_Operator = ['MarK' , 'Ram' , 'Sita',  'Lisa'];
+  students_List_Observable_For_Of_Operator : Observable<String[]> = of(this.students_List_For_Of_Operator);
+
+  students_String_For_Of_Operator = 'Arc Tutorial';
+  students_String_Observable_For_Of_Operator : Observable<String> = of(this.students_String_For_Of_Operator);
+
+  // in enterPrise we are using $ at the end of object-variable-name like 
+  // students_Object_For_Of_Operator$
+  students_Object_For_Of_Operator = {Ram:'Boy', Sita:'Girl' , Mark:'Boy'};
+  students_Object_Observable_For_Of_Operator : Observable<Object> = of(this.students_Object_For_Of_Operator);
+  // students_Object_Observable_For_Of_Operator : Observable<any> = of(this.students_Object_For_Of_Operator);
+  // if you are using <Object>  then it will take only Object 
+  // if you use <any>    then it will take any :- Array ,String Object ,.. etc
+
+  constructor() { }
+
+  ngOnInit(): void {
+
+    // Of Observable
+    this.students_List_Observable_For_Of_Operator.subscribe(data=>{
+      console.log("students_List_Observable_For_Of_Operator :-  " , data);
+    })
+    this.students_String_Observable_For_Of_Operator.subscribe(data=>{
+      console.log("students_String_Observable_For_Of_Operator :- " , data);
+    })
+    this.students_Object_Observable_For_Of_Operator.subscribe(data=>{
+      console.log("students_Object_Observable_For_Of_Operator :- " , data);
+    })
+    
+  }
+// ngOnInit end
+
+}
+
+```
+
+![For_Of_Operator](2023-01-06-01-08-20.png)
+
+
+# RxJS - `From` Operator 
+
+## From Operator - Introduction
+
+* From operator will create an observable from an array, an array-like object, a promise, an iterable object, or an observable-like object.
+* Remember it will always take Array or Array like
+* Lot of people will confuse "from" operator and "of' operator — I will explain difference in next episode in detail
+* Hands-On Examples
+  * `students2: Observable<string> = from(['welcome', 'to', 'arc', 'tutorials']);`
+
+**rx-js-learning.component.ts**
+
+```ts
+import { Component, OnInit } from '@angular/core';
+import { from, Observable, of } from 'rxjs';
+
+@Component({
+  selector: 'app-rx-js-learning',
+  templateUrl: './rx-js-learning.component.html',
+  styleUrls: ['./rx-js-learning.component.scss']
+})
+export class RxJSLearningComponent implements OnInit {
+
+  // students_List_For_From_Operator : Observable<String> = from(['Fashion' , 'Electronics' , 'Mobile',  'HouseHold']);
+  // or
+  students_List_For_From_Operator = ['Fashion' , 'Electronics' , 'Mobile',  'HouseHold'];
+  students_List_Observable_For_From_Operator : Observable<String> = from(this.students_List_For_From_Operator);
+
+  constructor() { }
+
+  ngOnInit(): void {
+    // from Observable
+    this.students_List_Observable_For_From_Operator.subscribe(data=>{
+      console.log("students_List_Observable_For_From_Operator :- " , data);
+    })
+ 
+  }
+// ngOnInit end
+
+}
+
+```
+
+![For_From_Operator](2023-01-06-01-12-17.png)
+
+# Difference Between `from` And `of` operator
+
+## Difference Between `from` and `of` Operator
+
+* From operator will create an observable from an array, an array-like object, a promise, an iterable object, or an observable-like object.
+* Of operator can create observable from a string, object or Array
+  * Specially useful when working with Models or interfaces
+* Hands-On Examples
+  * `students3: Observable<User> = of(this.userObj);` // Observable of interface
+  * `studentsl: Observable<string> = of('welcome');`// Observable of string
+  * `students2: Observable<string> = from(['welcome', 'to', 'arc', 'tutorials']);` // Observable from array
+* when  you are passing array , then you can use either `from` operator or `of` operator
+  
+# `fromEvent` Operator
+
+## FromEvent Operator - Introduction
+
+* Creates an Observable that emits events of a specific type coming from the given event target.
+* We can bind Target Elements and methods to make sure we get Observable as output
+* Angular Specific -> We will use ViewChild, NativeElement as target element and bind events
+* create an Observable from event.
+* Hands-On Examples
+
+  ```ts
+  const students4 = fromEvent(this.validateBtn?.nativeElement, 'click');
+  console.log(students4);
+  students4.subscribe(data => {
+  console.log(data);
+  })
+  ```
 
