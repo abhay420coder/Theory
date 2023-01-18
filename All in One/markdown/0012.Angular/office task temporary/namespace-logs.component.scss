@@ -1,0 +1,118 @@
+@import "../../../../assets/css/variables";
+
+::ng-deep .namespace-selector .mat-form-field-wrapper{
+    padding-bottom: 0 !important;
+}
+
+::ng-deep .date-time-picker .mat-form-field-wrapper{
+    padding-bottom: 0 !important;
+}
+
+::ng-deep .modules-btn.mat-stroked-button{
+    line-height: 1 !important;
+}
+
+.advanced-filter{
+    border-radius: 12px;
+    border: 1px solid $border-color;
+    overflow: hidden;
+}
+
+.filter-icon{
+    height: 60%;
+    width: 60%;
+}
+
+.filter-active{
+    position: relative;
+    &::after{
+        content: "";
+        position: absolute;
+        top: -5px;
+        right: -10px;
+        border-radius: 50%;
+        border: 5px solid red;
+    }
+}
+
+.btn-active-border{
+    border-color: $status-border-blue;
+}
+
+.sidebar{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 400px;
+    background-color: $app-background-color;
+    box-shadow: -2px 2px 20px $box-shadow-color;
+}
+
+.module-list{
+    @extend .sidebar;
+}
+
+.module-list-item{
+    border: 1px solid $border-color;
+    border-radius: 12px;
+}
+
+.module-selected{
+    background-color: $status-border-green;
+}
+
+.log-item{
+    background-color: white;
+    border-radius: 5px;
+    // border: 1px solid $border-color;
+}
+
+.border-gray{
+    border-left: 5px solid $status-border-gray;
+}
+
+.border-blue{
+    border-left: 5px solid $status-border-blue;
+}
+
+.border-orange{
+    border-left: 5px solid $status-border-orange;
+}
+
+.border-red{
+    border-left: 5px solid $status-border-red;
+}
+
+.text-red{
+    color: $status-text-red;
+}
+
+.text-blue{
+    color: $status-text-blue;
+}
+
+.text-orange{
+    color: $status-text-orange;
+}
+
+.border-red{
+    border-left: 5px solid $status-border-red;
+}
+
+.date-time-picker{
+    // width: 195px;
+}
+
+.time-range-icon{
+    width: 30px;
+    height: 30px;
+    object-fit: contain !important;
+    background-size: contain !important;
+    filter: grayscale(255)
+}
+
+.selected-time-range{
+    word-wrap: break-word;
+    max-width: 150px;
+}
