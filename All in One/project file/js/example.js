@@ -6,7 +6,7 @@ const datas = [
                 {name : "Anuj" , Profession:"Software Engieer"},
 ]
 
-/* 
+
 // we are not getting data all three 
 //          0 :- Ajay
 //          1 :- Anuj 
@@ -46,7 +46,7 @@ getDatas(); // this is a "call function"   , this is not a "callBack function"
 // output :- 
 //          0 :- Ajay
 //          1 :- Anuj 
-*/
+
 
 
 
@@ -54,7 +54,7 @@ getDatas(); // this is a "call function"   , this is not a "callBack function"
 
 
 //  solution -1
-/* 
+
 // with call function
 function getDatas(){
     setTimeout( () =>{
@@ -88,14 +88,14 @@ getDatas(); // this is a "call function"   , this is not a "callBack function"
 //          0 :- Ajay
 //          1 :- Anuj 
 //          2 :- Vivek 
-*/
+
 
 
 
 
 
 //  solution -2
-/* 
+
 // with callBack function
 function getDatas(){
     setTimeout( () =>{
@@ -128,11 +128,11 @@ createData({name : "Vivek" , Profession:"Software Engieer"} ,getDatas )
 //          0 :- Ajay
 //          1 :- Anuj 
 //          2 :- Vivek 
- */
+
 
 
 //  solution -3
-/* 
+
 // with promise function
 
 // return new Promise(   (resolve, reject) => {}  )
@@ -186,7 +186,7 @@ function createData(newdata){
 // then see ,how we will catch error
 createData({name : "Vivek" , Profession:"Software Engieer"} ).then(getDatas).catch((err)=>console.log(err))
 
- */
+
 
 
 //  solution -4
