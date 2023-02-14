@@ -1,23 +1,24 @@
+import { UsersComponent } from './../users/users.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddContactComponent } from './add-contact/add-contact.component';
-import { DeleteComponentComponent } from './delete-component/delete-component.component';
-import { EditComponentComponent } from './edit-component/edit-component.component';
-import { ListComponentComponent } from './list-component/list-component.component';
-import { ViewComponentComponent } from './view-component/view-component.component';
+import { ContactsComponent } from './contacts/contacts.component';
+import { ContactsRoutingModule } from './contacts-routing.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoggingInterceptor } from './API interceptor/logging.interceptor';
 
 
 
 @NgModule({
   declarations: [
-    AddContactComponent,
-    DeleteComponentComponent,
-    EditComponentComponent,
-    ListComponentComponent,
-    ViewComponentComponent
+    ContactsComponent
   ],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    ContactsRoutingModule,
+    HttpClientModule
+  ],
+  // providers:[
+  //   {provide: HTTP_INTERCEPTORS , useClass:LoggingInterceptor}
+  // ]
 })
 export class ContactsModule { }

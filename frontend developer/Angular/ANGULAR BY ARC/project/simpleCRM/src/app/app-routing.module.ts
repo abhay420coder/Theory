@@ -30,81 +30,84 @@ import { UnsavedGuard } from './unsaved.guard';
 
 
 const routes: Routes = [
- 
-  { 
-    path:'product/:id' , 
-    component:ProductComponent
-  } ,
-  { 
-    path:'loan/types' , 
-    component:LoanTypesComponent
-  } ,
-  { 
-    path:'loan' , 
-    component:LoansComponent
-  } ,
-  { 
-    path:'rxjs-learning' , 
-    component:RxJSLearningComponent
-  } ,
-  { 
-    path:'product/:productId/photos/:photoId' , 
-    component:ProductComponent
-  } ,
+
   {
-    path:'clients',
-    component: ClientsComponent,
-    canActivate:[AuthGuard]  // it takes more than one routes
+    path: 'product/:id',
+    component: ProductComponent
   },
-  
   {
-    path:'leads',
-    component:LeadsGridComponent,
+    path: 'loan/types',
+    component: LoanTypesComponent
+  },
+  {
+    path: 'loan',
+    component: LoansComponent
+  },
+  {
+    path: 'rxjs-learning',
+    component: RxJSLearningComponent
+  },
+  {
+    path: 'product/:productId/photos/:photoId',
+    component: ProductComponent
+  },
+  {
+    path: 'clients',
+    component: ClientsComponent,
+    canActivate: [AuthGuard]  // it takes more than one routes
+  },
+
+  {
+    path: 'leads',
+    component: LeadsGridComponent,
     // canActivate:[AuthGuard , AdminGuard]  // it takes more than one routes // all guard should return access(means true)
-    resolve:{
-      data:ResolverGuard , // whenever this path is trying to be loaded before route is activated
+    resolve: {
+      data: ResolverGuard, // whenever this path is trying to be loaded before route is activated
     }
     //  when i will be launch this route ResolverGuard will be resolve f irst then this route will be initiated
   },
   {
-    path:'search',
-    component:SearchComponent,
-    canDeactivate:[UnsavedGuard]
+    path: 'search',
+    component: SearchComponent,
+    canDeactivate: [UnsavedGuard]
   },
 
   // CanActivateChile Auth Guard
   {
-    path:'admin',
-    canActivate:[SuperAdminGuard] ,// http://localhost:4300/app1#/admin will work if SuperAdminGuard will give Access.
-    children:[
-      { path:'', component:AdminComponent }, //  http://localhost:4300/app1#/admin will work
+    path: 'admin',
+    canActivate: [SuperAdminGuard],// http://localhost:4300/app1#/admin will work if SuperAdminGuard will give Access.
+    children: [
+      { path: '', component: AdminComponent }, //  http://localhost:4300/app1#/admin will work
       {
-        path:'',
-        canActivateChild:[AdminAccessGuard],
-        children:[
-          { path:'manage', component:AdminManageComponent }, //  http://localhost:4300/app1#/admin/manage will work
-          { path:'delete', component:AdminDeleteComponent }, //  http://localhost:4300/app1#/admin/delete will work
-          { path:'edit', component:AdminEditComponent }, //  http://localhost:4300/app1#/admin/edit will work
+        path: '',
+        canActivateChild: [AdminAccessGuard],
+        children: [
+          { path: 'manage', component: AdminManageComponent }, //  http://localhost:4300/app1#/admin/manage will work
+          { path: 'delete', component: AdminDeleteComponent }, //  http://localhost:4300/app1#/admin/delete will work
+          { path: 'edit', component: AdminEditComponent }, //  http://localhost:4300/app1#/admin/edit will work
         ]
       },
     ]
   },
- 
+
   { path: 'payments', loadChildren: () => import('./payments/payments.module').then(m => m.PaymentsModule) },  // lazy modules
   { path: 'customers', loadChildren: () => import('./customers/customers.module').then(m => m.CustomersModule) },  // lazy modules
- 
+
+  { path: 'contacts', loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule) },  // lazy modules
 
 
-  { path: 'preferences', 
-     canLoad:[PreferencesCheckGuard],
-    loadChildren: () => import('./preferences/preferences.module').then(m => m.PreferencesModule) 
+
+  {
+    path: 'preferences',
+    canLoad: [PreferencesCheckGuard],
+    loadChildren: () => import('./preferences/preferences.module').then(m => m.PreferencesModule)
   },  // lazy modules
 
 
 
   {
-    path:'**',
-    component:PageNotFoundComponent
+    path: '**',
+    component: PageNotFoundComponent
   }
 ];
 

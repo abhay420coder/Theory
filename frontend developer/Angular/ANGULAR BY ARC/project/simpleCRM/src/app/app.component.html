@@ -1,5 +1,5 @@
 <h1 class="c1">{{title}}</h1>
-<!-- 
+<!--
 <input type="text"  [(ngModel)]="userName">
 
 <h1 *ngIf="userName.length > 10"> userName :-  {{ userName }}</h1>
@@ -34,20 +34,20 @@
 <div> date Pipe :- with 'shortDate' :-  {{ dateExampIe | date : 'shortDate'}}</div>
 <div> date Pipe :- with 'mediumDate' :-  {{ dateExampIe | date : 'mediumDate'}}</div>
 <div> date Pipe :- with 'longDate' :-  {{ dateExampIe | date : 'longDate'}}</div>
-<div> date Pipe :- with 'fullDate' :-  {{ dateExampIe | date : 'fullDate'}}</div> 
+<div> date Pipe :- with 'fullDate' :-  {{ dateExampIe | date : 'fullDate'}}</div>
 <div> date Pipe :- with 'shortTime' :-  {{ dateExampIe | date : 'shortTime'}}</div>
 <div> date Pipe :- with 'mediumTime' :-  {{ dateExampIe | date : 'mediumTime'}}</div>
 <div> date Pipe :- with 'longTime' :-  {{ dateExampIe | date : 'longTime'}}</div>
 <div> date Pipe :- with 'fullTime' :-  {{ dateExampIe | date : 'fullTime'}}</div>
 
 <h4> number Pipe </h4>
-<div> number Pipe:-  {{5.678 | number:'1.2-3' }}</div >      
-<div> number Pipe:-   {{5.678 | number:'3.4-5' }}</div>     
-<div> number Pipe:-   {{5.678 | number:'3.1-2' }}</div>      
+<div> number Pipe:-  {{5.678 | number:'1.2-3' }}</div >
+<div> number Pipe:-   {{5.678 | number:'3.4-5' }}</div>
+<div> number Pipe:-   {{5.678 | number:'3.1-2' }}</div>
 <h4> percent Pipe </h4>
-<div> percent Pipe:-  {{5.678 | percent:'1.2-3' }}</div >      
-<div> percent Pipe:-   {{5.678 | percent:'3.4-5' }}</div>      
-<div> percent Pipe:-   {{5.678 | percent:'3.1-2' }}</div>      
+<div> percent Pipe:-  {{5.678 | percent:'1.2-3' }}</div >
+<div> percent Pipe:-   {{5.678 | percent:'3.4-5' }}</div>
+<div> percent Pipe:-   {{5.678 | percent:'3.1-2' }}</div>
  -->
 
 
@@ -62,7 +62,7 @@
 <!-- <div>{{ pageHeading }}</div> -->
 
 
-<!-- 
+<!--
 <ul>
   <h1> element oƒ your iteration 1</h1>
   <li *ngFor="let contact of contacts">
@@ -109,7 +109,7 @@
   <div *ngSwitchCase="'green'"> my tax is 50</div>
   <div *ngSwitchDefault> my tax is Default</div>
 </div> -->
-<!-- 
+<!--
 <div [ngStyle]="{'background-color':'green' , 'color':'#fff'}"> This is Green DIV with ngStyle </div>
 
 <div style="background-color:green"> This is Green DIV with Style attribute </div>
@@ -128,7 +128,7 @@
 
 <div [ngClass]="getClsProp()" > This is ngCIass class method example c8 </div> -->
 
-<!-- 
+<!--
 <div> {{ page_heading  }}  </div>
 <div [style.color]="txtColor"> page cout is :- {{ page_count  }}  </div>
 
@@ -139,11 +139,11 @@
 <div [innerHTML]="user_object.firstName + '   ' + user_object.lastName"></div>
 </div>
 
-<img [src]="imageUrl" [alt]="imageAlternativeName"> 
+<img [src]="imageUrl" [alt]="imageAlternativeName">
 
 -->
 
-<!-- 
+<!--
 <div> {{ user_object  }}  </div>
 <div> user name is :- {{ user_object.firstName  }}  {{ user_object.lastName  }} </div>
 
@@ -158,9 +158,9 @@
     <td>{{contact.firstName}}</td>
     <td>{{contact.lastName}}</td>
   </tr>
-</table> 
+</table>
 -->
-<!-- 
+<!--
 <table>
   <tr>
     <th>contact ID</th>
@@ -172,9 +172,9 @@
     <td [title]="contact.firstName">{{contact.firstName}}</td>
     <td [title]="contact.lastName">{{contact.lastName}}</td>
   </tr>
-</table> 
+</table>
  -->
-<!-- 
+<!--
  <div> <h1>attribute binding </h1></div>
 
  <table style="background-color:#ddd">
@@ -190,8 +190,8 @@
   </tr>
 </table>  -->
 
-<!-- 
-  
+<!--
+
 <div> <h1>event binding </h1></div>
 
 <button (click)="sayHello()">event binding</button>
@@ -210,13 +210,13 @@
     <td [title]="contact.firstName">{{contact.firstName}}</td>
     <td [title]="contact.lastName">{{contact.lastName}}</td>
   </tr>
-</table> 
+</table>
 
 </div>
 
 <h1 (mouseover)="highlightColor()" [class]="higlightBlock"> highlight event binding on  mouse hover </h1>
 
-<input type="text" (focus)="inputBox();"> 
+<input type="text" (focus)="inputBox();">
 
 -->
 
@@ -240,10 +240,15 @@
 <a [routerLink]="'/rxjs-learning'">RxJS Learning Concept   -  loans.component.html</a>
 <br>
 another method of form is two way binding
-<router-outlet></router-outlet>  <!-- primary outlet --> 
- <!-- named router outlet --> 
+
+
+<br><br><br><br>
+<a [routerLink]="'/contacts'">services Learning Concept   -  contact.component.html</a>
+<br>
+<router-outlet></router-outlet>  <!-- primary outlet -->
+ <!-- named router outlet -->
  <!-- <router-outlet name="addLoan"></router-outlet>   -->
- <!-- named router outlet --> 
+ <!-- named router outlet -->
  <!-- <router-outlet name="editLoan"></router-outlet>   -->
 
 

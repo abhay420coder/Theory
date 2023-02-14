@@ -8,7 +8,7 @@ import { UsersComponent } from './users/users.component';
 
 import { LoansComponent } from './loans/loans.component';
 import { LoanTypesComponent } from './loan-types/loan-types.component';
-import { AddLoansComponent } from './add-loans/add-loans.component'  
+import { AddLoansComponent } from './add-loans/add-loans.component'
 import { HashLocationStrategy, LocationStrategy , PathLocationStrategy } from '@angular/common';
 import { P1Component } from './p1/p1.component';
 import { P2Component } from './p2/p2.component';
@@ -23,6 +23,8 @@ import { AdminComponent } from './admin/admin.component'; // import routing stra
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
 // all angular material API imported  started
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatBadgeModule} from '@angular/material/badge';
@@ -62,6 +64,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RxJSLearningComponent } from './rx-js-learning/rx-js-learning.component';
+import { LoggingInterceptor } from './contacts/API interceptor/logging.interceptor';
 // all angular material API imported  ended
 
 
@@ -88,9 +91,9 @@ import { RxJSLearningComponent } from './rx-js-learning/rx-js-learning.component
   imports: [
     BrowserModule,
     AppRoutingModule, // routing module add in  imports array
-    
+
     BrowserAnimationsModule,
-        FormsModule,ReactiveFormsModule,
+        FormsModule,ReactiveFormsModule,HttpClientModule,
         // all angular material module imported started
         MatAutocompleteModule,MatBadgeModule,MatBottomSheetModule,MatButtonModule,MatButtonToggleModule,
         MatCardModule,MatCheckboxModule,MatChipsModule,MatCommonModule,MatDatepickerModule,MatDialogModule,
@@ -100,13 +103,14 @@ import { RxJSLearningComponent } from './rx-js-learning/rx-js-learning.component
         MatSnackBarModule,MatSortModule,MatStepperModule,MatTableModule,MatTabsModule,MatToolbarModule,MatTooltipModule,
         MatTreeModule,
         // all angular material module imported started
-    
+
   ],
   providers: [
     {provide: LocationStrategy , useClass:HashLocationStrategy} , // add routing strategy in providers array
     // {provide: LocationStrategy , useClass:PathLocationStrategy} // add routing strategy in providers array
+    {provide: HTTP_INTERCEPTORS , useClass:LoggingInterceptor , multi:true} // add httpInterceptor here i.e; in providers array
   ],
-  
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
