@@ -1,0 +1,16 @@
+{
+  "name": "0051.data-structure",
+  "version": "1.0.0",
+  "description": "practice dsa in javascript",
+  "main": "0051.data-structure.0004.Array_Operation.javascript_practice.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "prompt": "^1.3.0",
+    "save": "^2.9.0"
+  }
+}
