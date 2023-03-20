@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "websocket": {
+    "ws-chat-application": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -12,12 +12,12 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "cf",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/websocket",
+            "outputPath": "dist/ws-chat-application",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -30,9 +30,16 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "./node_modules/bootstrap/dist/css/bootstrap.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/bootstrap/dist/js/bootstrap.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "./node_modules/jquery/dist/jquery.slim.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -65,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "websocket:build:production"
+              "browserTarget": "ws-chat-application:build:production"
             },
             "development": {
-              "browserTarget": "websocket:build:development"
+              "browserTarget": "ws-chat-application:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +83,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "websocket:build"
+            "browserTarget": "ws-chat-application:build"
           }
         },
         "test": {
@@ -102,6 +109,6 @@
     }
   },
   "cli": {
-    "analytics": "498ae582-0325-4c19-a7ad-b6fa2a70bc37"
+    "analytics": "09857c3e-2d4b-4b6c-a51a-9cf491d694f2"
   }
 }
