@@ -11,7 +11,9 @@ These are the elements outlined in John Gruber’s original design document. All
 ### Heading
 
 # H1
+
 ## H2
+
 ### H3
 
 ### Bold
@@ -28,8 +30,8 @@ These are the elements outlined in John Gruber’s original design document. All
 
 ### Ordered List
 
-1. First item
-2. Second item
+1. First items
+2. Second items
 3. Third item
 
 ### Unordered List
@@ -60,10 +62,10 @@ These elements extend the basic syntax by adding additional features. Not all Ma
 
 ### Table
 
-| Syntax | Description |
-| ----------- | ----------- |
-| Header | Title |
-| Paragraph | Text |
+| Syntax    | Description |
+| --------- | ----------- |
+| Header    | Title       |
+| Paragraph | Text        |
 
 ### Fenced Code Block
 
@@ -79,11 +81,9 @@ These elements extend the basic syntax by adding additional features. Not all Ma
 
 Here's a sentence with a footnote. [^1]
 
-[^1]: This is the footnote.
-
 ### Heading ID
 
-### My Great Heading {#custom-id}
+### My Great Heading
 
 ### Definition List
 
@@ -96,13 +96,13 @@ term
 
 ### Task List
 
-- [x] Write the press release
+- [X] Write the press release
 - [ ] Update the website
 - [ ] Contact the media
 
 ### Emoji
 
-That is so funny! :joy:
+That is so funny! 😂
 
 (See also [Copying and Pasting Emoji](https://www.markdownguide.org/extended-syntax/#copying-and-pasting-emoji))
 
@@ -130,13 +130,11 @@ X^2^
             <title>Document</title>
         </head>
         <body>
-            
+          
         </body>
         </html>
 
 ```
-
-
 
 ### XML
 
@@ -150,12 +148,11 @@ X^2^
             <title>Document</title>
         </head>
         <body>
-            
+          
         </body>
         </html>
 
 ```
-
 
 ### JS
 
@@ -164,3 +161,5 @@ X^2^
 console.log("hello world")
 
 ```
+
+[^1]: This is the footnote.

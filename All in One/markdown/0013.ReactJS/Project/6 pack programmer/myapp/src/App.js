@@ -9,4 +9,4 @@ function App(){ // this is functional component
 
 // in returning component if we want to call variable then we will write inside component :- {variableName}
 
-export default App; // this is exporting function
+export default App; // this is exporting functionJHGKtgjhFJJHGJGtyRRRRS`SWR3qaqHJGMKUGJ
