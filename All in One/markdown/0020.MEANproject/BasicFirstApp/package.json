@@ -1,0 +1,20 @@
+{
+  "name": "basicfirstapp",
+  "version": "1.0.0",
+  "description": "mean stack crud",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mean",
+    "stack",
+    "node",
+    "express"
+  ],
+  "author": "Abhay Kumar",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
