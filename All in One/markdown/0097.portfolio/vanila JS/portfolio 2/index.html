@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animation Portfolio</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Animation Portfolio</h1>
+    <div class="gallery">
+      <div class="thumbnail" onclick="openModal('project1')">
+        <img src="project1-thumbnail.jpg" alt="Project 1">
+      </div>
+      <div class="thumbnail" onclick="openModal('project2')">
+        <img src="project2-thumbnail.jpg" alt="Project 2">
+      </div>
+      <!-- Add more thumbnails as needed -->
+    </div>
+  </div>
+
+  <div id="modal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+      <img id="modal-image" src="" alt="Project">
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
