@@ -1,4 +1,5 @@
 
+// let allUser = []
 let allUser = JSON.parse( localStorage.allUser==undefined ? '[{"name":"CodeOfFun" , "address":"Bengaluru" , "phone":"7015393351" , "email":"manas@eduwol.com"}]' :localStorage.allUser)
 let id = null; 
 
