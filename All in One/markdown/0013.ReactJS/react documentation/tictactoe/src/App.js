@@ -2,7 +2,10 @@ import { useState } from 'react';
 import './App.css'
 
 
+/* 
 function Square({value , onSquareClick}){
+
+
   // const [value , setValue] = useState(null)
 
   // function onSquareClick(){
@@ -44,6 +47,7 @@ export default function Board({values}){
     )
 }
 
+ */
 
 
 
@@ -88,7 +92,6 @@ export default function Board({values}){
 
 
 
-/* 
 
 function Square({ value, onSquareClick }) {
   return (
@@ -202,4 +205,4 @@ function calculateWinner(squares) {
     }
   }
   return null;
-} */
+} 
