@@ -1,0 +1,584 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    font-family: 'Poppins',sans-serif;
+}
+
+:root{
+    --bg--color : #1f242d;
+    --second-bg-color:#323946;
+    --text-color:#fff;
+    --main-color:#0ef;
+}
+
+html{
+    font-size: 62.5%;
+    overflow-x: hidden;
+}
+
+body{
+    background-color: var(--bg--color);
+    color: var(--text-color);
+}
+
+section{
+    min-height: 100vh;
+    padding: 10rem 9% 2rem;
+}
+
+.heading{
+    text-align: center;
+    font-size: 4.5rem;
+}
+
+span{
+    color: var(--main-color);
+}
+
+.btn{
+    display: inline-block;
+    padding: 1rem 2.8rem;
+    background: var(--main-color);
+    border-radius: 4rem;
+    box-shadow: 0 0 1rem var(--main-color);
+    font-size: 1.6rem;
+    color: var(--second-bg-color);
+    letter-spacing: .1rem;
+    font-weight: 600;
+    transition: 0.5s ease; 
+    /* transition will work as animation  it will work on hover or psuedo classes  , it is one time animation*/
+}
+
+.btn:hover{
+    box-shadow: none;
+}
+
+/* header section  */
+.header{
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100%;
+    padding: 2rem 9%;
+    background-color: var(--bg--color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.header .sticky{
+    border-bottom: .1rem solid rgba(0,0,0,.2);
+}
+
+.logo{
+    font-size: 2.5rem;
+    color: var(--text-color);
+    font-weight: 600;
+    cursor: default;
+}
+
+.navbar{
+    display: flex;
+    justify-content: flex-end;
+    gap: 0 20%;
+}
+
+.navbar a{
+    font-size: 1.7rem;
+    color: var(--text-color);
+    transition: 0.3s;
+}
+
+.navbar a:hover , 
+.navbar a.active {
+    color: var(--main-color);
+}
+
+#menu-icon{
+    font-size: 3.6rem;
+    color: var(--text-color);
+    display: none; 
+    /* we will show when we will reduce screen size */
+}
+
+/* home section */
+
+.home{
+    display:  flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-content h3{
+    font-size: 3.2rem;
+    font-weight: 700;
+}
+.home-content h3:nth-of-type(2){
+    margin-bottom: 2rem;
+}
+
+.home-content h1{
+    font-size: 5.6rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+.home-content p{
+    font-size: 1.6rem;
+}
+
+.home-img img{
+    width: 35vw;
+    /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+    animation: floatImage 4s ease-in-out infinite;
+}
+
+@keyframes floatImage {
+    0%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(-2.4rem);
+    }
+    100%{
+        transform: translateY(0);
+    }
+}
+
+.social-media a{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 4rem;
+    background: transparent;
+    border: 0.2rem solid var(--main-color);
+    border-radius: 50%;
+    font-size: 2rem;
+    color: var(--main-color);
+    margin: 3rem 1.5rem 3rem 0;
+    transition: 0.5s ease;
+}
+
+.social-media a:hover{
+    background-color: var(--main-color);
+    color: var(--second-bg-color);
+    box-shadow: 0 0 1rem var(--main-color)
+}
+
+
+
+/* about section */
+.about{
+    display:  flex;
+    justify-content: center;
+    align-items: center;
+    gap:2rem;
+    background: var(--second-bg-color);
+}
+.about-img img{
+    width: 35vw;
+    
+}
+
+
+.about-content h2{
+    text-align: left;
+    line-height: 1.2;
+}
+.about-content h3{
+    font-size: 2.6rem;
+}
+.about-content .description{
+    font-size: 1.6rem;
+    margin: 2rem 0 3rem;
+}
+
+
+/* services section */
+
+
+
+
+
+.services h2{
+    margin-bottom: 5rem;
+}
+
+.services-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+.services-container .service-box{
+    flex: 1 1 30rem;
+    background-color: var(--second-bg-color);
+    padding: 3rem 2rem 4rem;
+    border-radius: 2rem;
+    text-align: center;
+    border: .2rem solid var(--bg--color);
+    transition-duration: 0.5s ease;
+}
+.services-container .service-box:hover{
+    border-color: var(--main-color);
+    transform: scale(1.02); 
+    /* scale(1.02)  :- it shows 1.02times bigger than original design */
+}
+
+.services-container .service-box i{
+    font-size: 7rem;
+    color: var(--main-color);
+}
+
+.services-container .service-box h3{
+    font-size: 2.6rem;
+}
+.services-container .service-box p{
+    font-size: 1.6rem;
+    margin: 1rem 0 3rem;
+}
+
+.portfolio{
+    background-color: var(--second-bg-color);
+}
+
+.portfolio h2{
+    margin-bottom: 4rem;
+}
+
+.portfolio .portfolio-container{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    align-items: center;
+    gap: 2.5rem;
+}
+.portfolio .portfolio-container .portfolio-box{
+   position: relative;
+   border-radius: 2rem;
+   box-shadow: 0 0 1rem var(--bg-color);
+   overflow: hidden;
+   display : flex;
+   flex-direction: column;
+   align-items: center;
+   min-width: 318px;
+}
+
+.portfolio .portfolio-container .portfolio-box img{
+    /* width:100%; */
+    width: 35rem;
+    height: 25rem;
+    border-radius: 2rem;
+    transition: .5s ease;
+
+}
+.portfolio .portfolio-container .portfolio-box:hover img{
+    transform: scale(1.1);
+}
+
+.portfolio .portfolio-container .portfolio-box .portfolio-layer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0,0,0,.1),var(--main-color));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 4rem;
+
+    /* it goes down the cotainer */
+    transform: translateY(100%);
+
+    transition: 0.5s ease;
+
+    /* hide scroll bars for IE , edge  */
+    -ms-overflow-style: none;
+    /* hide scroll bars for firefox */
+    scrollbar-width: none;
+}
+
+    /* hide scroll bars for chrome safari and opera */
+.portfolio .portfolio-container .portfolio-box .portfolio-layer::-webkit-scrollbar{
+    display: none;
+}
+
+.portfolio .portfolio-container .portfolio-box:hover .portfolio-layer{
+    transform: translateY(0);
+
+}
+
+.portfolio .portfolio-container .portfolio-box .portfolio-layer h4{
+    font-size: 3rem;
+    position: absolute;
+    top: 1rem;
+    height: 15%;
+}
+
+.portfolio .portfolio-container .portfolio-box .portfolio-layer p{
+    font-size: 1.6rem;
+    margin: 0.3rem 0 1rem;
+    position: absolute;
+    top: 4.5rem;
+    height: 55%;
+    overflow: scroll;
+    /* hide scroll bars for IE , edge  */
+    -ms-overflow-style: none;
+    /* hide scroll bars for firefox */
+    scrollbar-width: none;
+}
+.portfolio .portfolio-container .portfolio-box .portfolio-layer p::-webkit-scrollbar{
+    display: none;
+}
+.portfolio .portfolio-container .portfolio-box .portfolio-layer a{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 5rem;
+    height: 5rem;
+    background: var(--text-color);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 0.5rem;
+}
+.portfolio .portfolio-container .portfolio-box .portfolio-layer a i{
+    font-size: 2rem;
+    color: var(--second-bg-colors);
+}
+
+
+
+/* contact section css */
+.contact h2{
+    margin-bottom: 3rem;
+    /* background-color: rgb(247, 0, 255); */
+}
+
+.contact form{
+    max-width: 70rem;
+    margin: 1rem auto;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.contact form .input-box{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.contact form .input-box input ,
+.contact form textarea {
+    padding: 1.5rem;
+    font-size:1.6rem;
+    color: var(--text-color);
+    background: var(--second-bg-color);
+    border-radius: .8rem;
+    margin: .7rem 0;
+}
+
+.contact form .input-box input{
+    width: 49% ;
+}
+
+
+/* remove arrow/spinners from number input  for chrome , safari , edge , opera*/
+.contact form .input-box input::-webkit-inner-spin-button,
+.contact form .input-box input::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* remove arrow/spinners from number input  for firefox*/
+.contact form .input-box input[type=number]{
+    -moz-appearance: textfield;
+}
+
+.contact form textarea{
+    width: 100%;
+    resize: none;
+}
+
+.contact form btn{
+    margin-top: 2rem;
+    cursor: pointer;
+}
+
+
+
+/* footer section css */
+.footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 2rem 9%;
+    background: var(--second-bg-color);
+}
+.footer .footer-text p{
+    font-size: 1.6rem;
+}
+
+.footer .footer-iconTop a{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: .8rem;
+    background: var(--main-color);
+    border-radius: .8rem;
+    transition: .5s ease;
+}
+
+.footer .footer-iconTop a:hover{
+    box-shadow: 0 0 1rem var(--main-color);
+}
+.footer .footer-iconTop a i{
+    font-size: 2.4rem;
+    color: var(--second-bg-color);
+}
+
+
+
+/* Break Points */
+
+/* 
+@media (width < 1200px) {......}       is equal to         @media (max-width : 1200px) {......} 
+@media (width >= 1200px) {......}       is equal to        @media (min-width : 1200px) {......} 
+*/
+
+
+@media (max-width:1200px){
+    html{
+        font-size: 55%;
+    }
+}
+
+@media (max-width:991px){
+    .header{
+        padding: 2rem 3%;
+    }
+    section{
+        padding: 10rem 3% 2rem;
+    }
+    .services{
+        padding-bottom: 7rem;
+    }
+    .portfolio{
+        padding-bottom: 7rem;
+    }
+    .contact{
+        min-height: auto;
+    }
+    .footer{
+        padding: 2rem 3% 2rem;
+    }
+}
+
+@media (max-width:768px){
+    #menu-icon{
+        display: block;
+    }
+
+    .navbar {
+        gap: 0 10%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        padding: 1rem 3%;
+        background: var(--bg--color);
+        border-top: .1rem solid rgba(0,0,0,.2);
+        box-shadow: 0 .5rem 1rem rgba(0 , 0, 0, .2);
+        flex-direction: column;
+        display: none;
+    }
+
+    .activeNavbar{
+        display: block;
+    }
+
+    .navbar a{
+        display: block;
+        font-size: 2rem;
+        margin: 3rem 0;
+    }
+
+    .home {
+        flex-direction: column;
+    }
+
+    .home-content h3{
+        font-size: 2.6rem;
+    }
+
+    .home-content h1{
+        font-size: 5rem;
+    }
+    .home-img img{
+        width: 70vw;
+        margin-top: 4rem;
+    }
+    .about{
+        flex-direction: column-reverse;
+    }
+    .about img {
+        width: 70vw;
+        margin-top: 4rem;
+    }
+
+    .services h2{
+        margin-bottom: 3rem;
+    }
+
+    .portfolio h2{
+        margin-bottom: 3rem;
+    }
+
+    .portfolio .portfolio-container{
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media (max-width:671px){
+    .portfolio .portfolio-container{
+        grid-template-columns: repeat(1,1fr);
+    }
+    /* .portfolio .portfolio-container .portfolio-box img {
+        width: 70vw;
+    } */
+}
+
+@media (max-width:450px){
+    html{
+        font-size: 50%;
+    }
+    .contact form .input-box input{
+        width: 100%;
+    }
+    .footer .footer-text{
+        width: 70vw;
+    }
+    .footer p{
+        text-align: center;
+    }
+}
+
+@media (max-width:365px){
+    .home-img img{
+        width: 90vw;
+    }
+    .about-img img{
+        width: 90vw;
+    }
+    
+}
