@@ -104,3 +104,10 @@
 // .inset-3\/4	{ top: calc(300% / 4); right: calc(300% / 4); bottom: calc(300% / 4);  left: calc(300% / 4);  }  /* inset-3-4 = inset-3/4 = inset-75% */
 .inset-full	{ top: 100%; right: 100%; bottom: 100%;  left: 100%;  } 
 
+
+
+
+// inset : top right bottom left
+// inset : top RL bottom  :- right = RL , left= RL 
+// inset : TB RL   :- top=TB  ,   bottom=TB    ,  right = RL , left= RL 
+// inset : TBRL   :- top=TBRL  ,   bottom=TBRL    ,  right=TBRL , left=TBRL 
