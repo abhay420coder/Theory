@@ -1,0 +1,24 @@
+<!-- adding  another component -->
+<%- include('./common/header') %>
+
+
+
+
+
+<!-- render the data in html  or data binding in html -->
+<p> about.ejs   in  folderName  ->  views  </p>
+<p> name:-  <%= passingObject.name  %> </p>
+<p> age:-  <%= passingObject.age  %> </p>
+<p> add:-  <%= passingObject.add  %> </p>
+
+
+<!-- iterate the object -->
+
+<ul>
+    <% for(let i =0 ; i< passingObject.skill.length; i++){%>
+        <li><%= passingObject.skill[i] %></li>
+    <%}%>
+</ul>
+
+
+
